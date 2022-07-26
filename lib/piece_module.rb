@@ -1,0 +1,21 @@
+module PieceVariables
+  WHITE_KING = "\u2654"
+  WHITE_QUEEN = "\u2655"
+  WHITE_ROOK = "\u2656"
+  WHITE_BISHOP = "\u2657"
+  WHITE_KNIGHT = "\u2658"
+  WHITE_PAWN = "\u2659"
+
+  BLACK_KING = "\u265A"
+  BLACK_QUEEN = "\u265B"
+  BLACK_ROOK = "\u265C"
+  BLACK_BISHOP = "\u265D"
+  BLACK_KNIGHT = "\u265E"
+  BLACK_PAWN = "\u265F"
+
+  GREEN_SQUARE = "\u001b[48;5;107m"
+  WHITE_SQUARE = "\u001b[45m"
+  NEW_LINE = "\u001b[0m\n"
+  EMPTY_SPACE = "  "
+
+end
