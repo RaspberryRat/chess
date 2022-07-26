@@ -62,3 +62,33 @@ print "#{green_square} #{white_rook} "
 puts "\u001b[0m\n"
 print "   A  B  C  D  E  F  G  H"
 puts "\n" * 5
+
+#empty board
+
+i = 8
+chess_board = ''
+8.times do
+  chess_board += "#{i.to_s} "
+  chess_board += i.even? ? empty_row_green : empty_row_white
+  i -= 1
+end
+chess_board += "   A  B  C  D  E  F  G  H"
+print chess_board
+puts "\n" * 2
+
+
+green_square = "\u001b[48;5;107m"
+      white_square = "\u001b[48;5;231m"
+      empty_row_green = "#{green_square}   #{white_square}   " * 4 + "\u001b[0m\n"
+      empty_row_white = "#{white_square}   #{green_square}   " * 4 + "\u001b[0m\n"
+      printed_board = "8 #{empty_row_green}"\
+                      "7 #{empty_row_white}"\
+                      "6 #{empty_row_green}"\
+                      "5 #{empty_row_white}"\
+                      "4 #{empty_row_green}"\
+                      "3 #{empty_row_white}"\
+                      "2 #{empty_row_green}"\
+                      "1 #{empty_row_white}"\
+                      "   A  B  C  D  E  F  G  H"\
+                      "\n"
+                      print printed_board

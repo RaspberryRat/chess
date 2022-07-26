@@ -84,11 +84,25 @@ describe Board do
 
       subject(:current_board) { described_class.new }
 
-      printed_board = ''
+      green_square = "\u001b[48;5;107m"
+      white_square = "\u001b[48;5;231m"
+      empty_row_green = "#{green_square}   #{white_square}   " * 4 + "\u001b[0m\n"
+      empty_row_white = "#{white_square}   #{green_square}   " * 4 + "\u001b[0m\n"
+      printed_board = "8 #{empty_row_green}"\
+                      "7 #{empty_row_white}"\
+                      "6 #{empty_row_green}"\
+                      "5 #{empty_row_white}"\
+                      "4 #{empty_row_green}"\
+                      "3 #{empty_row_white}"\
+                      "2 #{empty_row_green}"\
+                      "1 #{empty_row_white}"\
+                      "   A  B  C  D  E  F  G  H"\
+                      "\n"
 
+      
       it 'prints board to terminal' do
-        chess_board = current_board.print_board
-        expect(chess_board).to eq(printed_board)
+        expect(current_board).to receive(:print).with(printed_board)
+        current_board.print_board
       end
     end
   end

@@ -15,12 +15,21 @@ class Board
     board_array
   end
 
-  # TODO this isn't done
   def print_board
-    single_pair = "\u001b[4m\u001b[48;5;107m  \u001b[48;5;231m  "
-    one_line = single_pair * 4 + "\u001b[0m\n"
-    output = one_line * 8
-    puts output
+    green_square = "\u001b[48;5;107m"
+    white_square = "\u001b[48;5;231m"
+    empty_row_green = "#{green_square}   #{white_square}   " * 4 + "\u001b[0m\n"
+    empty_row_white = "#{white_square}   #{green_square}   " * 4 + "\u001b[0m\n"
+
+    i = 8
+    chess_board = ''
+    8.times do
+      chess_board += "#{i.to_s} "
+      chess_board += i.even? ? empty_row_green : empty_row_white
+      i -= 1
+    end
+    chess_board += "   A  B  C  D  E  F  G  H\n"
+    print chess_board
   end
 end
 
