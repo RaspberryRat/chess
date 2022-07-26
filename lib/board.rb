@@ -19,6 +19,7 @@ class Board
     green_square = "\u001b[48;5;107m"
     white_square = "\u001b[48;5;231m"
     new_line = "\u001b[0m\n"
+    empty_space = "  "
 
     chess_board = ''
     board.reverse.map do |pos|
@@ -26,9 +27,11 @@ class Board
 
       first_value = pos[0].even?
       if pos[1].even? == first_value
-        chess_board += "#{green_square}   "
+        chess_board += "#{green_square}"
+        chess_board += pos[2].nil? ? "#{empty_space} " : " #{pos[2]} "
       else
-        chess_board += "#{white_square}   "
+        chess_board += "#{white_square}"
+        chess_board += pos[2].nil? ? "#{empty_space} " : " #{pos[2]} "
       end
       chess_board += new_line if pos[1] == 1
     end
