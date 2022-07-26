@@ -12,16 +12,42 @@ black_bishop = "\u265D"
 black_knight = "\u265E"
 black_pawn = "\u265F"
 
-puts white_king
-puts white_queen
-puts white_rook
-puts white_bishop
-puts white_knight
-puts white_pawn
-
-puts black_king
-puts black_queen
-puts black_rook
-puts black_bishop
-puts black_knight
-puts black_pawn
+underline = "\u001b[4m"
+green_square = "\u001b[48;5;107m"
+white_square = "\u001b[48;5;231m"
+empty_row_green = "#{green_square}   #{white_square}   " * 4 + "\u001b[0m\n"
+empty_row_white = "#{white_square}   #{green_square}   " * 4 + "\u001b[0m\n"
+# row 8 ROW
+puts "\n" * 5
+print "#{green_square} #{black_rook} "
+print "#{white_square} #{black_knight} "
+print "#{green_square} #{black_bishop} "
+print "#{white_square} #{black_king} "
+print "#{green_square} #{black_queen} "
+print "#{white_square} #{black_bishop} "
+print "#{green_square} #{black_knight} "
+print "#{white_square} #{black_rook} "
+#end of line
+puts "\u001b[0m\n"
+#line 7
+print "#{white_square} #{black_pawn} #{green_square} #{black_pawn} " * 4
+#end of line
+puts "\u001b[0m\n"
+#line 6 to 3
+print "#{empty_row_green}#{empty_row_white}" * 2
+# line 2 
+print "#{green_square} #{white_pawn} #{white_square} #{white_pawn} " * 4
+#end of line
+puts "\u001b[0m\n"
+# line 1
+print "#{white_square} #{white_rook} "
+print "#{green_square} #{white_knight} "
+print "#{white_square} #{white_bishop} "
+print "#{green_square} #{white_king} "
+print "#{white_square} #{white_queen} "
+print "#{green_square} #{white_bishop} "
+print "#{white_square} #{white_knight} "
+print "#{green_square} #{white_rook} "
+#end of line
+puts "\u001b[0m\n"
+puts "\n" * 5
