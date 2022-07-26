@@ -18,15 +18,19 @@ class Board
   def print_board
     green_square = "\u001b[48;5;107m"
     white_square = "\u001b[48;5;231m"
-    empty_row_green = "#{green_square}   #{white_square}   " * 4 + "\u001b[0m\n"
-    empty_row_white = "#{white_square}   #{green_square}   " * 4 + "\u001b[0m\n"
+    new_line = "\u001b[0m\n"
 
-    i = 8
     chess_board = ''
-    8.times do
-      chess_board += "#{i.to_s} "
-      chess_board += i.even? ? empty_row_green : empty_row_white
-      i -= 1
+    board.reverse.map do |pos|
+      chess_board += "#{pos[0]} " if pos[1] == 8
+
+      first_value = pos[0].even?
+      if pos[1].even? == first_value
+        chess_board += "#{green_square}   "
+      else
+        chess_board += "#{white_square}   "
+      end
+      chess_board += new_line if pos[1] == 1
     end
     chess_board += "   A  B  C  D  E  F  G  H\n"
     print chess_board
