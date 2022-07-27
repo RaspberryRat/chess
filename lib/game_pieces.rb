@@ -2,7 +2,38 @@
 
 require_relative 'piece_module'
 
+include PieceVariables
+
 class GamePiece
+  def self.for(count)
+    case count
+    when 1, 8
+      Rook
+    when 2, 7
+      Knight
+    when 3, 6
+      Bishop
+    when 4
+      Queen
+    when 5
+      King
+    when 9..16
+      Pawn
+    when 17, 24
+      BlackRook
+    when 18, 23
+      BlackKnight
+    when 19, 22
+      BlackBishop
+    when 20
+      BlackQueen
+    when 21
+      BlackKing
+    when 25..32
+      BlackPawn
+    end.new
+
+  end
   
   attr_reader :piece
 
@@ -13,7 +44,7 @@ class GamePiece
 end
 
 class Pawn < GamePiece
-    def initialize
+    def initialize(location = nil)
       super(location)
       @piece = WHITE_PAWN
   end
@@ -21,7 +52,7 @@ class Pawn < GamePiece
 end
 
 class BlackPawn < Pawn
-  def initialize
+  def initialize(location = nil)
       super(location)
       @piece = BLACK_PAWN
   end
@@ -29,7 +60,7 @@ class BlackPawn < Pawn
 end
 
 class Rook < GamePiece
-  def initialize
+  def initialize(location = nil)
     super(location)
     @piece = WHITE_ROOK
   end
@@ -37,7 +68,7 @@ class Rook < GamePiece
 end
 
 class BlackRook < Rook
-  def initialize
+  def initialize(location = nil)
     super(location)
     @piece = BLACK_ROOK
   end
@@ -45,7 +76,7 @@ class BlackRook < Rook
 end
 
 class Knight < GamePiece
-  def initialize
+  def initialize(location = nil)
     super(location)
     @piece = WHITE_KNIGHT
   end
@@ -53,7 +84,7 @@ class Knight < GamePiece
 end
 
 class BlackKnight < Knight
-  def initialize
+  def initialize(location = nil)
     super(location)
     @piece = BLACK_KNIGHT
   end
@@ -61,14 +92,14 @@ class BlackKnight < Knight
 end
 
 class Bishop < GamePiece
-  def initialize
+  def initialize(location = nil)
     super(location)
     @piece = WHITE_BISHOP
   end
 end
 
 class BlackBishop < Bishop
-  def initialize
+  def initialize(location = nil)
     super(location)
     @piece = BLACK_BISHOP
   end
@@ -76,7 +107,7 @@ class BlackBishop < Bishop
 end
 
 class Queen < GamePiece
-  def initialize
+  def initialize(location = nil)
     super(location)
     @piece = WHITE_QUEEN
   end
@@ -84,21 +115,21 @@ class Queen < GamePiece
 end
 
 class BlackQueen < Queen
-  def initialize
+  def initialize(location = nil)
     super(location)
     @piece = BLACK_QUEEN
   end
 end
 
 class King < GamePiece
-  def initialize
+  def initialize(location = nil)
     super(location)
     @piece = WHITE_KING
   end
 end
 
 class BlackKing < King
-  def initialize
+  def initialize(location = nil)
     super(location)
     @piece = BLACK_KING
   end

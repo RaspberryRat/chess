@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'board'
+require_relative 'game_pieces'
 
 class Game
 
@@ -11,14 +12,20 @@ class Game
   end
 
   def start
-    create_pieces
+    game_pieces = create_pieces
   end
 
   def create_pieces
     count = 0
-    24.times do
-      GamePiece.for(count)
+    array = []
+    32.times do
+      array << next_piece(count)
       count += 1
     end
+    array
+  end
+
+  def next_piece(count)
+    GamePiece.for(count)
   end
 end
