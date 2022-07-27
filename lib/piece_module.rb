@@ -14,7 +14,7 @@ module PieceVariables
   BLACK_PAWN = "\u265F"
 
   GREEN_SQUARE = "\u001b[48;5;107m"
-  WHITE_SQUARE = "\u001b[45m"
+  WHITE_SQUARE = "\u001b[48;5;252m"
   NEW_LINE = "\u001b[0m\n"
   EMPTY_SPACE = "  "
 

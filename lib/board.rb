@@ -7,10 +7,11 @@ include PieceVariables
 
 # playing board for pieces
 class Board
-  attr_accessor :board
+  attr_accessor :board, :printed_board
 
-  def initialize(board = positions(build_board))
+  def initialize(board = positions(build_board), printed_board = nil)
     @board = board
+    @printed_board = printed_board
   end
 
   def build_board
@@ -25,19 +26,18 @@ class Board
   end
 
   def print_board
-    chess_board = ''
-    # empty_green_space = BoardSqaure.new
-    # empty_white_space = BoardSquare.new
+    printed_board = ''
 
     board.reverse.map do |position|
       square_color = BoardSquare.for(position.x_position, position.y_position, position.game_piece)
       # sets number to indicate row
-      chess_board += "#{position.x_position} " if position.y_position == 8
-      chess_board += square_color.to_s
-      chess_board += NEW_LINE if position.y_position == 1
+      printed_board += "#{position.x_position} " if position.y_position == 8
+      printed_board += square_color.to_s
+      printed_board += NEW_LINE if position.y_position == 1
     end
-    chess_board += "   A  B  C  D  E  F  G  H\n"
-    print chess_board
+    printed_board += "   A  B  C  D  E  F  G  H\n"
+    print printed_board
   end
 end
 
+Board.new.print_board

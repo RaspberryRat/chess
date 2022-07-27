@@ -1,5 +1,8 @@
- require 'pry-byebug'
- # superclass for board squares
+# frozen_string_literal: true
+
+require 'pry-byebug'
+
+# superclass for board squares
 class BoardSquare
   def self.for(x_position, y_position, game_piece)
 
@@ -64,8 +67,7 @@ class WhiteSquare < BoardSquare
 end
 
 # determines if piece is green and has a game piece for board squares
-
-class OccupiedGreenSquare <GreenSquare
+class OccupiedGreenSquare < GreenSquare
 
   attr_reader :x_position, :y_position, :game_piece
 
