@@ -32,17 +32,7 @@ class Board
       square_color = BoardSquare.for(position)
       # sets number to indicate row
       chess_board += "#{position.x_position} " if position.y_position == 8
-
       chess_board += square_color.to_s
-
-      # first_value = pos.x_position.even?
-      # if pos.y_position.even? == first_value
-      #   chess_board += "#{GREEN_SQUARE}"
-      #   chess_board += pos.game_piece.nil? ? "#{EMPTY_SPACE} " : " #{pos.game_piece} "
-      # else
-      #   chess_board += "#{WHITE_SQUARE}"
-      #   chess_board += pos.game_piece.nil? ? "#{EMPTY_SPACE} " : " #{pos.game_piece} "
-      # end
       chess_board += NEW_LINE if position.y_position == 1
     end
     chess_board += "   A  B  C  D  E  F  G  H\n"
@@ -50,6 +40,7 @@ class Board
   end
 end
 
+# superclass for board squares
 class BoardSquare
   def self.for(position)
     # decides if both values are even or odd
@@ -74,6 +65,7 @@ class BoardSquare
   end
 end
 
+# determines if piece is green for board squares
 class GreenSquare < BoardSquare
   def self.for(position)
 
@@ -93,6 +85,7 @@ class GreenSquare < BoardSquare
 
 end
 
+# determines if piece is white for board squares
 class WhiteSquare < BoardSquare
   def self.for(position)
 
@@ -115,6 +108,8 @@ class WhiteSquare < BoardSquare
 
 end
 
+# determines if piece is green and has a game piece for board squares
+
 class OccupiedGreenSqaure <GreenSquare
 
   attr_reader :x_position, :y_position
@@ -126,6 +121,7 @@ class OccupiedGreenSqaure <GreenSquare
 
 end
 
+# determines if piece is white and has a game piece for board squares
 class OccupiedWhiteSquare < WhiteSquare
 
   attr_reader :x_position, :y_position
