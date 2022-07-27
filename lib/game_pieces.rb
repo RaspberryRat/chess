@@ -3,32 +3,33 @@
 require_relative 'piece_module'
 
 class GamePiece
-
+  
   attr_reader :piece
-    def initialize(location = nil)
+
+  def initialize(location = nil)
     @piece = nil
     @location = nil
+  end
 end
 
 class Pawn < GamePiece
     def initialize
-    super(location)
-    @piece = WHITE_PAWN
-    
+      super(location)
+      @piece = WHITE_PAWN
   end
 
 end
 
 class BlackPawn < Pawn
-    def initialize
-    super(location)
-    @piece = BLACK_PAWN
+  def initialize
+      super(location)
+      @piece = BLACK_PAWN
   end
 
 end
 
 class Rook < GamePiece
-    def initialize
+  def initialize
     super(location)
     @piece = WHITE_ROOK
   end
@@ -36,7 +37,7 @@ class Rook < GamePiece
 end
 
 class BlackRook < Rook
-    def initialize
+  def initialize
     super(location)
     @piece = BLACK_ROOK
   end
@@ -44,7 +45,7 @@ class BlackRook < Rook
 end
 
 class Knight < GamePiece
-    def initialize
+  def initialize
     super(location)
     @piece = WHITE_KNIGHT
   end
@@ -52,7 +53,7 @@ class Knight < GamePiece
 end
 
 class BlackKnight < Knight
-    def initialize
+  def initialize
     super(location)
     @piece = BLACK_KNIGHT
   end
@@ -60,14 +61,14 @@ class BlackKnight < Knight
 end
 
 class Bishop < GamePiece
-    def initialize
+  def initialize
     super(location)
     @piece = WHITE_BISHOP
   end
 end
 
 class BlackBishop < Bishop
-    def initialize
+  def initialize
     super(location)
     @piece = BLACK_BISHOP
   end
@@ -75,7 +76,7 @@ class BlackBishop < Bishop
 end
 
 class Queen < GamePiece
-    def initialize
+  def initialize
     super(location)
     @piece = WHITE_QUEEN
   end
@@ -83,21 +84,21 @@ class Queen < GamePiece
 end
 
 class BlackQueen < Queen
-    def initialize
+  def initialize
     super(location)
     @piece = BLACK_QUEEN
   end
 end
 
 class King < GamePiece
-    def initialize
+  def initialize
     super(location)
     @piece = WHITE_KING
   end
 end
 
 class BlackKing < King
-    def initialize
+  def initialize
     super(location)
     @piece = BLACK_KING
   end

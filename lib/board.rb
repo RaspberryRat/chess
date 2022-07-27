@@ -1,6 +1,7 @@
 # frozen_string_literal: true
+
 require 'pry-byebug'
-require_relative 'main'
+
 require_relative 'piece_module'
 require_relative 'board_square'
 include PieceVariables
@@ -39,5 +40,3 @@ class Board
     print printed_board
   end
 end
-
-Board.new.print_board

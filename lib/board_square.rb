@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry-byebug'
-
 # superclass for board squares
 class BoardSquare
   def self.for(x_position, y_position, game_piece)
