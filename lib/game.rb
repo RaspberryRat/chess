@@ -10,6 +10,7 @@ class Game
   
   def initialize(game_pieces = [])
     @game_pieces = game_pieces
+    @board = Board.new(game_pieces)
   end
 
   def start

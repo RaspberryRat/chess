@@ -9,10 +9,12 @@ include PieceVariables
 # playing board for pieces
 class Board
   attr_accessor :board, :printed_board
+  attr_reader :game_pieces_array
 
-  def initialize(board = positions(build_board), printed_board = nil)
+  def initialize(game_pieces_array, board = positions(build_board))
+    @game_pieces_array = game_pieces_array
     @board = board
-    @printed_board = printed_board
+    @printed_board = nil
   end
 
   def build_board
@@ -41,7 +43,7 @@ class Board
   end
 
   def board_square(position)
-    BoardSquare.for(position.to_h)
+    BoardSquare.for(position.to_h, game_pieces_array)
   end
 end
 

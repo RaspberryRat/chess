@@ -19,6 +19,7 @@ class GamePiece
     when 5
       King
     when 9..16
+      binding.pry
       Pawn
     when 17, 24
       BlackRook
@@ -57,6 +58,8 @@ class Pawn < GamePiece
       @piece = WHITE_PAWN
 
     def set_start_location
+      binding.pry
+
       location = case piece_number
       when 9
         [2, 1]
