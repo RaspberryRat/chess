@@ -38,10 +38,10 @@ class GamePiece
   
   attr_reader :piece, :location, :piece_number
 
-  def initialize(piece_number, location = set_start_location)
+  def initialize(piece_number)
     @piece = nil
     @piece_number = piece_number
-    @location = location
+    @location = set_start_location
   end
 
   def set_start_location
@@ -50,8 +50,8 @@ class GamePiece
 end
 
 class Pawn < GamePiece
-    def initialize(piece_number, location = set_start_location)
-      super(piece_number, location)
+    def initialize(piece_number)
+      super(piece_number)
       @piece = WHITE_PAWN
 
     def set_start_location
@@ -80,17 +80,17 @@ class Pawn < GamePiece
 end
 
 class BlackPawn < Pawn
-  def initialize(piece_number, location = set_start_location)
-      super(piece_number, location)
+  def initialize(piece_number)
+      super(piece_number)
       @piece = BLACK_PAWN
   end
 
 end
 
 class Rook < GamePiece
-  def initialize(piece_number, location = set_start_location)
+  def initialize(piece_number)
 
-    super(piece_number, location)
+    super(piece_number)
     @piece = WHITE_ROOK
   end
 
@@ -102,8 +102,8 @@ class Rook < GamePiece
 end
 
 class BlackRook < GamePiece
-  def initialize(piece_number, location = set_start_location)
-    super(piece_number, location)
+  def initialize(piece_number)
+    super(piece_number)
 
     @piece = BLACK_ROOK
   end
@@ -116,8 +116,8 @@ class BlackRook < GamePiece
 end
 
 class Knight < GamePiece
-  def initialize(piece_number, location = set_start_location)
-    super(piece_number, location)
+  def initialize(piece_number)
+    super(piece_number)
     @piece = WHITE_KNIGHT
   end
 
@@ -129,8 +129,8 @@ class Knight < GamePiece
 end
 
 class BlackKnight < Knight
-  def initialize(piece_number, location = set_start_location)
-    super(piece_number, location)
+  def initialize(piece_number)
+    super(piece_number)
     @piece = BLACK_KNIGHT
   end
 
@@ -142,8 +142,8 @@ class BlackKnight < Knight
 end
 
 class Bishop < GamePiece
-  def initialize(piece_number, location = set_start_location)
-    super(piece_number, location)
+  def initialize(piece_number)
+    super(piece_number)
     @piece = WHITE_BISHOP
   end
 
@@ -155,8 +155,8 @@ class Bishop < GamePiece
 end
 
 class BlackBishop < Bishop
-  def initialize(piece_number, location = set_start_location)
-    super(piece_number, location)
+  def initialize(piece_number)
+    super(piece_number)
     @piece = BLACK_BISHOP
   end
 
@@ -168,8 +168,8 @@ class BlackBishop < Bishop
 end
 
 class Queen < GamePiece
-  def initialize(piece_number, location = set_start_location)
-    super(piece_number, location)
+  def initialize(piece_number)
+    super(piece_number)
     @piece = WHITE_QUEEN
   end
 
@@ -179,8 +179,8 @@ class Queen < GamePiece
 end
 
 class BlackQueen < Queen
-  def initialize(piece_number, location = set_start_location)
-    super(piece_number, location)
+  def initialize(piece_number)
+    super(piece_number)
     @piece = BLACK_QUEEN
   end
 
@@ -190,8 +190,8 @@ class BlackQueen < Queen
 end
 
 class King < GamePiece
-  def initialize(piece_number, location = set_start_location)
-    super(piece_number, location)
+  def initialize(piece_number)
+    super(piece_number)
     @piece = WHITE_KING
   end
 
@@ -201,8 +201,8 @@ class King < GamePiece
 end
 
 class BlackKing < King
-  def initialize(piece_number, location = set_start_location)
-    super(piece_number, location)
+  def initialize(piece_number)
+    super(piece_number)
     @piece = BLACK_KING
   end
 
