@@ -2,6 +2,7 @@
 
 require_relative 'board'
 require_relative 'game_pieces'
+require 'pry-byebug'
 
 class Game
 
@@ -13,10 +14,11 @@ class Game
 
   def start
     game_pieces = create_pieces
+    binding.pry
   end
 
   def create_pieces
-    count = 0
+    count = 1
     array = []
     32.times do
       array << next_piece(count)
@@ -29,3 +31,5 @@ class Game
     GamePiece.for(count)
   end
 end
+
+Game.new.start

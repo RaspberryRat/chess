@@ -32,6 +32,8 @@ class GamePiece
       BlackKing
     when 25..32
       BlackPawn
+    else
+      puts 'ERROR ERROR'
     end.new(count)
 
   end
