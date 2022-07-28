@@ -30,7 +30,7 @@ class Board
     printed_board = ''
 
     board.reverse.map do |position|
-      square_color = BoardSquare.for(position.x_position, position.y_position, position.game_piece)
+      square_color = board_square(position)
       # sets number to indicate row
       printed_board += "#{position.x_position} " if position.y_position == 8
       printed_board += square_color.to_s
@@ -39,4 +39,9 @@ class Board
     printed_board += "   A  B  C  D  E  F  G  H\n"
     print printed_board
   end
+
+  def board_square(position)
+    BoardSquare.for(position.to_h)
+  end
 end
+
