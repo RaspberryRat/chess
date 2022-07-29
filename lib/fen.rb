@@ -2,15 +2,15 @@
 
 require 'pry-byebug'
 class Fen 
-  def initialize(field_placement = nil)
-    @field_placement = field_placement
+  def initialize(field_placement = standard_chess_start)
+    @field_placement = update_field(field_placement)
   end
 
   attr_reader :field_placement
 
 
   def standard_chess_start
-    update_field('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR')
+    'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'
   end
 
   def update_field(new_field)
@@ -21,5 +21,9 @@ class Fen
         c
       end
     end
+  end
+
+  def to_s
+    @field_placement
   end
 end
