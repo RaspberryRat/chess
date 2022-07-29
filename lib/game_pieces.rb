@@ -6,42 +6,26 @@ require 'pry-byebug'
 include PieceVariables
 
 class GamePiece
-  def self.for(count)
-    case count
-    when 1, 8
-      Rook
-    when 2, 7
-      Knight
-    when 3, 6
-      Bishop
-    when 4
-      Queen
-    when 5
-      King
-    when 9..16
-      binding.pry
-      Pawn
-    when 17, 24
-      BlackRook
-    when 18, 23
-      BlackKnight
-    when 19, 22
-      BlackBishop
-    when 20
-      BlackQueen
-    when 21
-      BlackKing
-    when 25..32
-      BlackPawn
-    else
-      puts 'ERROR ERROR'
-    end.new(count)
-
+  def self.for(piece)
+    {
+      pawn: Pawn,
+      black_pawn: BlackPawn,
+      rook: Rook,
+      black_rook: BlackRook,
+      knight: Knight,
+      black_knight: BlackKnight,
+      bishop: Bishop,
+      black_bishop: BlackBishop,
+      queen: Queen,
+      black_queen: BlackQueen,
+      king: King,
+      black_king: BlackKing,
+    }.fetch(piece).new
   end
   
   attr_reader :piece, :location, :piece_number
 
-  def initialize(piece_number)
+  def initialize
     @piece = nil
     @piece_number = piece_number
     @location = set_start_location
@@ -53,12 +37,10 @@ class GamePiece
 end
 
 class Pawn < GamePiece
-    def initialize(piece_number)
-      super(piece_number)
+    def initialize
       @piece = WHITE_PAWN
 
     def set_start_location
-      binding.pry
 
       location = case piece_number
       when 9
@@ -85,17 +67,15 @@ class Pawn < GamePiece
 end
 
 class BlackPawn < Pawn
-  def initialize(piece_number)
-      super(piece_number)
+  def initialize
       @piece = BLACK_PAWN
   end
 
 end
 
 class Rook < GamePiece
-  def initialize(piece_number)
+  def initialize
 
-    super(piece_number)
     @piece = WHITE_ROOK
   end
 
@@ -107,8 +87,7 @@ class Rook < GamePiece
 end
 
 class BlackRook < GamePiece
-  def initialize(piece_number)
-    super(piece_number)
+  def initialize
 
     @piece = BLACK_ROOK
   end
@@ -121,8 +100,7 @@ class BlackRook < GamePiece
 end
 
 class Knight < GamePiece
-  def initialize(piece_number)
-    super(piece_number)
+  def initialize
     @piece = WHITE_KNIGHT
   end
 
@@ -134,8 +112,7 @@ class Knight < GamePiece
 end
 
 class BlackKnight < Knight
-  def initialize(piece_number)
-    super(piece_number)
+  def initialize
     @piece = BLACK_KNIGHT
   end
 
@@ -147,8 +124,7 @@ class BlackKnight < Knight
 end
 
 class Bishop < GamePiece
-  def initialize(piece_number)
-    super(piece_number)
+  def initialize
     @piece = WHITE_BISHOP
   end
 
@@ -160,8 +136,7 @@ class Bishop < GamePiece
 end
 
 class BlackBishop < Bishop
-  def initialize(piece_number)
-    super(piece_number)
+  def initialize
     @piece = BLACK_BISHOP
   end
 
@@ -173,8 +148,7 @@ class BlackBishop < Bishop
 end
 
 class Queen < GamePiece
-  def initialize(piece_number)
-    super(piece_number)
+  def initialize
     @piece = WHITE_QUEEN
   end
 
@@ -184,8 +158,7 @@ class Queen < GamePiece
 end
 
 class BlackQueen < Queen
-  def initialize(piece_number)
-    super(piece_number)
+  def initialize
     @piece = BLACK_QUEEN
   end
 
@@ -195,8 +168,7 @@ class BlackQueen < Queen
 end
 
 class King < GamePiece
-  def initialize(piece_number)
-    super(piece_number)
+  def initialize
     @piece = WHITE_KING
   end
 
@@ -206,8 +178,7 @@ class King < GamePiece
 end
 
 class BlackKing < King
-  def initialize(piece_number)
-    super(piece_number)
+  def initialize
     @piece = BLACK_KING
   end
 
