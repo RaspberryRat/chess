@@ -13,7 +13,7 @@ class Board
   attr_accessor :board, :printed_board
   attr_reader :game_pieces_array
 
-  def initialize(board = Fen.new.field_placement)
+  def initialize(board = Fen.piece_placement)
     # @game_pieces_array = game_pieces_array
     @board = board
     @printed_board = nil
@@ -49,3 +49,4 @@ class Board
     BoardSquare.for(notation, color)
   end
 end
+
