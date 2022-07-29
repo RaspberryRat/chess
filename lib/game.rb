@@ -17,7 +17,6 @@ class Game
 
   def start
     game_pieces = create_pieces
-    binding.pry
   end
 
   def create_pieces
