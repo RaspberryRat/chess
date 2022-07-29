@@ -17,7 +17,7 @@ class Game
 
   def start
     game_pieces = create_pieces
-    binding.pry
+    
     assign_start_location
   end
 
@@ -36,7 +36,16 @@ class Game
   end
 
   def assign_start_location
-    game_pieces.each
+    game_pieces.each do |piece|
+      # identify piece, check if any other piece of same object has location, if not assign first one from array
+      other_locations = []
+      game_pieces.each do |another_piece|
+        if piece.class == another_piece.class
+          other_locations << another_piece.location
+        end
+      end
+      
+    end
   end
 end
 
