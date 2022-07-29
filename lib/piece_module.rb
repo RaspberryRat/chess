@@ -35,4 +35,19 @@ module StandardChessPieces
       king: 1,
       black_king: 1,
     }
+
+    STARTING_LOCATIONS = {
+      pawn: (1..8).to_a.map { |n| [2, n] },
+      black_pawn: (1..8).to_a.map { |n| [7, n] },
+      rook: [[1, 1], [1, 8]],
+      black_rook: [[8, 1], [8, 8]],
+      knight: [[1, 2], [1, 7]],
+      black_knight: [[8, 2], [8, 7]],
+      bishop: [[1, 3], [1, 6]],
+      black_bishop: [[8, 3], [8, 6]],
+      queen: [1, 4],
+      black_queen: [8, 4],
+      king: [1, 5],
+      black_king: [8, 5],
+    }
 end

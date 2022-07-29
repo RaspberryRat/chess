@@ -17,6 +17,8 @@ class Game
 
   def start
     game_pieces = create_pieces
+    binding.pry
+    assign_start_location
   end
 
   def create_pieces
@@ -31,6 +33,10 @@ class Game
 
   def next_piece(piece)
     GamePiece.for(piece)
+  end
+
+  def assign_start_location
+    game_pieces.each
   end
 end
 
