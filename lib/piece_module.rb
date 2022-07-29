@@ -17,5 +17,22 @@ module PieceVariables
   WHITE_SQUARE = "\u001b[48;5;252m"
   NEW_LINE = "\u001b[0m\n"
   EMPTY_SPACE = "  "
+end
 
+module StandardChessPieces
+  CHESS_PIECES =
+    {
+      pawn: 8,
+      black_pawn: 8,
+      rook: 2,
+      black_rook: 2,
+      knight: 2,
+      black_knight: 2,
+      bishop: 2,
+      black_bishop: 2,
+      queen: 1,
+      black_queen: 1,
+      king: 1,
+      black_king: 1,
+    }
 end

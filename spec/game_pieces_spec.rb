@@ -5,109 +5,109 @@ describe GamePiece do
 
     context 'when method calls return correct game piece' do
       subject(:new_game) { described_class }
-      it 'returns white rook when piece is rook' do
+      it 'returns white rook' do
         choice = :rook
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(Rook)
       end
 
-      it 'returns white knight when piece is 2' do
+      it 'returns white knight' do
         choice = :knight
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(Knight)
       end
 
-      it 'returns white bishop when piece is 3' do
+      it 'returns white bishop' do
         choice = :bishop
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(Bishop)
       end
 
-      it 'returns white queen when piece is 4' do
+      it 'returns white queen' do
         choice = :queen
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(Queen)
       end
 
-      it 'returns white king when piece is 5' do
+      it 'returns white king' do
         choice = :king
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(King)
       end
 
-      it 'returns white bishop when piece is 6' do
+      it 'returns white bishop' do
         choice = :bishop
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(Bishop)
       end
 
-      it 'returns white knight when piece is 7' do
+      it 'returns white knight' do
         choice = :knight
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(Knight)
       end
 
-      it 'returns white rook when piece is 8' do
+      it 'returns white rook' do
         choice = :rook
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(Rook)
       end
 
-      it 'returns a white pawn when piece is 9' do
+      it 'returns a white pawn' do
         choice = :pawn
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(Pawn)
       end
 
-      it 'returns black rook when piece is 17' do
+      it 'returns black rook' do
         choice = :black_rook
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(BlackRook)
       end
       
-      it 'returns black knight when piece is 18' do
+      it 'returns black knight' do
         choice = :black_knight
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(BlackKnight)
       end
       
-      it 'returns black bishop when piece is 19' do
+      it 'returns black bishop' do
         choice = :black_bishop
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(BlackBishop)
       end
       
-      it 'returns black queen when piece is 20' do
+      it 'returns black queen' do
         choice = :black_queen
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(BlackQueen)
       end
       
-      it 'returns black king when piece is 21' do
+      it 'returns black king' do
         choice = :black_king
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(BlackKing)
       end
       
-      it 'returns black bishop when piece is 22' do
+      it 'returns black bishop' do
         choice = :black_bishop
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(BlackBishop)
       end
       
-      it 'returns black knight when piece is 23' do
+      it 'returns black knight' do
         choice = :black_knight
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(BlackKnight)
       end
       
-      it 'returns black rook when piece is 24' do
+      it 'returns black rook' do
         choice = :black_rook
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(BlackRook)
       end
 
-      it 'returns a black pawn when piece is 25' do
+      it 'returns a black pawn' do
         choice = :black_pawn
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(BlackPawn)

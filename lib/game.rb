@@ -4,6 +4,8 @@ require_relative 'board'
 require_relative 'game_pieces'
 require 'pry-byebug'
 
+include StandardChessPieces
+
 class Game
 
   attr_accessor :game_pieces
@@ -19,17 +21,17 @@ class Game
   end
 
   def create_pieces
-    count = 1
     array = []
-    32.times do
-      array << next_piece(count)
-      count += 1
+    CHESS_PIECES.each do |piece, amount|
+      amount.times do
+        array << next_piece(piece)
+      end
     end
     array
   end
 
-  def next_piece(count)
-    GamePiece.for(count)
+  def next_piece(piece)
+    GamePiece.for(piece)
   end
 end
 
