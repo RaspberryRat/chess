@@ -2,7 +2,7 @@
 
 require 'pry-byebug'
 class Fen 
-  def initialize(field_placement = 1)
+  def initialize(field_placement = nil)
     @field_placement = field_placement
   end
 
@@ -14,15 +14,12 @@ class Fen
   end
 
   def update_field(new_field)
-    @field_placement = new_field
+    @field_placement = new_field.chars.map do |c|
+      if('1'..'8').include?(c)
+        c.to_i
+      else
+        c
+      end
+    end
   end
 end
-
-notation = notation.chars.map do |c|
-  if('1'..'8').include?(c)
-    c.to_i
-  else
-    c
-  end
-
-  #TODO NEED TO ADD THIS HERE TO CONVERT
