@@ -2,49 +2,22 @@ require_relative '../lib/board_square'
 
 describe BoardSquare do
   describe '.for' do
-    context 'when parity true and game piece is nil' do
+    context 'when notation is line break' do
 
       subject(:new_square) { described_class }
-      let(:argument_hash) { {x_position: 1, y_position: 1, game_piece: nil} }
+      let(:new_line) { '/' }
 
   
-      it 'is GreenSquare' do
-        returned_object = new_square.for(argument_hash)
-        expect(returned_object).to be_an_instance_of(GreenSquare)
+      it 'is BoardSquare' do
+        returned_object = new_square.for(new_line)
+        expect(returned_object).to be_an_instance_of(BoardSquare)
       end
-    end
-    context 'when parity false and game piece is nil' do
 
-      subject(:new_square) { described_class }
-      let(:argument_hash) { {x_position: 1, y_position: 2, game_piece: nil} }
-
-      it 'is WhiteSquare' do
-        returned_object = new_square.for(argument_hash)
-        expect(returned_object).to be_an_instance_of(WhiteSquare)
-      end
-    end
-
-    context 'when parity true and game piece is value' do
-
-      subject(:new_square) { described_class }
-      let(:argument_hash) { {x_position: 1, y_position: 1, game_piece: 'something'} } 
-
-
-      it 'is OccupiedGreenSquare' do
-        returned_object = new_square.for(argument_hash)
-        expect(returned_object).to be_an_instance_of(OccupiedGreenSquare)
-      end
-    end
-
-    context 'when parity false and game piece is nil' do
-
-      subject(:new_square) { described_class }
-      let(:argument_hash) { {x_position: 1, y_position: 2, game_piece: 'something'} } 
-
-
-      it 'is OccupiedWhiteSquare' do
-        returned_object = new_square.for(argument_hash)
-        expect(returned_object).to be_an_instance_of(OccupiedWhiteSquare)
+      
+      it 'returns a new line' do
+        next_line = "\u001b[0m\n"
+        output = new_square.for(new_line).to_s
+        expect(output).to eq(next_line)
       end
     end
   end

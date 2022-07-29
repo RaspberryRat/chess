@@ -20,20 +20,22 @@ module PieceVariables
 end
 
 module StandardChessPieces
+  include PieceVariables
+
   CHESS_PIECES =
     {
-      pawn: 8,
-      black_pawn: 8,
-      rook: 2,
-      black_rook: 2,
-      knight: 2,
-      black_knight: 2,
-      bishop: 2,
-      black_bishop: 2,
-      queen: 1,
-      black_queen: 1,
-      king: 1,
-      black_king: 1,
+      P: WHITE_PAWN,
+      p: BLACK_PAWN,
+      R: WHITE_ROOK,
+      r: BLACK_ROOK,
+      N: WHITE_KNIGHT,
+      n: BLACK_KNIGHT,
+      B: WHITE_BISHOP,
+      b: BLACK_BISHOP,
+      Q: WHITE_QUEEN,
+      q: BLACK_QUEEN,
+      K: WHITE_KING,
+      k: BLACK_KING,
     }
 
     STARTING_LOCATIONS = {
