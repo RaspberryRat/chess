@@ -3,12 +3,22 @@ require 'pry-byebug'
 
 # superclass for board squares
 class BoardSquare
-  def self.for(args)
+  def self.for(notation)
+    notation = notation.chars.map do |c|
+      if('1'..'8').include?(c)
+        c.to_i
+      else
+        c
+      end
+    end
     # decides if both values are even or odd
-    if args[:x_position].to_i.even? == args[:y_position].to_i.even?
-      GreenSquare
-    else
-      WhiteSquare
+    case notation
+    when '/'
+      row_number
+    when Integer
+      Square
+    else #TODO NEED TO REDO ALL THESE NOW
+      OccupiedSquare
     end.for(args)
   end
 

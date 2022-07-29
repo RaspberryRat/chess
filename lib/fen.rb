@@ -17,3 +17,12 @@ class Fen
     @field_placement = new_field
   end
 end
+
+notation = notation.chars.map do |c|
+  if('1'..'8').include?(c)
+    c.to_i
+  else
+    c
+  end
+
+  #TODO NEED TO ADD THIS HERE TO CONVERT

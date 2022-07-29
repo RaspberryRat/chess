@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'fen'
+
 require 'pry-byebug'
 
 require_relative 'piece_module'
@@ -11,39 +13,38 @@ class Board
   attr_accessor :board, :printed_board
   attr_reader :game_pieces_array
 
-  def initialize(game_pieces_array, board = positions(build_board))
-    @game_pieces_array = game_pieces_array
+  def initialize(board = Fen.standard_chess_start)
+    # @game_pieces_array = game_pieces_array
     @board = board
     @printed_board = nil
   end
 
-  def build_board
-    board_array = []
-    (1..8).to_a.repeated_permutation(2) { | arr| board_array << arr }
-    board_array
-  end
+  # def build_board
+  #   board_array = []
+  #   (1..8).to_a.repeated_permutation(2) { | arr| board_array << arr }
+  #   board_array
+  # end
 
-  BoardLocations = Struct.new(:x_position, :y_position, :game_piece)
-  def positions(location)
-    location.map { |cell| BoardLocations.new(cell[0], cell[1], cell[2]) }
-  end
+  # BoardLocations = Struct.new(:x_position, :y_position, :game_piece)
+  # def positions(location)
+  #   location.map { |cell| BoardLocations.new(cell[0], cell[1], cell[2]) }
+  # end
 
   def print_board
-    printed_board = ''
+    row_number = 8
+    printed_board = row_number
 
-    board.reverse.map do |position|
-      square_color = board_square(position)
+    board.chars.each do |notation|
+      square_color = board_square(notation)
       # sets number to indicate row
-      printed_board += "#{position.x_position} " if position.y_position == 8
       printed_board += square_color.to_s
-      printed_board += NEW_LINE if position.y_position == 1
     end
     printed_board += "   A  B  C  D  E  F  G  H\n"
     print printed_board
   end
 
-  def board_square(position)
-    BoardSquare.for(position.to_h, game_pieces_array)
+  def board_square(notation)
+    BoardSquare.for(notation)
   end
 end
 
