@@ -19,17 +19,6 @@ class Board
     @printed_board = nil
   end
 
-  # def build_board
-  #   board_array = []
-  #   (1..8).to_a.repeated_permutation(2) { | arr| board_array << arr }
-  #   board_array
-  # end
-
-  # BoardLocations = Struct.new(:x_position, :y_position, :game_piece)
-  # def positions(location)
-  #   location.map { |cell| BoardLocations.new(cell[0], cell[1], cell[2]) }
-  # end
-
   def print_board
     row_number = 8
     printed_board = "#{row_number.to_s} "
