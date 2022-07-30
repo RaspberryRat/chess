@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 require 'pry-byebug'
 
+#TODO UNSURE IF THIS CLASS IS NEEDED!
+
 # Takes fen notation
 class Fen 
   

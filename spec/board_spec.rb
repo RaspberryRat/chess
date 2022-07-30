@@ -139,10 +139,17 @@ describe Board do
   end
 
   describe '#move_piece' do
-    context 'when a square is selected' do
-      subject(:move_white_pawn) { described_class.new(["r", "n", "b", "q", "k", "b", "n", "r", "/", "p", "p", "p", "p", "p", "p", "p", "p", "/", 8, "/", 8, "/", 8, "/", 8, "/", "P", "P", "P", "P", "P", "P", "P", "P", "/", "R", "N", "B", "Q", "K", "B", "N", "R"])}
+    context 'when pawn h2 is selected' do
+      subject(:move_white_pawn) { described_class.new(starting_positions) }
+      let(:starting_positions) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' }
+
+      let(:updated_positions) { 'rnbqkbnr/pppppppp/8/8/8/7P/PPPPPPP1/RNBQKBNR' }
+      let(:move) { double('move', start_position: 'h1', new_position: 'h3') }
+
 
       it 'updates board with new field layout' do
+        new_position = move_white_pawn.move_piece(move)
+        expect(new_position).to eq(updated_positions)
 
       end
     end

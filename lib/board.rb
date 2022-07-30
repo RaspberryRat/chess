@@ -12,7 +12,7 @@ class Board
   attr_accessor :board, :printed_board
   attr_reader :game_pieces_array
 
-  def initialize(board = Fen.piece_placement)
+  def initialize(board = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR')
     # @game_pieces_array = game_pieces_array
     @board = board
   end
@@ -55,5 +55,10 @@ class Board
         c
       end
     end
+  end
+
+  def move_piece(move)
+    
+
   end
 end
