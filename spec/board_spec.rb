@@ -6,7 +6,7 @@ describe Board do
     context 'when board is empty' do
 
       subject(:empty_board) { described_class.new(clear_board) }
-      let(:clear_board) { [8, '/', 8, '/', 8, '/', 8, '/', 8, '/', 8, '/', 8, '/', 8] }
+      let(:clear_board) { '8/8/8/8/8/8/8/8' }
 
 
       empty_row_green = "#{GREEN_SQUARE}   #{WHITE_SQUARE}   " * 4 + "\u001b[0m\n"
@@ -30,7 +30,7 @@ describe Board do
     context 'when new game' do
 
       subject(:new_game) { described_class.new(starting_board) }
-      let(:starting_board) { ["r", "n", "b", "q", "k", "b", "n", "r", "/", "p", "p", "p", "p", "p", "p", "p", "p", "/", 8, "/", 8, "/", 8, "/", 8, "/", "P", "P", "P", "P", "P", "P", "P", "P", "/", "R", "N", "B", "Q", "K", "B", "N", "R"] }
+      let(:starting_board) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' }
 
 
       empty_row_green = "#{GREEN_SQUARE}   #{WHITE_SQUARE}   " * 4 + "\u001b[0m\n"
@@ -83,7 +83,7 @@ describe Board do
     context 'when white pawn moved to e4' do
 
       subject(:first_move) { described_class.new(pawn_e4) }
-      let(:pawn_e4) { ["r", "n", "b", "q", "k", "b", "n", "r", "/", "p", "p", "p", "p", "p", "p", "p", "p", "/", 8, "/", 8, "/", 4, 'P', 3, "/", 8, "/", "P", "P", "P", "P", 1, "P", "P", "P", "/", "R", "N", "B", "Q", "K", "B", "N", "R"] }
+      let(:pawn_e4) { 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR' }
 
 
       empty_row_green = "#{GREEN_SQUARE}   #{WHITE_SQUARE}   " * 4 + "\u001b[0m\n"
@@ -134,6 +134,16 @@ describe Board do
       it 'prints starting board for standard chess' do
         expect(first_move).to receive(:print).with(printed_board)
         first_move.print_board
+      end
+    end
+  end
+
+  describe '#move_piece' do
+    context 'when a square is selected' do
+      subject(:move_white_pawn) { described_class.new(["r", "n", "b", "q", "k", "b", "n", "r", "/", "p", "p", "p", "p", "p", "p", "p", "p", "/", 8, "/", 8, "/", 8, "/", 8, "/", "P", "P", "P", "P", "P", "P", "P", "P", "/", "R", "N", "B", "Q", "K", "B", "N", "R"])}
+
+      it 'updates board with new field layout' do
+
       end
     end
   end

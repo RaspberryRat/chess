@@ -21,7 +21,7 @@ class Board
     row_number = 8
     printed_board = "#{row_number.to_s} "
     previous_color = 'white'
-    board.each do |notation|
+    convert_notation.each do |notation|
       if notation.is_a?(Integer)
         notation.times do
           square_color = board_square(notation, previous_color)
@@ -32,10 +32,10 @@ class Board
         square_color = board_square(notation, previous_color)
         previous_color = previous_color == 'green' ? 'white' : 'green'
       end
-      printed_board += "#{square_color}"
+      printed_board += square_color.to_s
       if square_color.to_s == NEW_LINE
         row_number -= 1
-        printed_board += "#{row_number.to_s} "
+        printed_board += row_number.to_s + " "
       end
     end
     printed_board += NEW_LINE
@@ -45,5 +45,15 @@ class Board
 
   def board_square(notation, color)
     BoardSquare.for(notation, color)
+  end
+
+  def convert_notation
+    board.chars.map do |c|
+      if('1'..'8').include?(c)
+        c.to_i
+      else
+        c
+      end
+    end
   end
 end
