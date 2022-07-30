@@ -49,4 +49,3 @@ class Board
     BoardSquare.for(notation, color)
   end
 end
-
