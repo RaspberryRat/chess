@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 require 'pry-byebug'
 
 require_relative 'fen'
@@ -16,7 +15,6 @@ class Board
   def initialize(board = Fen.piece_placement)
     # @game_pieces_array = game_pieces_array
     @board = board
-    @printed_board = nil
   end
 
   def print_board
