@@ -138,21 +138,75 @@ describe Board do
     end
   end
 
-  describe '#move_piece' do
-    context 'when pawn h2 is selected' do
-      subject(:move_white_pawn) { described_class.new(starting_positions) }
-      let(:starting_positions) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' }
+  describe '#piece_at_location?' do
+    context 'when a piece is at selected square' do
+      subject(:select_square) { described_class.new }
+      let(:square_picked) { 'b1' }
 
-      let(:updated_positions) { 'rnbqkbnr/pppppppp/8/8/8/7P/PPPPPPP1/RNBQKBNR' }
-      let(:move) { double('move', start_position: 'h1', new_position: 'h3') }
+      before do
+        allow(select_square).to receive(:what_piece).and_return('p')
+      end
 
+      it 'returns true' do
+        result = select_square.piece_at_location?(square_picked)
+        expect(result).to be(true)
+      end
+    end
 
-      it 'updates board with new field layout' do
-        new_position = move_white_pawn.move_piece(move)
-        expect(new_position).to eq(updated_positions)
+    context 'when there is no piece at selected square' do
+      subject(:select_square) { described_class.new }
+      let(:square_picked) { 'b3' }
 
+      before do
+        allow(select_square).to receive(:what_piece).and_return(nil)
+      end
+
+      it 'returns false' do
+        result = select_square.piece_at_location?(square_picked)
+        expect(result).to be(false)
       end
     end
   end
+
+  describe '#what_piece?' do
+    context 'when a square selected' do
+
+      subject(:pawn_selected) { described_class.new }
+      let(:pawn_location) { 'b2' }
+
+      it "returns 'P' for a pawn" do
+        result = pawn_selected.what_piece(pawn_location)
+        expect(result).to eq('P')
+      end
+    end
+
+    context 'when a square selected' do
+
+      subject(:empty_square_check) { described_class.new }
+      let(:empty_location) { 'b4' }
+
+      it 'returns nil' do
+        result = empty_square_check.what_piece(empty_location)
+        expect(result).to eq('empty square')
+      end
+    end
+  end
+
+  # describe '#move_piece' do
+  #   context 'when pawn h2 is selected' do
+  #     subject(:move_white_pawn) { described_class.new(starting_positions) }
+  #     let(:starting_positions) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' }
+
+  #     let(:updated_positions) { 'rnbqkbnr/pppppppp/8/8/8/7P/PPPPPPP1/RNBQKBNR' }
+  #     let(:move) { double('move', start_position: 'h1', new_position: 'h3') }
+
+
+  #     it 'updates board with new field layout' do
+  #       new_position = move_white_pawn.move_piece(move)
+  #       expect(new_position).to eq(updated_positions)
+
+  #     end
+  #   end
+  # end
 end
 

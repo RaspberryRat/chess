@@ -57,8 +57,53 @@ class Board
     end
   end
 
-  def move_piece(move)
-    
+  def piece_at_location?(square_selected)
+    return true unless what_piece(square_selected).nil?
 
+    false
+  end
+
+  def what_piece(square_selected)
+    column = square_selected[0]
+    # substract 1 to convert to array index 
+    row = square_selected[1].to_i - 1
+    board_array = expand_notation
+
+    # convert column letters to index
+    column = {
+      a: 0,
+      b: 1,
+      c: 2,
+      d: 3,
+      e: 4,
+      f: 5,
+      g: 6,
+      h: 7
+    }.fetch(column.to_sym)
+
+    row = board_array[row]
+    piece = row[column]
+    return piece unless piece == '.'
+
+    'empty square'
+  end
+
+  # coverts fen notation into an array, if empty square, converts to '.'
+  def expand_notation
+    expanded_board = board.split('/').reverse
+    expanded_board.map do |row|
+      new_row = []
+      row = row.split('')
+      row.map do |c|
+        if c.to_i > 0
+          c.to_i.times do
+            new_row << '.'
+          end
+        else
+          new_row << c
+        end
+      end
+      row = new_row
+    end
   end
 end
