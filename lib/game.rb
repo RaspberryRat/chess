@@ -4,8 +4,6 @@ require_relative 'board'
 require_relative 'game_pieces'
 require 'pry-byebug'
 
-include StandardChessPieces
-
 class Game
 
   attr_reader :board
@@ -32,7 +30,8 @@ class Game
   end
   # TODO need to add test
   def verify_input(input)
-    return true if input.match(/[a-h]+[1-8]/)
+    return false if input.length > 2 #find a better way to do this
+    return true if /[a-h]+[1-8]/.match(input)
 
     false
   end
