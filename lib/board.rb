@@ -88,6 +88,9 @@ class Board
     'empty square'
   end
 
+
+  private
+  
   # coverts fen notation into an array, if empty square, converts to '.'
   def expand_notation
     expanded_board = board.split('/').reverse
