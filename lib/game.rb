@@ -16,6 +16,7 @@ class Game
 
     puts "Select the piece you would like to move (e.g., 'a4')"
     piece_selection = player_input
+    legal_move?(piece_selection)
     
   end
 
@@ -26,14 +27,17 @@ class Game
 
       puts "Invalid input. Your input must be in format 'a4' from letters a to h and numbers 1-8. Please enter a valid choice."
     end
-
   end
-  # TODO need to add test
+
   def verify_input(input)
-    return false if input.length > 2 #find a better way to do this
-    return true if /[a-h]+[1-8]/.match(input)
+    # return false if input.length > 2 #find a better way to do this
+    return true if /^[a-h][1-8]$/.match(input)
 
     false
+  end
+
+  def lega
+  
   end
 
 end

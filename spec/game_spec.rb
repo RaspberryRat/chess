@@ -71,6 +71,12 @@ describe Game do
         result = player_input.verify_input('a100')
         expect(result).to be(false)
       end
+
+      it 'ab1 returns false' do
+        result = player_input.verify_input('ab1')
+        expect(result).to be(false)
+      end
+      
       
     end
   end
