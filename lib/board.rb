@@ -3,14 +3,11 @@
 require 'pry-byebug'
 
 require_relative 'fen'
-require_relative 'piece_module'
 require_relative 'board_square'
-include PieceVariables
 
 # playing board for pieces
 class Board
-  attr_accessor :board, :printed_board
-  attr_reader :game_pieces_array
+  attr_accessor :board
 
   def initialize(board = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR')
     # @game_pieces_array = game_pieces_array
@@ -65,7 +62,7 @@ class Board
 
   def what_piece(square_selected)
     column = square_selected[0]
-    # substract 1 to convert to array index 
+    # substract 1 to convert to array index
     row = square_selected[1].to_i - 1
     board_array = expand_notation
 
@@ -88,9 +85,8 @@ class Board
     'empty square'
   end
 
-
   private
-  
+
   # coverts fen notation into an array, if empty square, converts to '.'
   def expand_notation
     expanded_board = board.split('/').reverse
@@ -98,7 +94,7 @@ class Board
       new_row = []
       row = row.split('')
       row.map do |c|
-        if c.to_i > 0
+        if c.to_i.positive?
           c.to_i.times do
             new_row << '.'
           end
@@ -106,7 +102,7 @@ class Board
           new_row << c
         end
       end
-      row = new_row
+      new_row
     end
   end
 end
