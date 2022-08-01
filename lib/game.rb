@@ -8,15 +8,15 @@ class Game
 
   attr_reader :board
   
-  def initialize
-    @board = Board.new
+  def initialize(board = Board.new)
+    @board = board
   end
 
   def start
 
     puts "Select the piece you would like to move (e.g., 'a4')"
     piece_selection = player_input
-    legal_move?(piece_selection)
+    legal_selection?(piece_selection)
     
   end
 
@@ -30,14 +30,17 @@ class Game
   end
 
   def verify_input(input)
-    # return false if input.length > 2 #find a better way to do this
     return true if /^[a-h][1-8]$/.match(input)
 
     false
   end
 
-  def lega
-  
+  def legal_selection?(selected_square)
+    return true if board.piece_at_location?(selected_square)
+
+    puts "There is no piece at location '#{selected_square}'."
+
+    start
   end
 
 end

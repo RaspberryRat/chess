@@ -76,8 +76,46 @@ describe Game do
         result = player_input.verify_input('ab1')
         expect(result).to be(false)
       end
-      
-      
+    end
+  end
+
+  describe '#legal_selection?' do
+    context 'when a move is legal' do
+      subject(:legal_piece) { described_class.new(board) }
+      let(:board) { double('board') }
+      let(:valid_input) { 'a4' }
+
+      before do
+        allow(board).to receive(:piece_at_location?).and_return(true)
+      end
+
+
+      it 'returns true' do 
+        result = legal_piece.legal_selection?(valid_input)
+        expect(result).to be(true)
+      end
+    end
+
+    context 'when there is no piece at the location' do
+      subject(:illegal_selection) { described_class.new(board) }
+      let(:board) { double('board') }
+      let(:invalid_input) { 'e4' }
+
+      before do
+        allow(board).to receive(:piece_at_location?).and_return(false)
+      end
+
+      it 'puts error message' do
+        allow(illegal_selection).to receive(:start)
+        error_message = "There is no piece at location 'e4'."
+        expect(illegal_selection).to receive(:puts).with(error_message)
+        illegal_selection.legal_selection?(invalid_input)
+      end
+
+      it 'expect #start to be received' do
+        expect(illegal_selection).to receive(:start).once
+        illegal_selection.legal_selection?(invalid_input)
+      end
     end
   end
 end
