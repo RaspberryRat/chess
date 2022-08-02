@@ -90,8 +90,8 @@ class Board
   end
 
   def move_checker?(piece_selected, destination, move_list)
-    current_location = convert_to_grid(piece_selected) #should return [1, 1]
-    destination = convert_to_grid(destination) # should return #[1, 2]
+    current_location = convert_to_grid(piece_selected)
+    destination = convert_to_grid(destination) 
     desired_move = []
 
     i = 0
@@ -121,7 +121,7 @@ class Board
   end
 
   def convert_to_grid(args)
-  #TODO 
+  # TODO need to write this
   end
   # coverts fen notation into an array, if empty square, converts to '.'
   def expand_notation
