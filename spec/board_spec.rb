@@ -218,6 +218,13 @@ describe Board do
     end
   end
 
+  describe '#allowed_move?' do
+    context 'when a move is chosen, check if legal move' do
+      subject(:pawn_move) { described_class.new }
+
+    end
+  end
+
 
   # describe '#move_piece' do
   #   context 'when pawn h2 is selected' do
