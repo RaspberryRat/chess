@@ -70,17 +70,7 @@ class Board
     board_array = expand_notation
 
     # convert column letters to index
-    column = {
-      a: 0,
-      b: 1,
-      c: 2,
-      d: 3,
-      e: 4,
-      f: 5,
-      g: 6,
-      h: 7
-    }.fetch(column.to_sym)
-
+    column = convert_column(column)
     row = board_array[row]
     piece = row[column]
     return piece unless piece == '.'
@@ -94,18 +84,45 @@ class Board
     piece_type = what_piece(piece_selected)
     possible_moves = piece_template.moves(piece_type)
 
-    return true  if move_checker?(piece_selected, destination, possible_moves)
+    return true if move_checker?(piece_selected, destination, possible_moves)
 
     false
   end
 
-  def move_checker?(piece_selected, destination, move_checker)
+  def move_checker?(piece_selected, destination, move_list)
+    current_location = convert_to_grid(piece_selected) #should return [1, 1]
+    destination = convert_to_grid(destination) # should return #[1, 2]
+    desired_move = []
 
+    i = 0
+    2.times do
+      desired_move << destination[i] - current_location[i]
+      i += 1
+    end
+    return true if move_list.include?(desired_move)
+
+    false
   end
 
 
   private
 
+  def convert_column(column)
+    {
+      a: 0,
+      b: 1,
+      c: 2,
+      d: 3,
+      e: 4,
+      f: 5,
+      g: 6,
+      h: 7
+    }.fetch(column.to_sym)
+  end
+
+  def convert_to_grid(args)
+  #TODO 
+  end
   # coverts fen notation into an array, if empty square, converts to '.'
   def expand_notation
     expanded_board = board.split('/').reverse

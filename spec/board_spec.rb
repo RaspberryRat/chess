@@ -247,7 +247,7 @@ describe Board do
       let(:game_pieces) { double('game_pieces') }
   
       before do
-        allow(game_pieces).to receive(:moves).and_return('[1, 1], [1, 2]')
+        allow(game_pieces).to receive(:moves).and_return('[0, 1], [0, 2]')
         allow(illegal_pawn_move).to receive(:move_checker?).and_return(false)
       end
   
@@ -257,6 +257,27 @@ describe Board do
       end
     end
   end
+
+  describe '#move_checker?' do
+    context 'when a move is allowed' do
+
+      subject(:pawn_move) { described_class.new(starting_board, game_pieces) }
+      let(:pawn) { 'b2' }
+      let(:move) { 'b3' }
+      let(:starting_board) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' }
+      let(:game_pieces) { double('game_pieces') }
+      let(:move_list) { [[0, 1], [0, 2]] }
+
+      before do
+        allow(pawn_move).to receive(:convert_to_grid).and_return([1, 1], [1, 2])
+      end
+
+      it 'returns true' do
+        result = pawn_move.move_checker?(pawn, move, move_list)
+        expect(result).to be(true)
+      end
+    end
+  end 
 
 
   # describe '#move_piece' do
