@@ -220,8 +220,41 @@ describe Board do
 
   describe '#allowed_move?' do
     context 'when a move is chosen, check if legal move' do
-      subject(:pawn_move) { described_class.new }
+      subject(:pawn_move) { described_class.new(starting_board, game_pieces) }
+      let(:pawn) { 'b2' }
+      let(:move) { 'b3' }
+      let(:starting_board) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' }
+      let(:game_pieces) { double('game_pieces') }
 
+      before do
+        allow(game_pieces).to receive(:moves).and_return('[1, 1], [1, 2]')
+        allow(pawn_move).to receive(:move_checker?).and_return(true)
+      end
+
+
+      it 'returns true' do
+        result = pawn_move.allowed_move?(pawn, move)
+        expect(result).to be(true)
+
+      end
+    end
+      
+    context 'when a move is chosen, check if legal move' do
+      subject(:illegal_pawn_move) { described_class.new(starting_board, game_pieces) }
+      let(:pawn) { 'b2' }
+      let(:move) { 'b7' }
+      let(:starting_board) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' }
+      let(:game_pieces) { double('game_pieces') }
+  
+      before do
+        allow(game_pieces).to receive(:moves).and_return('[1, 1], [1, 2]')
+        allow(illegal_pawn_move).to receive(:move_checker?).and_return(false)
+      end
+  
+      it 'returns false' do
+        result = illegal_pawn_move.allowed_move?(pawn, move)
+        expect(result).to be(false)
+      end
     end
   end
 

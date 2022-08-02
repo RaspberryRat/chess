@@ -8,18 +8,18 @@ include PieceVariables
 class GamePiece
   def self.for(piece)
     {
-      pawn: Pawn,
-      black_pawn: BlackPawn,
-      rook: Rook,
-      black_rook: BlackRook,
-      knight: Knight,
-      black_knight: BlackKnight,
-      bishop: Bishop,
-      black_bishop: BlackBishop,
-      queen: Queen,
-      black_queen: BlackQueen,
-      king: King,
-      black_king: BlackKing,
+      P: Pawn,
+      p: BlackPawn,
+      R: Rook,
+      r: BlackRook,
+      N: Knight,
+      n: BlackKnight,
+      B: Bishop,
+      b: BlackBishop,
+      Q: Queen,
+      q: BlackQueen,
+      K: King,
+      k: BlackKing,
     }.fetch(piece).new
   end
   

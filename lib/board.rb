@@ -4,19 +4,22 @@ require 'pry-byebug'
 
 require_relative 'fen'
 require_relative 'board_square'
+require_relative 'game_pieces'
 
 # playing board for pieces
 class Board
   attr_accessor :board
+  attr_reader :piece_template
 
-  def initialize(board = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR')
+  def initialize(board = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR', piece_template = GamePiece)
     # @game_pieces_array = game_pieces_array
     @board = board
+    @piece_template = piece_template
   end
 
   def print_board
     row_number = 8
-    printed_board = "#{row_number.to_s} "
+    printed_board = "#{row_number} "
     previous_color = 'white'
     convert_notation.each do |notation|
       if notation.is_a?(Integer)
@@ -32,7 +35,7 @@ class Board
       printed_board += square_color.to_s
       if square_color.to_s == NEW_LINE
         row_number -= 1
-        printed_board += "#{row_number.to_s} "
+        printed_board += "#{row_number} "
       end
     end
     printed_board += NEW_LINE
@@ -84,6 +87,22 @@ class Board
 
     'empty square'
   end
+
+
+  def allowed_move?(piece_selected, destination)
+
+    piece_type = what_piece(piece_selected)
+    possible_moves = piece_template.moves(piece_type)
+
+    return true  if move_checker?(piece_selected, destination, possible_moves)
+
+    false
+  end
+
+  def move_checker?(piece_selected, destination, move_checker)
+
+  end
+
 
   private
 
