@@ -17,6 +17,9 @@ class Game
     puts "Select the piece you would like to move (e.g., 'a4')"
     piece_selection = player_input
     legal_selection?(piece_selection)
+    puts 'What square do you want to move to?'
+    square_selection = player_input
+    legal_move?(square_selection)
     
   end
 
@@ -42,5 +45,17 @@ class Game
 
     start
   end
+
+  def legal_move?(selected_square)
+
+    return true if board.allowed_move?(selected_square)
+
+    puts 'That is not a legal move, please choose a different destination.'
+
+
+
+  end
+
+  
 
 end

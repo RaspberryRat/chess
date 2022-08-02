@@ -102,7 +102,7 @@ describe Game do
       let(:invalid_input) { 'e4' }
 
       before do
-        allow(board).to receive(:piece_at_location?).and_return(false)
+        allow(board).to receive(:piece_at_location?).and_return(nil)
       end
 
       it 'puts error message' do
@@ -118,4 +118,75 @@ describe Game do
       end
     end
   end
+
+  describe "#legal_move?" do
+
+    context 'when a square is empty and a move is legal?' do
+
+      subject(:legal_move) { described_class.new(board) }
+      let(:board) { double('board') }
+      let(:move) { 'b3' }
+
+      before do
+        allow(board).to receive(:allowed_move?).and_return(true)
+        allow(board).to receive(:legal_move?).and_return(true)
+      end
+
+      it 'returns true for empty square' do
+        result = legal_move.legal_move?(move)
+        expect(result).to eq(true)
+      end
+    end
+
+    context 'when a illegal square is chosen for a pawn move' do
+
+      subject(:illegal_move) { described_class.new(board) }
+      let(:board) { double('board') }
+      let(:move) { 'b1' }
+
+      before do
+        allow(board).to receive(:allowed_move?).and_return(false)
+        allow(board).to receive(:legal_move?).and_return(nil)
+
+      end
+
+      it 'returns error message' do
+        error_message = 'That is not a legal move, please choose a different destination.'
+        expect(illegal_move).to receive(:puts).with(error_message).once
+        illegal_move.legal_move?(move)
+      end
+    end
+
+    context 'when a illegal move is chosen then a legal move for a pawn move' do
+
+      subject(:game_move) { described_class.new(board) }
+      let(:board) { double('board') }
+      let(:invalid_move) { 'b1' }
+
+      before do
+        invalid_move = 'b1'
+        valid_move = 'b3'
+        allow(board).to receive(:allowed_move?).and_return(false)
+        allow(board).to receive(:legal_move?).and_return(nil, true)
+        allow(game_move).to receive(:move_loop).and_return(:legal_move?).with(valid_move)
+      end
+
+      it 'returns nil then true' do
+        game_move.legal_move?(invalid_move)
+      end
+    end
+  end
 end
+
+# subject(:game_input) { described_class.new }
+#       before do
+#         invalid_input = 'a9'
+#         valid_input = 'a1'
+#         allow(game_input).to receive(:gets).and_return(invalid_input, valid_input)
+#         allow(game_input).to receive(:verify_input).and_return(false, true)
+#       end
+
+#       it 'returns completes loop and returns input' do
+#         error_message = "Invalid input. Your input must be in format 'a4' from letters a to h and numbers 1-8. Please enter a valid choice."
+#         expect(game_input).to receive(:puts).with(error_message).once
+#         game_input.player_input
