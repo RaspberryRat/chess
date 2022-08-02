@@ -145,9 +145,11 @@ describe Game do
       let(:move) { 'b1' }
 
       before do
+        move_message = 'What square do you want to move to?'
         allow(board).to receive(:allowed_move?).and_return(false)
-        allow(board).to receive(:legal_move?).and_return(nil)
-
+        allow(illegal_move).to receive(:puts).with(move_message)
+        allow(illegal_move).to receive(:player_input)
+        allow(board).to receive(:allowed_move?).and_return(false, true)
       end
 
       it 'returns error message' do
@@ -166,12 +168,13 @@ describe Game do
       before do
         invalid_move = 'b1'
         valid_move = 'b3'
-        allow(board).to receive(:allowed_move?).and_return(false)
+        allow(board).to receive(:allowed_move?).and_return(false, true)
         allow(board).to receive(:legal_move?).and_return(nil, true)
-        allow(game_move).to receive(:move_loop).and_return(:legal_move?).with(valid_move)
+        allow(game_move).to receive(:move_loop)
       end
 
       it 'returns nil then true' do
+        expect(game_move).to receive(:move_loop).once
         game_move.legal_move?(invalid_move)
       end
     end
