@@ -15,9 +15,9 @@ class Game
   def start
 
     puts "Select the piece you would like to move (e.g., 'a4')"
-    piece_selection = player_input
-    legal_selection?(piece_selection)
-    square_selection = move_loop
+    piece_selected = player_input
+    legal_selection?(piece_selected)
+    move_selected = move_loop(piece_selected)
   
     
   end
@@ -37,28 +37,26 @@ class Game
     false
   end
 
-  def legal_selection?(selected_square)
-    return true if board.piece_at_location?(selected_square)
+  def legal_selection?(piece_selected)
+    return true if board.piece_at_location?(piece_selected)
 
-    puts "There is no piece at location '#{selected_square}'."
+    puts "There is no piece at location '#{piece_selected}'."
 
     start
   end
 
-  def legal_move?(selected_square)
-    return true if board.allowed_move?(selected_square)
+  def legal_move?(piece_selected, move_selected)
+    return true if board.allowed_move?(piece_selected, move_selected)
 
     puts 'That is not a legal move, please choose a different destination.'
-    move_loop
+    move_loop(piece_selected)
   end
 
   private
 
-  def move_loop
-    loop do
-      puts 'What square do you want to move to?'
-      square_selection = player_input
-      return square_selection if legal_move?(square_selection)
-    end
+  def move_loop(piece_selected)
+    puts 'What square do you want to move to?'
+    move_selected = player_input
+    return move_selected if legal_move?(piece_selected, move_selected)
   end
 end

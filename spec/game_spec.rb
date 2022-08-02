@@ -126,6 +126,7 @@ describe Game do
       subject(:legal_move) { described_class.new(board) }
       let(:board) { double('board') }
       let(:move) { 'b3' }
+      let(:piece) { 'b2' }
 
       before do
         allow(board).to receive(:allowed_move?).and_return(true)
@@ -133,7 +134,7 @@ describe Game do
       end
 
       it 'returns true for empty square' do
-        result = legal_move.legal_move?(move)
+        result = legal_move.legal_move?(piece, move)
         expect(result).to eq(true)
       end
     end
@@ -143,6 +144,7 @@ describe Game do
       subject(:illegal_move) { described_class.new(board) }
       let(:board) { double('board') }
       let(:move) { 'b1' }
+      let(:piece) { 'b2' }
 
       before do
         move_message = 'What square do you want to move to?'
@@ -155,7 +157,7 @@ describe Game do
       it 'returns error message' do
         error_message = 'That is not a legal move, please choose a different destination.'
         expect(illegal_move).to receive(:puts).with(error_message).once
-        illegal_move.legal_move?(move)
+        illegal_move.legal_move?(piece, move)
       end
     end
 
@@ -164,18 +166,19 @@ describe Game do
       subject(:game_move) { described_class.new(board) }
       let(:board) { double('board') }
       let(:invalid_move) { 'b1' }
+      let(:piece) { 'b2' }
+
 
       before do
         invalid_move = 'b1'
         valid_move = 'b3'
         allow(board).to receive(:allowed_move?).and_return(false, true)
         allow(board).to receive(:legal_move?).and_return(nil, true)
-        allow(game_move).to receive(:move_loop)
       end
 
       it 'returns nil then true' do
         expect(game_move).to receive(:move_loop).once
-        game_move.legal_move?(invalid_move)
+        game_move.legal_move?(piece, invalid_move)
       end
     end
   end
