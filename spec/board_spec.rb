@@ -268,10 +268,6 @@ describe Board do
       let(:game_pieces) { double('game_pieces') }
       let(:move_list) { [[0, 1], [0, 2]] }
 
-      before do
-        allow(pawn_move).to receive(:convert_to_grid).and_return([1, 1], [1, 2])
-      end
-
       it 'returns true' do
         result = pawn_move.move_checker?(pawn, move, move_list)
         expect(result).to be(true)

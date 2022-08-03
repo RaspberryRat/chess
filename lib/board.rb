@@ -64,13 +64,11 @@ class Board
   end
 
   def what_piece(square_selected)
-    column = square_selected[0]
-    # substract 1 to convert to array index
-    row = square_selected[1].to_i - 1
-    board_array = expand_notation
+    square_to_grid = convert_to_grid(square_selected)
+    column = square_to_grid[0]
+    row = square_to_grid[1]
 
-    # convert column letters to index
-    column = convert_column(column)
+    board_array = expand_notation
     row = board_array[row]
     piece = row[column]
     return piece unless piece == '.'
@@ -91,7 +89,7 @@ class Board
 
   def move_checker?(piece_selected, destination, move_list)
     current_location = convert_to_grid(piece_selected)
-    destination = convert_to_grid(destination) 
+    destination = convert_to_grid(destination)
     desired_move = []
 
     i = 0
@@ -103,7 +101,6 @@ class Board
 
     false
   end
-
 
   private
 
@@ -120,8 +117,10 @@ class Board
     }.fetch(column.to_sym)
   end
 
-  def convert_to_grid(args)
-  # TODO need to write this
+  def convert_to_grid(board_square)
+    column = convert_column(board_square[0])
+    row = board_square[1].to_i - 1
+    [column, row]
   end
   # coverts fen notation into an array, if empty square, converts to '.'
   def expand_notation
