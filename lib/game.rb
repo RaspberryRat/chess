@@ -40,10 +40,10 @@ class Game
   end
 
   private
-  
+
   def move_piece(location, destination)
-    return true if Move.new(location, destination)
-    
+    return true if move.new_move(location, destination, board)
+
     false
   end
 end

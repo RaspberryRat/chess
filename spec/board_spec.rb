@@ -275,7 +275,7 @@ describe Board do
     end
   end 
 
-  # TODO write convert to grid method, then game_pieces move lists
+  
 
   # describe '#move_piece' do
   #   context 'when pawn h2 is selected' do
