@@ -100,88 +100,94 @@ describe Move do
   end
 
   describe '#piece_at_location?' do
-      context 'when a piece is at selected square' do
-        subject(:select_square) { described_class.new(square_picked, destination, board) }
-        let(:square_picked) { 'b1' }
-        let(:board) { double('board') }
-        let(:destination) { 'b1' }
-  
-        before do
-          allow(select_square).to receive(:what_piece).and_return('p')
-        end
-  
-        it 'returns true' do
-          result = select_square.piece_at_location?
-          expect(result).to be(true)
-        end
+    context 'when a piece is at selected square' do
+      subject(:select_square) { described_class.new(square_picked, destination, board) }
+      let(:square_picked) { 'b1' }
+      let(:board) { double('board') }
+      let(:destination) { 'b1' }
+
+      before do
+        allow(select_square).to receive(:what_piece).and_return('p')
       end
-  
-      context 'when there is no piece at selected square' do
-        subject(:select_square) { described_class.new(square_picked, destination, board) }
-        let(:square_picked) { 'b3' }
-        let(:board) { double('board') }
-        let(:destination) { 'b1' }
-  
-        before do
-          allow(select_square).to receive(:what_piece).and_return(false)
-        end
-  
-        it 'returns false' do
-          result = select_square.piece_at_location?
-          expect(result).to be(false)
-        end
+
+      it 'returns true' do
+        result = select_square.piece_at_location?
+        expect(result).to be(true)
       end
     end
-  
-    # describe '#what_piece?' do
-    #   context 'when a square selected' do
-  
-    #     subject(:pawn_selected) { described_class.new }
-    #     let(:pawn_location) { 'b2' }
-  
-    #     it "returns 'P' for a pawn" do
-    #       result = pawn_selected.what_piece(pawn_location)
-    #       expect(result).to eq('P')
-    #     end
-  
-  
-    #   subject(:first_move) { described_class.new(pawn_e4) }
-    #   let(:pawn_e4) { 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR' }
-    #   let(:pawn_moved) { 'e4'}
-    #   it "returns 'P' for a pawn" do
-    #     result = first_move.what_piece(pawn_moved)
-    #     expect(result).to eq('P')
-    #   end
-    # end
-  
-    # context 'when almost empty board and black king selected at c4' do
-  
-    #   subject(:end_game_board) { described_class.new(end_board) }
-    #   let(:end_board) { '8/8/8/4p1K1/2k1P3/8/8/8' }
-    #   let(:square_picked) { 'c4' }
-  
-    #   it "returns 'K'" do
-    #     result = end_game_board.what_piece(square_picked)
-    #     expect(result).to eq('k')
-    #   end
-  
-    #   it "returns 'empty square' when pick 'c3'" do
-    #     result = end_game_board.what_piece('c3')
-    #     expect(result).to eq('empty square')
-    #   end
-    # end
-      
-    #   context 'when an empty square selected' do
-  
-    #     subject(:empty_square_check) { described_class.new }
-    #     let(:empty_location) { 'b4' }
-  
-    #     it "returns 'empty square'" do
-    #       result = empty_square_check.what_piece(empty_location)
-    #       expect(result).to eq('empty square')
-    #     end
-    #   end
-    # end
+
+    context 'when there is no piece at selected square' do
+      subject(:select_square) { described_class.new(square_picked, destination, board) }
+      let(:square_picked) { 'b3' }
+      let(:board) { double('board') }
+      let(:destination) { 'b1' }
+
+      before do
+        allow(select_square).to receive(:what_piece).and_return(false)
+      end
+
+      it 'returns false' do
+        result = select_square.piece_at_location?
+        expect(result).to be(false)
+      end
+    end
+  end
+
+  describe '#what_piece?' do
+    context 'when a square selected' do
+
+      subject(:pawn_selected) { described_class.new(pawn_start, destination, board) }
+      let(:pawn_start) { 'b2' }
+      let(:board) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' }
+      let(:destination) { 'b1' }
+
+      it "returns 'P' for a pawn" do
+        result = pawn_selected.what_piece
+        expect(result).to eq('P')
+      end
+
+
+      subject(:first_move) { described_class.new(pawn_location, pawn_moved, updated_board) }
+      let(:updated_board) { 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR' }
+      let(:pawn_location) { 'e4' }
+      let(:pawn_moved) { 'b1' }
+
+
+
+      it "returns 'P' for a pawn" do
+        result = first_move.what_piece
+        expect(result).to eq('P')
+      end
+    end
+
+  # context 'when almost empty board and black king selected at c4' do
+
+  #   subject(:end_game_board) { described_class.new(end_board) }
+  #   let(:end_board) { '8/8/8/4p1K1/2k1P3/8/8/8' }
+  #   let(:square_picked) { 'c4' }
+
+  #   it "returns 'K'" do
+  #     result = end_game_board.what_piece(square_picked)
+  #     expect(result).to eq('k')
+  #   end
+
+  #   it "returns 'empty square' when pick 'c3'" do
+  #     result = end_game_board.what_piece('c3')
+  #     expect(result).to eq('empty square')
+  #   end
+  # end
+    
+  #   context 'when an empty square selected' do
+
+  #     subject(:empty_square_check) { described_class.new }
+  #     let(:empty_location) { 'b4' }
+
+  #     it "returns 'empty square'" do
+  #       result = empty_square_check.what_piece(empty_location)
+  #       expect(result).to eq('empty square')
+  #     end
+  #   end
+  end
   
     # describe '#allowed_move?' do
     #   context 'when a move is chosen, check if legal move' do
