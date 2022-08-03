@@ -4,7 +4,9 @@ describe Game do
   describe '#player_input' do
     context 'when player inputs valid input' do
 
-      subject(:game_input) { described_class.new }
+      subject(:game_input) { described_class.new(board, move) }
+      let(:board) { double('board') }
+      let(:move) { double('move') }
 
 
       before do
@@ -22,7 +24,10 @@ describe Game do
 
     context 'when player inputs, invalid input, then valid input' do
 
-      subject(:game_input) { described_class.new }
+      subject(:game_input) { described_class.new(board, move) }
+      let(:board) { double('board') }
+      let(:move) { double('move') }
+
       before do
         invalid_input = 'a9'
         valid_input = 'a1'
@@ -40,7 +45,10 @@ describe Game do
 
   describe '#verify_input' do
     context 'when given an input' do
-      subject(:player_input) { described_class.new }
+      
+      subject(:player_input) { described_class.new(board, move) }
+      let(:board) { double('board') }
+      let(:move) { double('move') }
 
       it 'e4 returns true' do
         result = player_input.verify_input('e4')
@@ -79,120 +87,54 @@ describe Game do
     end
   end
 
-  describe '#legal_selection?' do
-    context 'when a move is legal' do
-      subject(:legal_piece) { described_class.new(board) }
-      let(:board) { double('board') }
-      let(:valid_input) { 'a4' }
+  describe '#start' do
+    subject(:move_loop) { described_class.new(board, move) }
+    let(:board) { double('board') }
+    let(:move) { double('move') }
+    
+    context 'when game called with an error in player input, loops once' do
 
       before do
-        allow(board).to receive(:piece_at_location?).and_return(true)
+        allow(move_loop).to receive(:player_input).exactly(4).times
+        allow(move_loop).to receive(:move_piece).and_return(false, true)
       end
 
-
-      it 'returns true' do 
-        result = legal_piece.legal_selection?(valid_input)
-        expect(result).to be(true)
+      it 'displays puts message twice' do
+        message = "Select the piece you would like to move (e.g., 'a4')"
+        expect(move_loop).to receive(:puts).with(message).twice
+        move_loop.start
       end
     end
 
-    context 'when there is no piece at the location' do
-      subject(:illegal_selection) { described_class.new(board) }
-      let(:board) { double('board') }
-      let(:invalid_input) { 'e4' }
+    context 'when game called with an error in player input, loops twice' do
 
       before do
-        allow(board).to receive(:piece_at_location?).and_return(nil)
+        allow(move_loop).to receive(:player_input).exactly(6).times
+        allow(move_loop).to receive(:move_piece).and_return(false, false, true)
       end
 
-      it 'puts error message' do
-        allow(illegal_selection).to receive(:start)
-        error_message = "There is no piece at location 'e4'."
-        expect(illegal_selection).to receive(:puts).with(error_message)
-        illegal_selection.legal_selection?(invalid_input)
-      end
-
-      it 'expect #start to be received' do
-        expect(illegal_selection).to receive(:start).once
-        illegal_selection.legal_selection?(invalid_input)
-      end
-    end
-  end
-
-  describe "#legal_move?" do
-
-    context 'when a square is empty and a move is legal?' do
-
-      subject(:legal_move) { described_class.new(board) }
-      let(:board) { double('board') }
-      let(:move) { 'b3' }
-      let(:piece) { 'b2' }
-
-      before do
-        allow(board).to receive(:allowed_move?).and_return(true)
-        allow(board).to receive(:legal_move?).and_return(true)
-      end
-
-      it 'returns true for empty square' do
-        result = legal_move.legal_move?(piece, move)
-        expect(result).to eq(true)
+      it 'displays puts message twice' do
+        message = "Select the piece you would like to move (e.g., 'a4')"
+        expect(move_loop).to receive(:puts).with(message).exactly(3).times
+        move_loop.start
       end
     end
 
-    context 'when a illegal square is chosen for a pawn move' do
-
-      subject(:illegal_move) { described_class.new(board) }
-      let(:board) { double('board') }
-      let(:move) { 'b1' }
-      let(:piece) { 'b2' }
+    context 'when game called with a correct player input, breaks loop' do
 
       before do
-        move_message = 'What square do you want to move to?'
-        allow(board).to receive(:allowed_move?).and_return(false)
-        allow(illegal_move).to receive(:puts).with(move_message)
-        allow(illegal_move).to receive(:player_input)
-        allow(board).to receive(:allowed_move?).and_return(false, true)
+        allow(move_loop).to receive(:player_input).exactly(2).times
+        allow(move_loop).to receive(:move_piece).and_return(true)
       end
 
-      it 'returns error message' do
-        error_message = 'That is not a legal move, please choose a different destination.'
-        expect(illegal_move).to receive(:puts).with(error_message).once
-        illegal_move.legal_move?(piece, move)
+      it 'displays puts message twice' do
+        message = "Select the piece you would like to move (e.g., 'a4')"
+        expect(move_loop).to receive(:puts).with(message).once
+        move_loop.start
       end
     end
 
-    context 'when a illegal move is chosen then a legal move for a pawn move' do
 
-      subject(:game_move) { described_class.new(board) }
-      let(:board) { double('board') }
-      let(:invalid_move) { 'b1' }
-      let(:piece) { 'b2' }
-
-
-      before do
-        invalid_move = 'b1'
-        valid_move = 'b3'
-        allow(board).to receive(:allowed_move?).and_return(false, true)
-        allow(board).to receive(:legal_move?).and_return(nil, true)
-      end
-
-      it 'returns nil then true' do
-        expect(game_move).to receive(:move_loop).once
-        game_move.legal_move?(piece, invalid_move)
-      end
-    end
   end
 end
 
-# subject(:game_input) { described_class.new }
-#       before do
-#         invalid_input = 'a9'
-#         valid_input = 'a1'
-#         allow(game_input).to receive(:gets).and_return(invalid_input, valid_input)
-#         allow(game_input).to receive(:verify_input).and_return(false, true)
-#       end
-
-#       it 'returns completes loop and returns input' do
-#         error_message = "Invalid input. Your input must be in format 'a4' from letters a to h and numbers 1-8. Please enter a valid choice."
-#         expect(game_input).to receive(:puts).with(error_message).once
-#         game_input.player_input

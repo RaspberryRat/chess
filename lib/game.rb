@@ -2,24 +2,26 @@
 
 require_relative 'board'
 require_relative 'game_pieces'
+require_relative 'move'
 require 'pry-byebug'
 
 class Game
 
-  attr_reader :board
+  attr_reader :board, :move
   
-  def initialize(board = Board.new)
+  def initialize(board = Board.new, move = Move)
     @board = board
+    @move = move
   end
 
   def start
-
-    puts "Select the piece you would like to move (e.g., 'a4')"
-    piece_selected = player_input
-    legal_selection?(piece_selected)
-    move_selected = move_loop(piece_selected)
-  
-    
+    loop do
+      puts "Select the piece you would like to move (e.g., 'a4')"
+      piece_selected = player_input
+      # legal_selection?(piece_selected)
+      destination = player_input
+      break if move_piece(piece_selected, destination)
+    end
   end
 
   def player_input
@@ -37,26 +39,11 @@ class Game
     false
   end
 
-  def legal_selection?(piece_selected)
-    return true if board.piece_at_location?(piece_selected)
-
-    puts "There is no piece at location '#{piece_selected}'."
-
-    start
-  end
-
-  def legal_move?(piece_selected, move_selected)
-    return true if board.allowed_move?(piece_selected, move_selected)
-
-    puts 'That is not a legal move, please choose a different destination.'
-    move_loop(piece_selected)
-  end
-
   private
-
-  def move_loop(piece_selected)
-    puts 'What square do you want to move to?'
-    move_selected = player_input
-    return move_selected if legal_move?(piece_selected, move_selected)
+  
+  def move_piece(location, destination)
+    return true if Move.new(location, destination)
+    
+    false
   end
 end

@@ -2,7 +2,6 @@
 
 require 'pry-byebug'
 
-require_relative 'fen'
 require_relative 'board_square'
 require_relative 'game_pieces'
 
@@ -12,7 +11,6 @@ class Board
   attr_reader :piece_template
 
   def initialize(board = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR', piece_template = GamePiece)
-    # @game_pieces_array = game_pieces_array
     @board = board
     @piece_template = piece_template
   end
@@ -76,12 +74,9 @@ class Board
     'empty square'
   end
 
-
   def allowed_move?(piece_selected, destination)
-
     piece_type = what_piece(piece_selected)
     possible_moves = piece_template.moves(piece_type)
-
     return true if move_checker?(piece_selected, destination, possible_moves)
 
     false
@@ -122,6 +117,7 @@ class Board
     row = board_square[1].to_i - 1
     [column, row]
   end
+
   # coverts fen notation into an array, if empty square, converts to '.'
   def expand_notation
     expanded_board = board.split('/').reverse
