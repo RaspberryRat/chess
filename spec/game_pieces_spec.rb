@@ -6,111 +6,125 @@ describe GamePiece do
     context 'when method calls return correct game piece' do
       subject(:new_game) { described_class }
       it 'returns white rook' do
-        choice = :rook
+        choice = :R
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(Rook)
       end
 
       it 'returns white knight' do
-        choice = :knight
+        choice = :N
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(Knight)
       end
 
       it 'returns white bishop' do
-        choice = :bishop
+        choice = :B
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(Bishop)
       end
 
       it 'returns white queen' do
-        choice = :queen
+        choice = :Q
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(Queen)
       end
 
       it 'returns white king' do
-        choice = :king
+        choice = :K
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(King)
       end
 
       it 'returns white bishop' do
-        choice = :bishop
+        choice = :B
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(Bishop)
       end
 
       it 'returns white knight' do
-        choice = :knight
+        choice = :N
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(Knight)
       end
 
       it 'returns white rook' do
-        choice = :rook
+        choice = :R
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(Rook)
       end
 
       it 'returns a white pawn' do
-        choice = :pawn
+        choice = :P
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(Pawn)
       end
 
       it 'returns black rook' do
-        choice = :black_rook
+        choice = :r
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(BlackRook)
       end
       
       it 'returns black knight' do
-        choice = :black_knight
+        choice = :n
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(BlackKnight)
       end
       
       it 'returns black bishop' do
-        choice = :black_bishop
+        choice = :b
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(BlackBishop)
       end
       
       it 'returns black queen' do
-        choice = :black_queen
+        choice = :q
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(BlackQueen)
       end
       
       it 'returns black king' do
-        choice = :black_king
+        choice = :k
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(BlackKing)
       end
       
       it 'returns black bishop' do
-        choice = :black_bishop
+        choice = :b
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(BlackBishop)
       end
       
       it 'returns black knight' do
-        choice = :black_knight
+        choice = :n
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(BlackKnight)
       end
       
       it 'returns black rook' do
-        choice = :black_rook
+        choice = :r
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(BlackRook)
       end
 
       it 'returns a black pawn' do
-        choice = :black_pawn
+        choice = :p
         returned_object = new_game.for(choice)
         expect(returned_object).to be_an_instance_of(BlackPawn)
+      end
+    end
+  end
+
+  describe '.moves' do
+    context 'when a white pawn piece is called' do
+
+      subject(:P_class) { described_class }
+      
+      expected_moves = [[0, 1], [0, 2]]
+      it 'returns pawn move list' do
+        move_list = pawn_class.moves
+        expect(move_list).to eq(expected_moves)
+
       end
     end
   end
@@ -363,7 +377,7 @@ end
 #   describe "#set_start_location" do
 
 #     context 'when black queen is created' do
-#       subject(:black_queen) { described_class.new(count) }
+#       subject(:q) { described_class.new(count) }
 #       let(:count)  { 21 }
 #       it 'has location of [8, 4]' do
 #         location = black_queen.set_start_location
@@ -377,7 +391,7 @@ end
 #   describe "#set_start_location" do
 
 #     context 'when black king is created' do
-#       subject(:black_king) { described_class.new(count) }
+#       subject(:k) { described_class.new(count) }
 #       let(:count)  { 21 }
 #       it 'has location of [8, 5]' do
 #         location = black_king.set_start_location
