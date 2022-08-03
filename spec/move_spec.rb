@@ -160,89 +160,97 @@ describe Move do
       end
     end
 
-  # context 'when almost empty board and black king selected at c4' do
+  context 'when almost empty board and black king selected at c4' do
 
-  #   subject(:end_game_board) { described_class.new(end_board) }
-  #   let(:end_board) { '8/8/8/4p1K1/2k1P3/8/8/8' }
-  #   let(:square_picked) { 'c4' }
+    subject(:end_game_board) { described_class.new(square_picked, destination, end_board) }
+    let(:end_board) { '8/8/8/4p1K1/2k1P3/8/8/8' }
+    let(:square_picked) { 'c4' }
+    let(:destination) { nil }
 
-  #   it "returns 'K'" do
-  #     result = end_game_board.what_piece(square_picked)
-  #     expect(result).to eq('k')
-  #   end
+    it "returns 'K'" do
+      result = end_game_board.what_piece
+      expect(result).to eq('k')
+    end
 
-  #   it "returns 'empty square' when pick 'c3'" do
-  #     result = end_game_board.what_piece('c3')
-  #     expect(result).to eq('empty square')
-  #   end
-  # end
+    subject(:next_board) { described_class.new(empty_square, destination, end_board) }
+    let(:empty_square) { 'c3' }
+
+    it "returns 'empty square' when pick 'c3'" do
+      result = next_board.what_piece
+      expect(result).to be(false)
+    end
+  end
     
-  #   context 'when an empty square selected' do
+    context 'when an empty square selected' do
 
-  #     subject(:empty_square_check) { described_class.new }
-  #     let(:empty_location) { 'b4' }
+      subject(:empty_square_check) { described_class.new(empty_location, destination, board) }
+      let(:empty_location) { 'b4' }
+      let(:board) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' }
+      let(:destination) { 'b1' }
 
-  #     it "returns 'empty square'" do
-  #       result = empty_square_check.what_piece(empty_location)
-  #       expect(result).to eq('empty square')
-  #     end
-  #   end
+      it "returns 'empty square'" do
+        result = empty_square_check.what_piece
+        expect(result).to be(false)
+      end
+    end
   end
   
-    # describe '#allowed_move?' do
-    #   context 'when a move is chosen, check if legal move' do
-    #     subject(:pawn_move) { described_class.new(starting_board, game_pieces) }
-    #     let(:pawn) { 'b2' }
-    #     let(:move) { 'b3' }
-    #     let(:starting_board) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' }
-    #     let(:game_pieces) { double('game_pieces') }
+  describe '#allowed_move?' do
+    context 'when a move is chosen, check if legal move' do
+      subject(:pawn_move) { described_class.new(pawn, destination, starting_board, game_pieces) }
+      let(:pawn) { 'b2' }
+      let(:destination) { 'b3' }
+      let(:starting_board) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' }
+      let(:game_pieces) { double('game_pieces') }
+
+      before do
+        allow(game_pieces).to receive(:moves).and_return('[1, 1], [1, 2]')
+        allow(pawn_move).to receive(:move_checker?).and_return(true)
+      end
+
+
+      it 'returns true' do
+        result = pawn_move.allowed_move?
+        expect(result).to be(true)
+
+      end
+    end
+
+    context 'when a move is chosen, check if legal move' do
+      subject(:illegal_pawn_move) { described_class.new(pawn, destination, starting_board, game_pieces) }
+      let(:pawn) { 'b2' }
+      let(:destination) { 'b7' }
+      let(:starting_board) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' }
+      let(:game_pieces) { double('game_pieces') }
   
-    #     before do
-    #       allow(game_pieces).to receive(:moves).and_return('[1, 1], [1, 2]')
-    #       allow(pawn_move).to receive(:move_checker?).and_return(true)
-    #     end
+      before do
+        allow(game_pieces).to receive(:moves).and_return('[0, 1], [0, 2]')
+        allow(illegal_pawn_move).to receive(:move_checker?).and_return(false)
+      end
   
-  
-    #     it 'returns true' do
-    #       result = pawn_move.allowed_move?(pawn, move)
-    #       expect(result).to be(true)
-  
-    #     end
-    #   end
-        
-    #   context 'when a move is chosen, check if legal move' do
-    #     subject(:illegal_pawn_move) { described_class.new(starting_board, game_pieces) }
-    #     let(:pawn) { 'b2' }
-    #     let(:move) { 'b7' }
-    #     let(:starting_board) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' }
-    #     let(:game_pieces) { double('game_pieces') }
-    
-    #     before do
-    #       allow(game_pieces).to receive(:moves).and_return('[0, 1], [0, 2]')
-    #       allow(illegal_pawn_move).to receive(:move_checker?).and_return(false)
-    #     end
-    
-    #     it 'returns false' do
-    #       result = illegal_pawn_move.allowed_move?(pawn, move)
-    #       expect(result).to be(false)
-    #     end
-    #   end
-    # end
-  
-    # describe '#move_checker?' do
-    #   context 'when a move is allowed' do
-  
-    #     subject(:pawn_move) { described_class.new(starting_board, game_pieces) }
-    #     let(:pawn) { 'b2' }
-    #     let(:move) { 'b3' }
-    #     let(:starting_board) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' }
-    #     let(:game_pieces) { double('game_pieces') }
-    #     let(:move_list) { [[0, 1], [0, 2]] }
-  
-    #     it 'returns true' do
-    #       result = pawn_move.move_checker?(pawn, move, move_list)
-    #       expect(result).to be(true)
-    #     end
-    #   end
-    # end 
+      it 'returns false' do
+        result = illegal_pawn_move.allowed_move?
+        expect(result).to be(false)
+      end
+    end
+  end
+
+  describe '#move_checker?' do
+    context 'when a move is allowed' do
+
+      
+      subject(:pawn_move) { described_class.new(pawn, destination, starting_board, game_pieces) }
+      let(:pawn) { 'b2' }
+      let(:destination) { 'b3' }
+      let(:starting_board) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' }
+      let(:game_pieces) { double('game_pieces') }
+      let(:move_list) { [[0, 1], [0, 2]] }
+
+
+      it 'returns true' do
+        result = pawn_move.move_checker?(move_list)
+        expect(result).to be(true)
+      end
+    end
+  end
 end

@@ -10,9 +10,8 @@ class Board
   attr_accessor :board
   attr_reader :piece_template
 
-  def initialize(board = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR', piece_template = GamePiece)
+  def initialize(board = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR')
     @board = board
-    @piece_template = piece_template
   end
 
   def print_board

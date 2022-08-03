@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'board'
+require_relative 'game_pieces'
 require 'pry-byebug'
 
 class Move
@@ -8,12 +9,13 @@ class Move
     new(location, destination, board).move_loop
   end
 
-  attr_reader :location, :destination, :board
+  attr_reader :location, :destination, :board, :piece_template
 
-  def initialize(location, destination, board)
+  def initialize(location, destination, board, piece_template = GamePiece)
     @location = location
     @destination = destination
     @board = board
+    @piece_template = piece_template
   end
 
   def move_loop
@@ -57,30 +59,30 @@ class Move
     false
   end
 
-  # def allowed_move?(piece_selected, destination)
-  #   piece_type = what_piece(piece_selected)
-  #   possible_moves = piece_template.moves(piece_type)
-  #   return true if move_checker?(piece_selected, destination, possible_moves)
+  def allowed_move?
+    piece_type = what_piece
+    possible_moves = piece_template.moves(piece_type)
+    return true if move_checker?(possible_moves)
 
-  #   false
-  # end
+    false
+  end
 
-  # def move_checker?(piece_selected, destination, move_list)
-  #   current_location = convert_to_grid(piece_selected)
-  #   destination = convert_to_grid(destination)
-  #   desired_move = []
+  def move_checker?(move_list)
+    current_location = convert_to_grid(location)
+    converted_destination = convert_to_grid(destination)
+    desired_move = []
 
-  #   i = 0
-  #   2.times do
-  #     desired_move << destination[i] - current_location[i]
-  #     i += 1
-  #   end
-  #   return true if move_list.include?(desired_move)
+    i = 0
+    2.times do
+      desired_move << converted_destination[i] - current_location[i]
+      i += 1
+    end
+    return true if move_list.include?(desired_move)
 
-  #   false
-  # end
+    false
+  end
 
-  # private
+  private
 
   def convert_notation
     board.chars.map do |c|
