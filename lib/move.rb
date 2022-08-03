@@ -37,4 +37,96 @@ class Move
     puts 'That is not a legal move, please choose a different destination.'
     false
   end
+
+  def piece_at_location?
+    return true if what_piece
+
+    false
+  end
+
+  def what_piece
+    square_to_grid = convert_to_grid(location)
+    column = square_to_grid[0]
+    row = square_to_grid[1]
+
+    board_array = expand_notation
+    row = board_array[row]
+    piece = row[column]
+    return piece unless piece == '.'
+
+    false
+  end
+
+  # def allowed_move?(piece_selected, destination)
+  #   piece_type = what_piece(piece_selected)
+  #   possible_moves = piece_template.moves(piece_type)
+  #   return true if move_checker?(piece_selected, destination, possible_moves)
+
+  #   false
+  # end
+
+  # def move_checker?(piece_selected, destination, move_list)
+  #   current_location = convert_to_grid(piece_selected)
+  #   destination = convert_to_grid(destination)
+  #   desired_move = []
+
+  #   i = 0
+  #   2.times do
+  #     desired_move << destination[i] - current_location[i]
+  #     i += 1
+  #   end
+  #   return true if move_list.include?(desired_move)
+
+  #   false
+  # end
+
+  # private
+
+  def convert_notation
+    board.chars.map do |c|
+      if('1'..'8').include?(c)
+        c.to_i
+      else
+        c
+      end
+    end
+  end
+
+  def convert_column(column)
+    {
+      a: 0,
+      b: 1,
+      c: 2,
+      d: 3,
+      e: 4,
+      f: 5,
+      g: 6,
+      h: 7
+    }.fetch(column.to_sym)
+  end
+
+  def convert_to_grid(board_square)
+    column = convert_column(board_square[0])
+    row = board_square[1].to_i - 1
+    [column, row]
+  end
+
+  # coverts fen notation into an array, if empty square, converts to '.'
+  def expand_notation
+    expanded_board = board.split('/').reverse
+    expanded_board.map do |row|
+      new_row = []
+      row = row.split('')
+      row.map do |c|
+        if c.to_i.positive?
+          c.to_i.times do
+            new_row << '.'
+          end
+        else
+          new_row << c
+        end
+      end
+      new_row
+    end
+  end
 end
