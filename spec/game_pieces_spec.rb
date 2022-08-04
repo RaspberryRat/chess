@@ -121,20 +121,12 @@ describe GamePiece do
 
       subject(:pawn_class) { described_class }
       let(:class_symbol) { :P }
-      let(:location) { 'b2' }
 
-      expected_moves = [[0, 1], [1, 1], [-1, 1], [0, 2]].sort
+      expected_moves = [[0, 1], [0, 2], [-1, 1], [1, 1]]
 
-      it 'returns pawn move list for starting location' do
-        move_list = pawn_class.moves(class_symbol, location)
+      it 'returns white pawn move list' do
+        move_list = pawn_class.moves(class_symbol)
         expect(move_list).to eq(expected_moves)
-      end
-
-      base_moves = [[0, 1], [1, 1], [-1, 1]].sort
-      let(:moved_location) { 'b4' }
-      it 'returns pawn base move list' do
-        move_list = pawn_class.moves(class_symbol, moved_location)
-        expect(move_list).to eq(base_moves)
       end
     end
   end
@@ -142,369 +134,137 @@ describe GamePiece do
   context 'when a black pawn piece is called' do
     subject(:pawn_class) { described_class }
     let(:class_symbol) { :p }
-    let(:location) { 'b7' }
 
-    expected_moves = [[0, -1], [0, -2], [1, -1], [-1, -1]].sort
+    expected_moves = [[0, -1], [0, -2], [-1, -1], [1, -1]]
 
-    it 'returns pawn move list for starting location' do
-      move_list = pawn_class.moves(class_symbol, location)
+    it 'returns black pawn move list' do
+      move_list = pawn_class.moves(class_symbol)
       expect(move_list).to eq(expected_moves)
-    end
-
-    base_moves = [[0, -1], [1, -1], [-1, -1]].sort
-    let(:moved_location) { 'b5' }
-    it 'returns pawn base move list' do
-      move_list = pawn_class.moves(class_symbol, moved_location)
-      expect(move_list).to eq(base_moves)
     end
   end
 
+  context 'when a white rook piece is called' do
+
+    subject(:rook_class) { described_class }
+    let(:class_symbol) { :R }
+
+    expected_moves = [[0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [0, -1], [0, -2], [0, -3], [0, -4], [0, -5], [0, -6], [0, -7], [-1, 0], [-2, 0], [-3, 0], [-4, 0], [-5, 0], [-6, 0], [-7, 0]]
+
+    it 'returns white rook move list' do
+      move_list = rook_class.moves(class_symbol)
+      expect(move_list).to match_array(expected_moves)
+    end
+  end
+
+  context 'when a black rook piece is called' do
+    subject(:rook_class) { described_class }
+    let(:class_symbol) { :r }
+
+    expected_moves = [[0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [0, -1], [0, -2], [0, -3], [0, -4], [0, -5], [0, -6], [0, -7], [-1, 0], [-2, 0], [-3, 0], [-4, 0], [-5, 0], [-6, 0], [-7, 0]]
+
+    it 'returns black rook move list' do
+      move_list = rook_class.moves(class_symbol)
+      expect(move_list).to match_array(expected_moves)
+    end
+  end
+
+  context 'when a white knight piece is called' do
+
+    subject(:knight_class) { described_class }
+    let(:class_symbol) { :N }
+
+    expected_moves = [[1, 2], [1, -2], [-1, 2], [-1, -2], [2, 1], [2, -1], [-2, 1], [-2, -1]]
+
+    it 'returns white knight move list' do
+      move_list = knight_class.moves(class_symbol)
+      expect(move_list).to match_array(expected_moves)
+    end
+  end
+
+  context 'when a black knight piece is called' do
+    subject(:knight_class) { described_class }
+    let(:class_symbol) { :n }
+
+    expected_moves = [[1, 2], [1, -2], [-1, 2], [-1, -2], [2, 1], [2, -1], [-2, 1], [-2, -1]]
+
+    it 'returns black knight move list' do
+      move_list = knight_class.moves(class_symbol)
+      expect(move_list).to match_array(expected_moves)
+    end
+  end
+
+  context 'when a white bishop piece is called' do
+
+    subject(:bishop_class) { described_class }
+    let(:class_symbol) { :B }
+
+    expected_moves = [[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 7], [-1, 1], [-2, 2], [-3, 3], [-4, 4], [-5, 5], [-6, 6], [-7, 7], [1, -1], [2, -2], [3, -3], [4, -4], [5, -5], [6, -6], [7, -7], [-1, -1], [-2, -2], [-3, -3], [-4, -4], [-5, -5], [-6, -6], [-7, -7]]
+
+    it 'returns white bishop move list' do
+      move_list = bishop_class.moves(class_symbol)
+      expect(move_list).to match_array(expected_moves)
+    end
+  end
+
+  context 'when a black bishop piece is called' do
+    subject(:bishop_class) { described_class }
+    let(:class_symbol) { :b }
+
+    expected_moves = [[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 7], [-1, 1], [-2, 2], [-3, 3], [-4, 4], [-5, 5], [-6, 6], [-7, 7], [1, -1], [2, -2], [3, -3], [4, -4], [5, -5], [6, -6], [7, -7], [-1, -1], [-2, -2], [-3, -3], [-4, -4], [-5, -5], [-6, -6], [-7, -7]]
+
+    it 'returns black bishop move list' do
+      move_list = bishop_class.moves(class_symbol)
+      expect(move_list).to match_array(expected_moves)
+    end
+  end
+
+  context 'when a white queen piece is called' do
+
+    subject(:queen_class) { described_class }
+    let(:class_symbol) { :Q }
+
+    expected_moves = [[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 7], [-1, 1], [-2, 2], [-3, 3], [-4, 4], [-5, 5], [-6, 6], [-7, 7], [1, -1], [2, -2], [3, -3], [4, -4], [5, -5], [6, -6], [7, -7], [-1, -1], [-2, -2], [-3, -3], [-4, -4], [-5, -5], [-6, -6], [-7, -7], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [0, -1], [0, -2], [0, -3], [0, -4], [0, -5], [0, -6], [0, -7], [-1, 0], [-2, 0], [-3, 0], [-4, 0], [-5, 0], [-6, 0], [-7, 0]]
+
+    it 'returns white queen move list' do
+      move_list = queen_class.moves(class_symbol)
+      expect(move_list).to match_array(expected_moves)
+    end
+  end
+
+  context 'when a black queen piece is called' do
+    subject(:queen_class) { described_class }
+    let(:class_symbol) { :q }
+
+    expected_moves = [[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 7], [-1, 1], [-2, 2], [-3, 3], [-4, 4], [-5, 5], [-6, 6], [-7, 7], [1, -1], [2, -2], [3, -3], [4, -4], [5, -5], [6, -6], [7, -7], [-1, -1], [-2, -2], [-3, -3], [-4, -4], [-5, -5], [-6, -6], [-7, -7], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [0, -1], [0, -2], [0, -3], [0, -4], [0, -5], [0, -6], [0, -7], [-1, 0], [-2, 0], [-3, 0], [-4, 0], [-5, 0], [-6, 0], [-7, 0]]
+
+    it 'returns black queen move list' do
+      move_list = queen_class.moves(class_symbol)
+      expect(move_list).to match_array(expected_moves)
+    end
+  end
+
+  context 'when a white king piece is called' do
+
+    subject(:king_class) { described_class }
+    let(:class_symbol) { :K }
+
+    expected_moves = [[0, 1], [0, -1], [1, 0], [-1, 0], [1, 1], [1, -1], [-1, 1], [-1, -1]]
+
+    it 'returns white king move list' do
+      move_list = king_class.moves(class_symbol)
+      expect(move_list).to match_array(expected_moves)
+    end
+  end
+
+  context 'when a black king piece is called' do
+    subject(:king_class) { described_class }
+    let(:class_symbol) { :k }
+
+    expected_moves = [[0, 1], [0, -1], [1, 0], [-1, 0], [1, 1], [1, -1], [-1, 1], [-1, -1]]
+
+    it 'returns black king move list' do
+      move_list = king_class.moves(class_symbol)
+      expect(move_list).to match_array(expected_moves)
+    end
+  end
 end
-
-# describe Rook do
-#   describe "#set_start_location" do
-
-#     context 'when first rook is created' do
-#       subject(:first_rook) { described_class.new(count) }
-#       let(:count)  { 1 }
-#       it 'has location of [1, 1]' do
-#         location = first_rook.set_start_location
-#         expect(location).to eq([1, 1])
-#       end
-#     end
-
-#     context 'when second rook is created' do
-#       subject(:second_rook) { described_class.new(count) }
-#       let(:count)  { 8 }
-#       it 'has location of [1, 8]' do
-#         location = second_rook.set_start_location
-#         expect(location).to eq([1, 8])
-#       end
-#     end
-#   end
-# end
-
-# describe Knight do
-#   describe "#set_start_location" do
-
-#     context 'when first knight is created' do
-#       subject(:first_knight) { described_class.new(count) }
-#       let(:count)  { 2 }
-#       it 'has location of [1, 2]' do
-#         location = first_knight.set_start_location
-#         expect(location).to eq([1, 2])
-#       end
-#     end
-
-#     context 'when second knight is created' do
-#       subject(:second_knight) { described_class.new(count) }
-#       let(:count)  { 7 }
-#       it 'has location of [1, 7]' do
-#         location = second_knight.set_start_location
-#         expect(location).to eq([1, 7])
-#       end
-#     end
-#   end
-# end
-
-# describe Bishop do
-#   describe "#set_start_location" do
-
-#     context 'when first bishop is created' do
-#       subject(:first_bishop) { described_class.new(count) }
-#       let(:count)  { 3 }
-#       it 'has location of [1, 3]' do
-#         location = first_bishop.set_start_location
-#         expect(location).to eq([1, 3])
-#       end
-#     end
-
-#     context 'when second bishop is created' do
-#       subject(:second_bishop) { described_class.new(count) }
-#       let(:count)  { 6 }
-#       it 'has location of [1, 6]' do
-#         location = second_bishop.set_start_location
-#         expect(location).to eq([1, 6])
-#       end
-#     end
-#   end
-# end
-
-# describe Queen do
-#   describe "#set_start_location" do
-
-#     context 'when white queen is created' do
-#       subject(:white_queen) { described_class.new(count) }
-#       let(:count)  { 4 }
-#       it 'has location of [1, 4]' do
-#         location = white_queen.set_start_location
-#         expect(location).to eq([1, 4])
-#       end
-#     end
-#   end
-# end
-
-# describe King do
-#   describe "#set_start_location" do
-
-#     context 'when white king is created' do
-#       subject(:white_king) { described_class.new(count) }
-#       let(:count)  { 5 }
-#       it 'has location of [1, 5]' do
-#         location = white_king.set_start_location
-#         expect(location).to eq([1, 5])
-#       end
-#     end
-#   end
-# end
-
-# describe Pawn do
-#   describe "#set_start_location" do
-
-#     context 'when first white pawn is created' do
-#       subject(:first_pawn) { described_class.new(count) }
-#       let(:count)  { 9 }
-#       it 'has location of [2, 1]' do
-#         location = first_pawn.set_start_location
-#         expect(location).to eq([2, 1])
-#       end
-#     end
-
-#     context 'when second white pawn is created' do
-#       subject(:second_pawn) { described_class.new(count) }
-#       let(:count)  { 10 }
-#       it 'has location of [2, 2]' do
-#         location = second_pawn.set_start_location
-#         expect(location).to eq([2, 2])
-#       end
-#     end
-
-#     context 'when third white pawn is created' do
-#       subject(:third_pawn) { described_class.new(count) }
-#       let(:count)  { 11 }
-#       it 'has location of [2, 3]' do
-#         location = third_pawn.set_start_location
-#         expect(location).to eq([2, 3])
-#       end
-#     end
-
-#     context 'when fourth white pawn is created' do
-#       subject(:fourth_pawn) { described_class.new(count) }
-#       let(:count)  { 12 }
-#       it 'has location of [2, 4]' do
-#         location = fourth_pawn.set_start_location
-#         expect(location).to eq([2, 4])
-#       end
-#     end
-
-#     context 'when fifth white pawn is created' do
-#       subject(:fifth_pawn) { described_class.new(count) }
-#       let(:count)  { 13 }
-#       it 'has location of [2, 5]' do
-#         location = fifth_pawn.set_start_location
-#         expect(location).to eq([2, 5])
-#       end
-#     end
-
-#     context 'when sixth white pawn is created' do
-#       subject(:sixth_pawn) { described_class.new(count) }
-#       let(:count)  { 14 }
-#       it 'has location of [2, 6]' do
-#         location = sixth_pawn.set_start_location
-#         expect(location).to eq([2, 6])
-#       end
-#     end
-
-#     context 'when seventh white pawn is created' do
-#       subject(:seventh_pawn) { described_class.new(count) }
-#       let(:count)  { 15 }
-#       it 'has location of [2, 7]' do
-#         location = seventh_pawn.set_start_location
-#         expect(location).to eq([2, 7])
-#       end
-#     end
-
-#     context 'when eight white pawn is created' do
-#       subject(:eight_pawn) { described_class.new(count) }
-#       let(:count)  { 16 }
-#       it 'has location of [2, 8]' do
-#         location = eight_pawn.set_start_location
-#         expect(location).to eq([2, 8])
-#       end
-#     end
-#   end
-# end
-
-# describe BlackRook do
-#   describe "#set_start_location" do
-
-#     context 'when first black rook is created' do
-#       subject(:first_rook) { described_class.new(count) }
-#       let(:count)  { 17 }
-#       it 'has location of [8, 1]' do
-#         location = first_rook.set_start_location
-#         expect(location).to eq([8, 1])
-#       end
-#     end
-
-#     context 'when second rook is created' do
-#       subject(:second_rook) { described_class.new(count) }
-#       let(:count)  { 24 }
-#       it 'has location of [8, 8]' do
-#         location = second_rook.set_start_location
-#         expect(location).to eq([8, 8])
-#       end
-#     end
-#   end
-# end
-
-# describe BlackKnight do
-#   describe "#set_start_location" do
-
-#     context 'when first black knight is created' do
-#       subject(:first_knight) { described_class.new(count) }
-#       let(:count)  { 18 }
-#       it 'has location of [8, 2]' do
-#         location = first_knight.set_start_location
-#         expect(location).to eq([8, 2])
-#       end
-#     end
-
-#     context 'when second black knight is created' do
-#       subject(:second_knight) { described_class.new(count) }
-#       let(:count)  { 23 }
-#       it 'has location of [8, 7]' do
-#         location = second_knight.set_start_location
-#         expect(location).to eq([8, 7])
-#       end
-#     end
-#   end
-# end
-
-# describe BlackBishop do
-#   describe "#set_start_location" do
-
-#     context 'when first black bishop is created' do
-#       subject(:first_bishop) { described_class.new(count) }
-#       let(:count)  { 19 }
-#       it 'has location of [8, 3]' do
-#         location = first_bishop.set_start_location
-#         expect(location).to eq([8, 3])
-#       end
-#     end
-
-#     context 'when second black bishop is created' do
-#       subject(:second_bishop) { described_class.new(count) }
-#       let(:count)  { 22 }
-#       it 'has location of [8, 6]' do
-#         location = second_bishop.set_start_location
-#         expect(location).to eq([8, 6])
-#       end
-#     end
-#   end
-# end
-
-# describe BlackQueen do
-#   describe "#set_start_location" do
-
-#     context 'when black queen is created' do
-#       subject(:q) { described_class.new(count) }
-#       let(:count)  { 21 }
-#       it 'has location of [8, 4]' do
-#         location = black_queen.set_start_location
-#         expect(location).to eq([8, 4])
-#       end
-#     end
-#   end
-# end
-
-# describe BlackKing do
-#   describe "#set_start_location" do
-
-#     context 'when black king is created' do
-#       subject(:k) { described_class.new(count) }
-#       let(:count)  { 21 }
-#       it 'has location of [8, 5]' do
-#         location = black_king.set_start_location
-#         expect(location).to eq([8, 5])
-#       end
-#     end
-#   end
-# end
-
-# describe Pawn do
-#   describe "#set_start_location" do
-
-#     context 'when first white pawn is created' do
-#       subject(:first_pawn) { described_class.new(count) }
-#       let(:count)  { 9 }
-#       it 'has location of [2, 1]' do
-#         location = first_pawn.set_start_location
-#         expect(location).to eq([2, 1])
-#       end
-#     end
-
-#     context 'when second white pawn is created' do
-#       subject(:second_pawn) { described_class.new(count) }
-#       let(:count)  { 10 }
-#       it 'has location of [2, 2]' do
-#         location = second_pawn.set_start_location
-#         expect(location).to eq([2, 2])
-#       end
-#     end
-
-#     context 'when third white pawn is created' do
-#       subject(:third_pawn) { described_class.new(count) }
-#       let(:count)  { 11 }
-#       it 'has location of [2, 3]' do
-#         location = third_pawn.set_start_location
-#         expect(location).to eq([2, 3])
-#       end
-#     end
-
-#     context 'when fourth white pawn is created' do
-#       subject(:fourth_pawn) { described_class.new(count) }
-#       let(:count)  { 12 }
-#       it 'has location of [2, 4]' do
-#         location = fourth_pawn.set_start_location
-#         expect(location).to eq([2, 4])
-#       end
-#     end
-
-#     context 'when fifth white pawn is created' do
-#       subject(:fifth_pawn) { described_class.new(count) }
-#       let(:count)  { 13 }
-#       it 'has location of [2, 5]' do
-#         location = fifth_pawn.set_start_location
-#         expect(location).to eq([2, 5])
-#       end
-#     end
-
-#     context 'when sixth white pawn is created' do
-#       subject(:sixth_pawn) { described_class.new(count) }
-#       let(:count)  { 14 }
-#       it 'has location of [2, 6]' do
-#         location = sixth_pawn.set_start_location
-#         expect(location).to eq([2, 6])
-#       end
-#     end
-
-#     context 'when seventh white pawn is created' do
-#       subject(:seventh_pawn) { described_class.new(count) }
-#       let(:count)  { 15 }
-#       it 'has location of [2, 7]' do
-#         location = seventh_pawn.set_start_location
-#         expect(location).to eq([2, 7])
-#       end
-#     end
-
-#     context 'when eight white pawn is created' do
-#       subject(:eight_pawn) { described_class.new(count) }
-#       let(:count)  { 16 }
-#       it 'has location of [2, 8]' do
-#         location = eight_pawn.set_start_location
-#         expect(location).to eq([2, 8])
-#       end
-#     end
-#   end
-# end

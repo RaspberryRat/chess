@@ -23,8 +23,8 @@ class GamePiece
     }.fetch(piece).new
   end
 
-  def self.moves(piece, current_location)
-    self.for(piece).moves(current_location)
+  def self.moves(piece)
+    self.for(piece).moves
   end
   
   
@@ -37,6 +37,29 @@ class GamePiece
     @location = nil
   end
 
+  def diagonal_moves(maximum_distance)
+    move_list = []
+    i = 1
+    maximum_distance.times do
+      move_list << [i, i]
+      move_list << [i, -i]
+      move_list << [-i, i]
+      move_list << [-i, -i]
+      i += 1
+    end
+    move_list
+  end
+
+  def straight_moves(maximum_distance)
+    move_list = []
+    (1..maximum_distance).each do |n|
+      move_list << [0, n]
+      move_list << [n, 0]
+      move_list << [0, n * -1]
+      move_list << [n * -1, 0]
+    end
+    move_list
+  end
 end
 
 class Pawn < GamePiece
@@ -45,11 +68,8 @@ class Pawn < GamePiece
     @piece = WHITE_PAWN
   end
 
-  def moves(current_location)
-    move_list = []
-    move_list.push([0, 1], [1, 1], [-1, 1])
-    move_list << [0, 2] if current_location[1] == '2'
-    move_list.sort
+  def moves
+    [[0, 1], [0, 2], [-1, 1], [1, 1]]
   end
 end
 
@@ -60,12 +80,8 @@ class BlackPawn < Pawn
     @piece = BLACK_PAWN
   end
 
-  def moves(current_location)
-    move_list = []
-    move_list.push([0, -1], [1, -1], [-1, -1])
-    move_list << [0, -2] if current_location[1] == '7'
-
-    move_list.sort
+  def moves
+    [[0, -1], [0, -2], [-1, -1], [1, -1]]
   end
 end
 
@@ -74,33 +90,38 @@ class Rook < GamePiece
     @location = location
     @piece = WHITE_ROOK
   end
+
+  def moves
+    straight_moves(7)
+  end
 end
 
-class BlackRook < GamePiece
+class BlackRook < Rook
   
   def initialize(location = nil)
     @location = location
     @piece = BLACK_ROOK
   end
-
 end
 
 class Knight < GamePiece
-  
+
   def initialize(location = nil)
     @location = location
     @piece = WHITE_KNIGHT
   end
 
+  def moves
+    [[1, 2], [1, -2], [-1, 2], [-1, -2], [2, 1], [2, -1], [-2, 1], [-2, -1]]
+  end
 end
 
 class BlackKnight < Knight
-  
+
   def initialize(location = nil)
     @location = location
     @piece = BLACK_KNIGHT
   end
-
 end
 
 class Bishop < GamePiece
@@ -109,7 +130,10 @@ class Bishop < GamePiece
     @location = location
     @piece = WHITE_BISHOP
   end
-
+  
+  def moves
+    diagonal_moves(7)
+  end
 end
 
 class BlackBishop < Bishop
@@ -118,7 +142,6 @@ class BlackBishop < Bishop
     @location = location
     @piece = BLACK_BISHOP
   end
-
 end
 
 class Queen < GamePiece
@@ -128,6 +151,9 @@ class Queen < GamePiece
     @piece = WHITE_QUEEN
   end
 
+  def moves
+   move_list = straight_moves(7) + diagonal_moves(7)
+  end
 end
 
 class BlackQueen < Queen
@@ -136,7 +162,6 @@ class BlackQueen < Queen
     @location = location
     @piece = BLACK_QUEEN
   end
-
 end
 
 class King < GamePiece
@@ -145,7 +170,11 @@ class King < GamePiece
     @location = location
     @piece = WHITE_KING
   end
+  
+  def moves
+    move_list = diagonal_moves(1) + straight_moves(1)
 
+  end
 end
 
 class BlackKing < King
@@ -154,5 +183,4 @@ class BlackKing < King
     @location = location
     @piece = BLACK_KING
   end
-
 end
