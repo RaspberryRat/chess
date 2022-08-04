@@ -22,8 +22,14 @@ class GamePiece
       k: BlackKing,
     }.fetch(piece).new
   end
+
+  def self.moves(piece, current_location)
+    self.for(piece).moves(current_location)
+  end
+  
   
   attr_reader :piece, :location, :piece_number
+  attr_accessor :move_list
 
   def initialize
     @piece = nil
@@ -38,6 +44,13 @@ class Pawn < GamePiece
     @location = location
     @piece = WHITE_PAWN
   end
+
+  def moves(current_location)
+    move_list = []
+    move_list.push([0, 1], [1, 1], [-1, 1])
+    move_list << [0, 2] if current_location[1] == '2'
+    move_list.sort
+  end
 end
 
 class BlackPawn < Pawn
@@ -45,6 +58,14 @@ class BlackPawn < Pawn
   def initialize(location = nil)
     @location = location
     @piece = BLACK_PAWN
+  end
+
+  def moves(current_location)
+    move_list = []
+    move_list.push([0, -1], [1, -1], [-1, -1])
+    move_list << [0, -2] if current_location[1] == '7'
+
+    move_list.sort
   end
 end
 

@@ -5,6 +5,7 @@ describe GamePiece do
 
     context 'when method calls return correct game piece' do
       subject(:new_game) { described_class }
+
       it 'returns white rook' do
         choice = :R
         returned_object = new_game.for(choice)
@@ -118,16 +119,46 @@ describe GamePiece do
   describe '.moves' do
     context 'when a white pawn piece is called' do
 
-      subject(:P_class) { described_class }
-      
-      expected_moves = [[0, 1], [0, 2]]
-      it 'returns pawn move list' do
-        move_list = pawn_class.moves
-        expect(move_list).to eq(expected_moves)
+      subject(:pawn_class) { described_class }
+      let(:class_symbol) { :P }
+      let(:location) { 'b2' }
 
+      expected_moves = [[0, 1], [1, 1], [-1, 1], [0, 2]].sort
+
+      it 'returns pawn move list for starting location' do
+        move_list = pawn_class.moves(class_symbol, location)
+        expect(move_list).to eq(expected_moves)
+      end
+
+      base_moves = [[0, 1], [1, 1], [-1, 1]].sort
+      let(:moved_location) { 'b4' }
+      it 'returns pawn base move list' do
+        move_list = pawn_class.moves(class_symbol, moved_location)
+        expect(move_list).to eq(base_moves)
       end
     end
   end
+
+  context 'when a black pawn piece is called' do
+    subject(:pawn_class) { described_class }
+    let(:class_symbol) { :p }
+    let(:location) { 'b7' }
+
+    expected_moves = [[0, -1], [0, -2], [1, -1], [-1, -1]].sort
+
+    it 'returns pawn move list for starting location' do
+      move_list = pawn_class.moves(class_symbol, location)
+      expect(move_list).to eq(expected_moves)
+    end
+
+    base_moves = [[0, -1], [1, -1], [-1, -1]].sort
+    let(:moved_location) { 'b5' }
+    it 'returns pawn base move list' do
+      move_list = pawn_class.moves(class_symbol, moved_location)
+      expect(move_list).to eq(base_moves)
+    end
+  end
+
 end
 
 # describe Rook do

@@ -84,16 +84,6 @@ class Move
 
   private
 
-  def convert_notation
-    board.chars.map do |c|
-      if('1'..'8').include?(c)
-        c.to_i
-      else
-        c
-      end
-    end
-  end
-
   def convert_column(column)
     {
       a: 0,
