@@ -235,22 +235,62 @@ describe Move do
     end
   end
 
-  describe '#move_checker?' do
-    context 'when a move is allowed' do
+  describe '#legal_move_list' do
 
-      
-      subject(:pawn_move) { described_class.new(pawn, destination, starting_board, game_pieces) }
-      let(:pawn) { 'b2' }
-      let(:destination) { 'b3' }
+    context 'when a queen is selected at starting location' do
+
+      subject(:new_game) { described_class.new(queen, destination, starting_board, game_pieces) }
+      let(:queen) { 'd1' }
+      let(:destination) { 'd2' }
       let(:starting_board) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' }
       let(:game_pieces) { double('game_pieces') }
-      let(:move_list) { [[0, 1], [0, 2]] }
+      let(:queen_moves) { '[[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 7], [-1, 1], [-2, 2], [-3, 3], [-4, 4], [-5, 5], [-6, 6], [-7, 7], [1, -1], [2, -2], [3, -3], [4, -4], [5, -5], [6, -6], [7, -7], [-1, -1], [-2, -2], [-3, -3], [-4, -4], [-5, -5], [-6, -6], [-7, -7], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [0, -1], [0, -2], [0, -3], [0, -4], [0, -5], [0, -6], [0, -7], [-1, 0], [-2, 0], [-3, 0], [-4, 0], [-5, 0], [-6, 0], [-7, 0]]' }
 
+      
 
-      it 'returns true' do
-        result = pawn_move.move_checker?(move_list)
-        expect(result).to be(true)
+      it 'returns no possible moves' do 
+        moves_available = new_game.available_moves(queen_moves)
+        expect(moves_available).to be(false)
+      end
+    end
+
+    context 'when a queen is selected at starting location and pawn moved' do
+
+      subject(:new_game) { described_class.new(queen, destination, starting_board, game_pieces) }
+      let(:queen) { 'd1' }
+      let(:destination) { 'd2' }
+      let(:starting_board) { 'rnbqkbnr/pppppppp/8/8/8/3P4/PPP1PPPP/RNBQKBNR' }
+      let(:game_pieces) { double('game_pieces') }
+      let(:queen_moves) { '[[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 7], [-1, 1], [-2, 2], [-3, 3], [-4, 4], [-5, 5], [-6, 6], [-7, 7], [1, -1], [2, -2], [3, -3], [4, -4], [5, -5], [6, -6], [7, -7], [-1, -1], [-2, -2], [-3, -3], [-4, -4], [-5, -5], [-6, -6], [-7, -7], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [0, -1], [0, -2], [0, -3], [0, -4], [0, -5], [0, -6], [0, -7], [-1, 0], [-2, 0], [-3, 0], [-4, 0], [-5, 0], [-6, 0], [-7, 0]]' }
+
+      expected_moves = [[0, 1]]
+
+      it 'returns no possible moves' do 
+        moves_available = new_game.available_moves(queen_moves)
+        expect(moves_available).to match_array(expected_moves)
       end
     end
   end
+
+
+
+
+  # describe '#move_checker?' do
+  #   context 'when a move is allowed' do
+
+      
+  #     subject(:pawn_move) { described_class.new(pawn, destination, starting_board, game_pieces) }
+  #     let(:pawn) { 'b2' }
+  #     let(:destination) { 'b3' }
+  #     let(:starting_board) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' }
+  #     let(:game_pieces) { double('game_pieces') }
+  #     let(:move_list) { [[0, 1], [0, 2]] }
+
+
+  #     it 'returns true' do
+  #       result = pawn_move.move_checker?(move_list)
+  #       expect(result).to be(true)
+  #     end
+  #   end
+  # end
 end

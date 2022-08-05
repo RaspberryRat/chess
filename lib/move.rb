@@ -61,12 +61,21 @@ class Move
 
   def allowed_move?
     piece_type = what_piece
-    possible_moves = piece_template.moves(piece_type)
-    return true if move_checker?(possible_moves)
+    move_list = piece_template.moves(piece_type)
+    return true if move_checker?(move_list)
 
     false
   end
 
+  def available_moves(move_list)
+    possible_moves = []
+
+    return false if possible_moves.empty?
+    possible_moves
+  end
+
+
+  #TODO might have to remove this as it won't do what I want anymore
   def move_checker?(move_list)
     current_location = convert_to_grid(location)
     converted_destination = convert_to_grid(destination)
