@@ -267,12 +267,85 @@ describe Move do
 
       expected_moves = [[1, 0]]
 
-      it 'returns no possible moves' do 
+      it 'returns one possible move' do 
+        moves_available = new_game.available_moves(queen_moves, piece)
+        expect(moves_available).to match_array(expected_moves)
+      end
+    end
+
+    context 'when queen is selected at start location and pawn removed in d' do
+
+      subject(:new_game) { described_class.new(queen, destination, starting_board, game_pieces) }
+      let(:queen) { 'd1' }
+      let(:destination) { 'd2' }
+      let(:starting_board) { 'rnbqkbnr/pppppppp/8/8/8/8/PPP1PPPP/RNBQKBNR' }
+      let(:game_pieces) { double('game_pieces') }
+      let(:piece) { 'Q' }
+      let(:queen_moves) { [[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 7], [-1, 1], [-2, 2], [-3, 3], [-4, 4], [-5, 5], [-6, 6], [-7, 7], [1, -1], [2, -2], [3, -3], [4, -4], [5, -5], [6, -6], [7, -7], [-1, -1], [-2, -2], [-3, -3], [-4, -4], [-5, -5], [-6, -6], [-7, -7], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [0, -1], [0, -2], [0, -3], [0, -4], [0, -5], [0, -6], [0, -7], [-1, 0], [-2, 0], [-3, 0], [-4, 0], [-5, 0], [-6, 0], [-7, 0]] }
+
+      expected_moves = [[1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0]]
+
+      it 'returns 6 possible move' do 
+        moves_available = new_game.available_moves(queen_moves, piece)
+        expect(moves_available).to match_array(expected_moves)
+      end
+    end
+
+    context 'when queen is selected at start location and pawn removed in d' do
+
+      subject(:new_game) { described_class.new(queen, destination, starting_board, game_pieces) }
+      let(:queen) { 'd1' }
+      let(:destination) { 'd2' }
+      let(:starting_board) { 'rnbqkbnr/8/8/8/8/8/PPP1PPPP/RNBQKBNR' }
+      let(:game_pieces) { double('game_pieces') }
+      let(:piece) { 'Q' }
+      let(:queen_moves) { [[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 7], [-1, 1], [-2, 2], [-3, 3], [-4, 4], [-5, 5], [-6, 6], [-7, 7], [1, -1], [2, -2], [3, -3], [4, -4], [5, -5], [6, -6], [7, -7], [-1, -1], [-2, -2], [-3, -3], [-4, -4], [-5, -5], [-6, -6], [-7, -7], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [0, -1], [0, -2], [0, -3], [0, -4], [0, -5], [0, -6], [0, -7], [-1, 0], [-2, 0], [-3, 0], [-4, 0], [-5, 0], [-6, 0], [-7, 0]] }
+
+      expected_moves = [[1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0]]
+
+      it 'returns 7 possible move' do 
+        moves_available = new_game.available_moves(queen_moves, piece)
+        expect(moves_available).to match_array(expected_moves)
+      end
+    end
+
+    context 'when queen is selected at and one piece in row' do
+
+      subject(:new_game) { described_class.new(queen, destination, starting_board, game_pieces) }
+      let(:queen) { 'd1' }
+      let(:destination) { 'd2' }
+      let(:starting_board) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/3Q4' }
+      let(:game_pieces) { double('game_pieces') }
+      let(:piece) { 'Q' }
+      let(:queen_moves) { [[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 7], [-1, 1], [-2, 2], [-3, 3], [-4, 4], [-5, 5], [-6, 6], [-7, 7], [1, -1], [2, -2], [3, -3], [4, -4], [5, -5], [6, -6], [7, -7], [-1, -1], [-2, -2], [-3, -3], [-4, -4], [-5, -5], [-6, -6], [-7, -7], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [0, -1], [0, -2], [0, -3], [0, -4], [0, -5], [0, -6], [0, -7], [-1, 0], [-2, 0], [-3, 0], [-4, 0], [-5, 0], [-6, 0], [-7, 0]] }
+
+      expected_moves = [[0, 1], [0, -1], [0, 2], [0, -2], [0, 3], [0, -3], [0, 4]]
+
+      it 'returns 7 possible move' do 
+        moves_available = new_game.available_moves(queen_moves, piece)
+        expect(moves_available).to match_array(expected_moves)
+      end
+    end
+
+    context 'when queen is selected at and no pawns in row 2' do
+
+      subject(:new_game) { described_class.new(queen, destination, starting_board, game_pieces) }
+      let(:queen) { 'd1' }
+      let(:destination) { 'd2' }
+      let(:starting_board) { 'rnbqkbnr/pppppppp/8/8/8/8/8/RNBQKBNR' }
+      let(:game_pieces) { double('game_pieces') }
+      let(:piece) { 'Q' }
+      let(:queen_moves) { [[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 7], [-1, 1], [-2, 2], [-3, 3], [-4, 4], [-5, 5], [-6, 6], [-7, 7], [1, -1], [2, -2], [3, -3], [4, -4], [5, -5], [6, -6], [7, -7], [-1, -1], [-2, -2], [-3, -3], [-4, -4], [-5, -5], [-6, -6], [-7, -7], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [0, -1], [0, -2], [0, -3], [0, -4], [0, -5], [0, -6], [0, -7], [-1, 0], [-2, 0], [-3, 0], [-4, 0], [-5, 0], [-6, 0], [-7, 0]] }
+
+      expected_moves = [[1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [1, -1], [2, -2], [3, -3], [1, 1], [2, 2], [3, 3], [4, 4]]
+
+      it 'returns 7 possible move' do 
         moves_available = new_game.available_moves(queen_moves, piece)
         expect(moves_available).to match_array(expected_moves)
       end
     end
   end
+  
 
   describe '#piece_colour' do
     context 'when a white queen is selected' do

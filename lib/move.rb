@@ -93,83 +93,121 @@ class Move
       else
         temp_move_list << move
       end
-
     end
-
-    # horizontal moves
+    
+    # vertical moves
     if temp_move_list.include?([1, 0])
       possible_moves << [1, 0]
       i = 2
       temp_move_list.length.times do
         break unless temp_move_list.include?([i, 0])
-
+        # last_square_empty?
+        prev_move = [i - 1, 0]
+        last_move = [prev_move[0] + piece_location[0], prev_move[1] + piece_location[1]]
+        last_square = current_board_state[last_move[0]][last_move[1]]
+        break unless last_square == '.'
+    
         possible_moves << [i, 0]
         i += 1
       end
-    elsif temp_move_list.include?([-1, 0])
+    end
+    if temp_move_list.include?([-1, 0])
       possible_moves << [-1, 0]
       i = 2
       temp_move_list.length.times do
         break unless temp_move_list.include?([-i, 0])
-
-        possible_moves << [i, 0]
+        prev_move = [(i - 1) * - 1, 0]
+        last_move = [prev_move[0] + piece_location[0], prev_move[1] + piece_location[1]]
+        last_square = current_board_state[last_move[0]][last_move[1]]
+        break unless last_square == '.'
+    
+        possible_moves << [-i, 0]
         i += 1
       end
-      # vertical moves
-    elsif temp_move_list.include?([0, 1])
+    end
+      # horizontal moves
+    if temp_move_list.include?([0, 1])
       possible_moves << [0, 1]
       i = 2
       temp_move_list.length.times do
         break unless temp_move_list.include?([0, i])
-
+        prev_move = [0, i]
+        last_move = [prev_move[0] + piece_location[0], prev_move[1] + piece_location[1]]
+        last_square = current_board_state[last_move[0]][last_move[1]]
+        break unless last_square == '.'
+    
         possible_moves << [0, i]
         i += 1
       end
-    elsif temp_move_list.include?([-1, 0])
+    end
+    if temp_move_list.include?([0, -1])
       possible_moves << [0, -1]
       i = 2
       temp_move_list.length.times do
         break unless temp_move_list.include?([0, -i])
-
+        prev_move = [0, (i - 1) * - 1]
+        last_move = [prev_move[0] + piece_location[0], prev_move[1] + piece_location[1]]
+        last_square = current_board_state[last_move[0]][last_move[1]]
+        break unless last_square == '.'
+    
         possible_moves << [0, -i]
         i += 1
       end
     end
-
-    #vertical moves
+    
+    # diagonal moves
     if temp_move_list.include?([1, 1])
       possible_moves << [1, 1]
       i = 2
       temp_move_list.length.times do
         break unless temp_move_list.include?([i, i])
-
+        prev_move = [i, i]
+        last_move = [prev_move[0] + piece_location[0], prev_move[1] + piece_location[1]]
+        last_square = current_board_state[last_move[0]][last_move[1]]
+        break unless last_square == '.'
+    
         possible_moves << [i, i]
         i += 1
       end
-    elsif temp_move_list.include?([-1, 1])
+    end
+    if temp_move_list.include?([-1, 1])
       possible_moves << [-1, 1]
       i = 2
       temp_move_list.length.times do
         break unless temp_move_list.include?([-i, i])
-
+        prev_move = [(i - 1) * - 1, i - 1]
+        last_move = [prev_move[0] + piece_location[0], prev_move[1] + piece_location[1]]
+        last_square = current_board_state[last_move[0]][last_move[1]]
+        break unless last_square == '.'
+    
         possible_moves << [-i, i]
         i += 1
       end
-    elsif temp_move_list.include?([1, -1])
+    end
+    if temp_move_list.include?([1, -1])
       possible_moves << [1, -1]
       i = 2
       temp_move_list.length.times do
         break unless temp_move_list.include?([i, -i])
-
+        prev_move = [i - 1, (i - 1) * - 1]
+        last_move = [prev_move[0] + piece_location[0], prev_move[1] + piece_location[1]]
+        last_square = current_board_state[last_move[0]][last_move[1]]
+        break unless last_square == '.'
+    
         possible_moves << [i, -i]
         i += 1
       end
-    elsif temp_move_list.include?([-1, -1])
+    end
+    if temp_move_list.include?([-1, -1])
       possible_moves << [-1, -1]
       i = 2
       temp_move_list.length.times do
         break unless temp_move_list.include?([-i, -i])
-
+        prev_move = [(i - 1) * - 1, (i - 1) * - 1]
+        last_move = [prev_move[0] + piece_location[0], prev_move[1] + piece_location[1]]
+        last_square = current_board_state[last_move[0]][last_move[1]]
+        break unless last_square == '.'
+    
         possible_moves << [-i, -i]
         i += 1
       end
