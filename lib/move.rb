@@ -2,6 +2,7 @@
 
 require_relative 'board'
 require_relative 'game_pieces'
+require_relative 'string'
 require 'pry-byebug'
 
 class Move
@@ -81,16 +82,18 @@ class Move
     current_board_state = expand_notation
     piece_location = convert_to_grid(location)
     
+    temp_move_list = []
 
     move_list.each do |move|
-      next_square = [move[0] + piece_location[0], move[1] + piece_location[1]]
-      if next_square.any? { |n| n.negative? }
-        # probably use unless instead
-      end
+      next_square = [move[0] + piece_location[0]][move[1] + piece_location[1]]
+      next if next_square.any? { |n| n.negative? }
+
+      destination_square = current_board_state[next_square[0]][next_square[1]]
+      temp_move_list << move if destination_square == '.'
+
+      current_color = 
       
     end
-
-    # i need location and destination
 
     return false if possible_moves.empty?
     possible_moves
