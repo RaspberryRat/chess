@@ -49,8 +49,8 @@ class Move
 
   def what_piece
     square_to_grid = convert_to_grid(location)
-    column = square_to_grid[0]
-    row = square_to_grid[1]
+    column = square_to_grid[1]
+    row = square_to_grid[0]
 
     board_array = expand_notation
     row = board_array[row]
@@ -68,39 +68,120 @@ class Move
     false
   end
 
+  #TODO: only works for Queen, maybe need new class to send to 
   def available_moves(move_list, piece_type)
     possible_moves = []
 
-    # expand board notation
-    # take list of moves and loop
-    # check if square is empty, if square empty add to possible moves
-    # if square not empty, is the piece opposite of current piece (ie Black if white), if so add to possible moves
-    # then take possible move list - need to loop again
-    # if square distance is one, keep in list
-    # if greater than 1, need to check each possible move is unblocked, if move is blocked, need to remove from list and all further moves in that line
-
     current_board_state = expand_notation
     piece_location = convert_to_grid(location)
+    current_colour = piece_colour(piece_type)
     
     temp_move_list = []
 
     move_list.each do |move|
-      next_square = [move[0] + piece_location[0]][move[1] + piece_location[1]]
-      next if next_square.any? { |n| n.negative? }
+      next_square = [move[0] + piece_location[0], move[1] + piece_location[1]]
+      next if next_square.any?(&:negative?)
+      next if next_square.any? { |n| n > 7 }
 
       destination_square = current_board_state[next_square[0]][next_square[1]]
-      temp_move_list << move if destination_square == '.'
 
-      current_color = 
-      
+      # next iteration if square is same colour piece
+      if destination_square == '.'
+        temp_move_list << move
+      elsif current_colour == piece_colour(destination_square)
+        next
+      else
+        temp_move_list << move
+      end
+
     end
 
-    return false if possible_moves.empty?
+    # horizontal moves
+    if temp_move_list.include?([1, 0])
+      possible_moves << [1, 0]
+      i = 2
+      temp_move_list.length.times do
+        break unless temp_move_list.include?([i, 0])
+
+        possible_moves << [i, 0]
+        i += 1
+      end
+    elsif temp_move_list.include?([-1, 0])
+      possible_moves << [-1, 0]
+      i = 2
+      temp_move_list.length.times do
+        break unless temp_move_list.include?([-i, 0])
+
+        possible_moves << [i, 0]
+        i += 1
+      end
+      # vertical moves
+    elsif temp_move_list.include?([0, 1])
+      possible_moves << [0, 1]
+      i = 2
+      temp_move_list.length.times do
+        break unless temp_move_list.include?([0, i])
+
+        possible_moves << [0, i]
+        i += 1
+      end
+    elsif temp_move_list.include?([-1, 0])
+      possible_moves << [0, -1]
+      i = 2
+      temp_move_list.length.times do
+        break unless temp_move_list.include?([0, -i])
+
+        possible_moves << [0, -i]
+        i += 1
+      end
+    end
+
+    #vertical moves
+    if temp_move_list.include?([1, 1])
+      possible_moves << [1, 1]
+      i = 2
+      temp_move_list.length.times do
+        break unless temp_move_list.include?([i, i])
+
+        possible_moves << [i, i]
+        i += 1
+      end
+    elsif temp_move_list.include?([-1, 1])
+      possible_moves << [-1, 1]
+      i = 2
+      temp_move_list.length.times do
+        break unless temp_move_list.include?([-i, i])
+
+        possible_moves << [-i, i]
+        i += 1
+      end
+    elsif temp_move_list.include?([1, -1])
+      possible_moves << [1, -1]
+      i = 2
+      temp_move_list.length.times do
+        break unless temp_move_list.include?([i, -i])
+
+        possible_moves << [i, -i]
+        i += 1
+      end
+    elsif temp_move_list.include?([-1, -1])
+      possible_moves << [-1, -1]
+      i = 2
+      temp_move_list.length.times do
+        break unless temp_move_list.include?([-i, -i])
+
+        possible_moves << [-i, -i]
+        i += 1
+      end
+    end
+
+    return false if possible_moves.flatten.empty?
+
     possible_moves
   end
 
 
-  #TODO might have to remove this as it won't do what I want anymore
+  # TODO: might have to remove this as it won't do what I want anymore
   def move_checker?(move_list)
     current_location = convert_to_grid(location)
     converted_destination = convert_to_grid(destination)
@@ -114,6 +195,12 @@ class Move
     return true if move_list.include?(desired_move)
 
     false
+  end
+
+  def piece_colour(piece_type)
+    return 'white' if piece_type.is_upper?
+
+    'black'
   end
 
   private
@@ -134,7 +221,7 @@ class Move
   def convert_to_grid(board_square)
     column = convert_column(board_square[0])
     row = board_square[1].to_i - 1
-    [column, row]
+    [row, column]
   end
 
   # coverts fen notation into an array, if empty square, converts to '.'
