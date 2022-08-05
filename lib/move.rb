@@ -67,8 +67,30 @@ class Move
     false
   end
 
-  def available_moves(move_list)
+  def available_moves(move_list, piece_type)
     possible_moves = []
+
+    # expand board notation
+    # take list of moves and loop
+    # check if square is empty, if square empty add to possible moves
+    # if square not empty, is the piece opposite of current piece (ie Black if white), if so add to possible moves
+    # then take possible move list - need to loop again
+    # if square distance is one, keep in list
+    # if greater than 1, need to check each possible move is unblocked, if move is blocked, need to remove from list and all further moves in that line
+
+    current_board_state = expand_notation
+    piece_location = convert_to_grid(location)
+    
+
+    move_list.each do |move|
+      next_square = [move[0] + piece_location[0], move[1] + piece_location[1]]
+      if next_square.any? { |n| n.negative? }
+        # probably use unless instead
+      end
+      
+    end
+
+    # i need location and destination
 
     return false if possible_moves.empty?
     possible_moves

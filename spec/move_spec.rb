@@ -237,36 +237,38 @@ describe Move do
 
   describe '#legal_move_list' do
 
-    context 'when a queen is selected at starting location' do
+    context 'when queen is selected at starting location' do
 
       subject(:new_game) { described_class.new(queen, destination, starting_board, game_pieces) }
       let(:queen) { 'd1' }
       let(:destination) { 'd2' }
       let(:starting_board) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' }
       let(:game_pieces) { double('game_pieces') }
+      let(:piece) { 'Q' }
       let(:queen_moves) { '[[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 7], [-1, 1], [-2, 2], [-3, 3], [-4, 4], [-5, 5], [-6, 6], [-7, 7], [1, -1], [2, -2], [3, -3], [4, -4], [5, -5], [6, -6], [7, -7], [-1, -1], [-2, -2], [-3, -3], [-4, -4], [-5, -5], [-6, -6], [-7, -7], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [0, -1], [0, -2], [0, -3], [0, -4], [0, -5], [0, -6], [0, -7], [-1, 0], [-2, 0], [-3, 0], [-4, 0], [-5, 0], [-6, 0], [-7, 0]]' }
 
       
 
       it 'returns no possible moves' do 
-        moves_available = new_game.available_moves(queen_moves)
+        moves_available = new_game.available_moves(queen_moves, piece)
         expect(moves_available).to be(false)
       end
     end
 
-    context 'when a queen is selected at starting location and pawn moved' do
+    context 'when queen is selected at starting location and pawn moved d2d3' do
 
       subject(:new_game) { described_class.new(queen, destination, starting_board, game_pieces) }
       let(:queen) { 'd1' }
       let(:destination) { 'd2' }
       let(:starting_board) { 'rnbqkbnr/pppppppp/8/8/8/3P4/PPP1PPPP/RNBQKBNR' }
       let(:game_pieces) { double('game_pieces') }
+      let(:piece) { 'Q' }
       let(:queen_moves) { '[[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 7], [-1, 1], [-2, 2], [-3, 3], [-4, 4], [-5, 5], [-6, 6], [-7, 7], [1, -1], [2, -2], [3, -3], [4, -4], [5, -5], [6, -6], [7, -7], [-1, -1], [-2, -2], [-3, -3], [-4, -4], [-5, -5], [-6, -6], [-7, -7], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [0, -1], [0, -2], [0, -3], [0, -4], [0, -5], [0, -6], [0, -7], [-1, 0], [-2, 0], [-3, 0], [-4, 0], [-5, 0], [-6, 0], [-7, 0]]' }
 
       expected_moves = [[0, 1]]
 
       it 'returns no possible moves' do 
-        moves_available = new_game.available_moves(queen_moves)
+        moves_available = new_game.available_moves(queen_moves, piece)
         expect(moves_available).to match_array(expected_moves)
       end
     end
