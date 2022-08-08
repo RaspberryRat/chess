@@ -344,5 +344,21 @@ describe Move do
         expect(moves_available).to match_array(expected_moves)
       end
     end
+
+    # context 'when rook is selected at starting location' do
+
+    #   subject(:new_game) { described_class.new(rook, destination, starting_board, game_pieces) }
+    #   let(:rook) { 'a1' }
+    #   let(:destination) { 'a2' }
+    #   let(:starting_board) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' }
+    #   let(:game_pieces) { double('game_pieces') }
+    #   let(:piece) { 'R' }
+    #   let(:rook_moves) { [[0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [0, -1], [0, -2], [0, -3], [0, -4], [0, -5], [0, -6], [0, -7], [-1, 0], [-2, 0], [-3, 0], [-4, 0], [-5, 0], [-6, 0], [-7, 0]] }
+
+    #   it 'returns no possible moves' do 
+    #     moves_available = new_game.available_moves(rook_moves, piece)
+    #     expect(moves_available).to be(false)
+    #   end
+    # end
   end
 end
