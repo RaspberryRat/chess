@@ -2,7 +2,6 @@
 
 require_relative 'board'
 require_relative 'game_pieces'
-require_relative 'string'
 require_relative 'legal_move'
 require 'pry-byebug'
 
@@ -94,12 +93,6 @@ class Move
     return true if move_list.include?(desired_move)
 
     false
-  end
-
-  def piece_colour(piece_type)
-    return 'white' if piece_type.is_upper?
-
-    'black'
   end
 
   private

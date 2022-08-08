@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'string'
+
 class LegalMove
   def self.for(move_list, piece, location, board)
     {
