@@ -4,20 +4,21 @@ require_relative 'string'
 require 'pry-byebug'
 
 class LegalMove
+  @@Knight = 0
   def self.for(move_list, piece, location, board)
     {
-      # p: MovePawn,
-      # R: MoveRook,
       # P: MovePawn,
-      # r: MoveRook,
-      # N: MoveKnight,
-      # n: MoveKnight,
-      # B: MoveBishop,
-      # b: MoveBishop,
+      # p: MovePawn,
+      R: MoveRook,
+      r: MoveRook,
+      N: MoveKnight,
+      n: MoveKnight,
+      B: MoveBishop,
+      b: MoveBishop,
       Q: MoveQueen,
       q: MoveQueen,
-      # K: MoveKing,
-      # k: MoveKing,
+      K: MoveKing,
+      k: MoveKing
     }.fetch(piece.to_sym).new(move_list, location, piece, board).moves
   end
 
@@ -42,6 +43,7 @@ class LegalMove
 
   def temporary_move_list
     move_list.each do |move|
+      binding.pry if @@Knight == 1
       next_square = [move[0] + location[0], move[1] + location[1]]
       next if next_square.any?(&:negative?)
       next if next_square.any? { |n| n > 7 }
@@ -70,7 +72,7 @@ class LegalMove
         last_square = board[last_move[0]][last_move[1]]
         break unless last_square == '.'
 
-        possible_moves << [i, 0]
+        possible_moves << [i, 0] if temp_move_list.include?([i, 0])
         i += 1
       end
     end
@@ -84,7 +86,8 @@ class LegalMove
         last_square = board[last_move[0]][last_move[1]]
         break unless last_square == '.'
 
-        possible_moves << [-i, 0]
+        possible_moves << [-i, 0] if temp_move_list.include?([-i, 0])
+
         i += 1
       end
     end
@@ -102,7 +105,8 @@ class LegalMove
         last_square = board[last_move[0]][last_move[1]]
         break unless last_square == '.'
 
-        possible_moves << [0, i]
+        possible_moves << [0, i] if temp_move_list.include?([0, i])
+
         i += 1
       end
     end
@@ -117,7 +121,8 @@ class LegalMove
         last_square = board[last_move[0]][last_move[1]]
         break unless last_square == '.'
 
-        possible_moves << [0, -i]
+        possible_moves << [0, -i] if temp_move_list.include?([0, -i])
+
         i += 1
       end
     end
@@ -135,7 +140,8 @@ class LegalMove
         last_square = board[last_move[0]][last_move[1]]
         break unless last_square == '.'
 
-        possible_moves << [i, i]
+        possible_moves << [i, i] if temp_move_list.include?([i, i])
+        
         i += 1
       end
     end
@@ -150,7 +156,7 @@ class LegalMove
         last_square = board[last_move[0]][last_move[1]]
         break unless last_square == '.'
 
-        possible_moves << [-i, i]
+        possible_moves << [-i, i] if temp_move_list.include?([-i, i])
         i += 1
       end
     end
@@ -165,7 +171,8 @@ class LegalMove
         last_square = board[last_move[0]][last_move[1]]
         break unless last_square == '.'
 
-        possible_moves << [i, -i]
+        possible_moves << [i, -i] if temp_move_list.include?([i, -i])
+
         i += 1
       end
     end
@@ -180,7 +187,8 @@ class LegalMove
         last_square = board[last_move[0]][last_move[1]]
         break unless last_square == '.'
 
-        possible_moves << [-i, -i]
+        possible_moves << [-i, -i] if temp_move_list.include?([-i, -i])
+
         i += 1
       end
     end
@@ -197,6 +205,41 @@ class MoveQueen < LegalMove
   end
 end
 
+# TODO Castling
+class MoveRook < LegalMove
+  def moves
+    temporary_move_list
+    vertical_moves
+    horizontal_moves
+    possible_moves
+  end
+end
+
+class MoveBishop < LegalMove
+  def moves
+    temporary_move_list
+    diagonal_moves
+    possible_moves
+  end
+end
+
+# TODO Castling
+class MoveKing < LegalMove
+  def moves
+    temporary_move_list
+    vertical_moves
+    horizontal_moves
+    diagonal_moves
+    possible_moves
+  end
+end
+
+class MoveKnight < LegalMove
+  def moves
+    temporary_move_list
+    temp_move_list
+  end
+end
 
 
 
