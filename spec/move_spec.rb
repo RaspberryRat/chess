@@ -663,5 +663,23 @@ describe Move do
         expect(moves_available).to be(false)
       end
     end
+
+    context 'when pawn is at location d2 on starting board' do
+
+      subject(:new_game) { described_class.new(pawn, destination, starting_board, game_pieces) }
+      let(:pawn) { 'd2' }
+      let(:destination) { 'd3' }
+      let(:starting_board) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' }
+      let(:game_pieces) { double('game_pieces') }
+      let(:piece) { 'P' }
+      let(:pawn_moves) { [[0, 1], [0, 2], [-1, 1], [1, 1]] }
+
+      expected_moves = [[1, 0], [2, 0]]
+
+      it 'returns eight possible moves' do
+        moves_available = new_game.available_moves(pawn_moves, piece)
+        expect(moves_available).to match_array(expected_moves)
+      end
+    end
   end
 end

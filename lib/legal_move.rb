@@ -7,8 +7,8 @@ class LegalMove
   @@Knight = 0
   def self.for(move_list, piece, location, board)
     {
-      # P: MovePawn,
-      # p: MovePawn,
+      P: MovePawn,
+      p: MovePawn,
       R: MoveRook,
       r: MoveRook,
       N: MoveKnight,
@@ -238,6 +238,18 @@ class MoveKnight < LegalMove
   def moves
     temporary_move_list
     temp_move_list
+  end
+end
+
+# TODO Add pawn moves when piece avaialbe for capture
+class MovePawn < LegalMove
+  def moves
+    temporary_move_list
+    piece_to_capture?
+  end
+
+  def piece_to_capture?
+
   end
 end
 
