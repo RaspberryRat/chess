@@ -239,13 +239,13 @@ class MoveKnight < LegalMove
   end
 end
 
-# TODO Add pawn moves when piece avaialbe for capture
 class MovePawn < LegalMove
   def moves
     available_move_list = temporary_move_list
-    available_move_list = move_direction(available_move_list)
-    available_move_list = piece_to_capture(available_move_list)
     availble_move_list = at_start_location(available_move_list)
+    available_move_list = move_direction(available_move_list)
+    available_move_list = blocked_square(available_move_list)
+    available_move_list = piece_to_capture(available_move_list)
   end
 
   def move_direction(moves)
@@ -257,7 +257,7 @@ class MovePawn < LegalMove
 
   def piece_to_capture(moves)
     move_list = []
-    
+
     moves.each do |move|
       move_list << move if move[1] == 0
       next if move[0] == 0
@@ -275,6 +275,29 @@ class MovePawn < LegalMove
     else
       moves.delete_at(moves.index([2, 0])) unless location[0] == 6
     end
+    moves
+  end
+
+  def blocked_square(moves)
+    move_list = []
+
+    moves.each do |move|
+      move_list << move unless move[1] == 0
+      next unless move[1] == 0
+      next_square = [move[0] + location[0], move[1] + location[1]]
+      destination = board[next_square[0]][next_square[1]]
+      next unless destination == '.'
+      move_list << move
+    end
+    first_move_blocked(move_list)
+  end
+
+  private
+
+  def first_move_blocked(moves)
+    return moves if moves.include?([1, 0])
+
+    moves.delete_at(moves.index([2, 0])) if moves.include?([2, 0])
     moves
   end
 end
