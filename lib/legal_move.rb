@@ -4,7 +4,6 @@ require_relative 'string'
 require 'pry-byebug'
 
 class LegalMove
-  @@Knight = 0
   def self.for(move_list, piece, location, board)
     {
       P: MovePawn,
@@ -43,7 +42,6 @@ class LegalMove
 
   def temporary_move_list
     move_list.each do |move|
-      binding.pry if @@Knight == 1
       next_square = [move[0] + location[0], move[1] + location[1]]
       next if next_square.any?(&:negative?)
       next if next_square.any? { |n| n > 7 }
@@ -244,21 +242,29 @@ end
 # TODO Add pawn moves when piece avaialbe for capture
 class MovePawn < LegalMove
   def moves
-    temporary_move_list
-    piece_to_capture?
+    available_move_list = temporary_move_list
+    available_move_list = move_direction(available_move_list)
+    piece_to_capture(available_move_list)
   end
 
-  def piece_to_capture?
+  def move_direction(moves)
+    return if moves.empty?
+    return moves if current_colour == 'white'
 
+    moves.map { |move| [move[0] * -1, move[1]] }
+  end
+
+  def piece_to_capture(moves)
+    move_list = []
+    
+    moves.each do |move|
+      move_list << move if move[1] == 0
+      next if move[0] == 0
+      next_square = [move[0] + location[0], move[1] + location[1]]
+      destination = board[next_square[0]][next_square[1]]
+      next if destination == '.'
+      move_list << move unless current_colour == piece_colour(destination)
+    end
+    move_list
   end
 end
-
-
-
-
-
-
-
-
-
-

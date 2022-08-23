@@ -69,7 +69,7 @@ class Pawn < GamePiece
   end
 
   def moves
-    [[0, 1], [0, 2], [-1, 1], [1, 1]]
+    [[1, 0], [2, 0], [1, -1], [1, 1]]
   end
 end
 
@@ -81,7 +81,7 @@ class BlackPawn < Pawn
   end
 
   def moves
-    [[0, -1], [0, -2], [-1, -1], [1, -1]]
+    [[-1, 0], [-2,  0], [-1, -1], [-1, 1]]
   end
 end
 

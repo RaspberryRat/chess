@@ -663,7 +663,7 @@ describe Move do
         expect(moves_available).to be(false)
       end
     end
-
+    # TODO Add pawn moves when piece avaialbe for capture
     context 'when pawn is at location d2 on starting board' do
 
       subject(:new_game) { described_class.new(pawn, destination, starting_board, game_pieces) }
