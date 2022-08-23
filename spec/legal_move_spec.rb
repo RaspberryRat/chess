@@ -174,6 +174,100 @@ describe MovePawn do
       end
     end
   end
+
+  describe '#at_start_location' do
+    context '#when a white pawn is selected at starting location' do
+      subject(:pawn_move) { described_class.new(pawn_moves, location, piece_type, board) }
+      let(:pawn_moves) { [[1, 0], [2, 0]] }
+      let(:location) { [1, 3] }
+      let(:piece_type) { 'P' }
+      let(:board) { [["R", "N", "B", "Q", "K", "B", "N", "R"],
+        ["P", "P", "P", "P", "P", "P", "P", "P"],
+        [".", ".", ".", ".", ".", ".", ".", "."],
+        [".", ".", ".", ".", ".", ".", ".", "."],
+        [".", ".", ".", ".", ".", ".", ".", "."],
+        [".", ".", ".", ".", ".", ".", ".", "."],
+        ["p", "p", "p", "p", "p", "p", "p", "p"],
+        ["r", "n", "b", "q", "k", "b", "n", "r"]] 
+      }
+
+      expected_moves = [[1, 0], [2, 0]]
+
+      it 'returns white pawn start moves' do
+        available_moves = pawn_move.at_start_location(pawn_moves)
+        expect(available_moves).to match_array(expected_moves)
+      end
+    end
+
+    context '#when a white pawn is selected at not at start location' do
+      subject(:pawn_move) { described_class.new(pawn_moves, location, piece_type, board) }
+      let(:pawn_moves) { [[1, 0], [2, 0]] }
+      let(:location) { [2, 3] }
+      let(:piece_type) { 'P' }
+      let(:board) { [["R", "N", "B", "Q", "K", "B", "N", "R"],
+        ["P", "P", "P", ".", "P", "P", "P", "P"],
+        [".", ".", ".", "P", ".", ".", ".", "."],
+        [".", ".", ".", ".", ".", ".", ".", "."],
+        [".", ".", ".", ".", ".", ".", ".", "."],
+        [".", ".", ".", ".", ".", ".", ".", "."],
+        ["p", "p", "p", "p", "p", "p", "p", "p"],
+        ["r", "n", "b", "q", "k", "b", "n", "r"]] 
+      }
+
+      expected_moves = [[1, 0]]
+
+      it 'returns one white pawn move' do
+        available_moves = pawn_move.at_start_location(pawn_moves)
+        expect(available_moves).to match_array(expected_moves)
+      end
+    end
+
+    context '#when a white pawn is selected at starting location' do
+      subject(:pawn_move) { described_class.new(pawn_moves, location, piece_type, board) }
+      let(:pawn_moves) { [[1, 0], [2, 0]] }
+      let(:location) { [6, 3] }
+      let(:piece_type) { 'p' }
+      let(:board) { [["R", "N", "B", "Q", "K", "B", "N", "R"],
+        ["P", "P", "P", "P", "P", "P", "P", "P"],
+        [".", ".", ".", ".", ".", ".", ".", "."],
+        [".", ".", ".", ".", ".", ".", ".", "."],
+        [".", ".", ".", ".", ".", ".", ".", "."],
+        [".", ".", ".", ".", ".", ".", ".", "."],
+        ["p", "p", "p", "p", "p", "p", "p", "p"],
+        ["r", "n", "b", "q", "k", "b", "n", "r"]] 
+      }
+
+      expected_moves = [[1, 0], [2, 0]]
+
+      it 'returns white pawn start moves' do
+        available_moves = pawn_move.at_start_location(pawn_moves)
+        expect(available_moves).to match_array(expected_moves)
+      end
+    end
+
+    context '#when a white pawn is selected at not at start location' do
+      subject(:pawn_move) { described_class.new(pawn_moves, location, piece_type, board) }
+      let(:pawn_moves) { [[1, 0], [2, 0]] }
+      let(:location) { [5, 3] }
+      let(:piece_type) { 'p' }
+      let(:board) { [["R", "N", "B", "Q", "K", "B", "N", "R"],
+        ["P", "P", "P", ".", "P", "P", "P", "P"],
+        [".", ".", ".", "P", ".", ".", ".", "."],
+        [".", ".", ".", ".", ".", ".", ".", "."],
+        [".", ".", ".", ".", ".", ".", ".", "."],
+        [".", ".", ".", "p", ".", ".", ".", "."],
+        ["p", "p", "p", ".", "p", "p", "p", "p"],
+        ["r", "n", "b", "q", "k", "b", "n", "r"]] 
+      }
+
+      expected_moves = [[1, 0]]
+
+      it 'returns one white pawn move' do
+        available_moves = pawn_move.at_start_location(pawn_moves)
+        expect(available_moves).to match_array(expected_moves)
+      end
+    end
+  end
 end
 
 

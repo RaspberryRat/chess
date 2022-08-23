@@ -244,7 +244,8 @@ class MovePawn < LegalMove
   def moves
     available_move_list = temporary_move_list
     available_move_list = move_direction(available_move_list)
-    piece_to_capture(available_move_list)
+    available_move_list = piece_to_capture(available_move_list)
+    availble_move_list = at_start_location(available_move_list)
   end
 
   def move_direction(moves)
@@ -266,5 +267,14 @@ class MovePawn < LegalMove
       move_list << move unless current_colour == piece_colour(destination)
     end
     move_list
+  end
+
+  def at_start_location(moves)
+    if current_colour == 'white'
+      moves.delete_at(moves.index([2, 0])) unless location[0] == 1
+    else
+      moves.delete_at(moves.index([2, 0])) unless location[0] == 6
+    end
+    moves
   end
 end
