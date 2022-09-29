@@ -78,8 +78,6 @@ class Move
     possible_moves
   end
 
-
-  # TODO: might have to remove this as it won't do what I want anymore
   def move_checker?(move_list)
     current_location = convert_to_grid(location)
     converted_destination = convert_to_grid(destination)

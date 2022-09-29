@@ -81,7 +81,7 @@ class BlackPawn < Pawn
   end
 
   def moves
-    [[-1, 0], [-2,  0], [-1, -1], [-1, 1]]
+    [[-1, 0], [-2, 0], [-1, -1], [-1, 1]]
   end
 end
 

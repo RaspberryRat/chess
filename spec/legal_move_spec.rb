@@ -12,6 +12,17 @@ describe LegalMove do
         expect(colour).to eq('white')
       end
     end
+
+    context 'when a white queen is selected' do
+      subject(:game_move) { described_class.new(empty, empty, empty, empty) }
+      let(:empty) { 'nil' }
+      let(:piece) { 'q' }
+
+      it "returns 'black'" do
+        colour = game_move.piece_colour(piece)
+        expect(colour).to eq('black')
+      end
+    end
   end
 end
 
@@ -466,7 +477,7 @@ describe MovePawn do
       }
     
       expected_moves = [[1, 0], [1, -1], [1, 1]]
-      it 'returns white pawn all moves' do
+      it 'returns white pawn 3 moves' do
         available_moves = pawn_move.blocked_square(pawn_moves)
         expect(available_moves).to match_array(expected_moves)
       end
