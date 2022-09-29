@@ -29,14 +29,14 @@ class Move
   end
 
   def legal_selection?
-    return true if board.piece_at_location?(location)
+    return true if piece_at_location?
 
     puts "There is no piece at location '#{location}'."
     false
   end
 
   def legal_move?
-    return true if board.allowed_move?(location, destination)
+    return true if allowed_move?
 
     puts 'That is not a legal move, please choose a different destination.'
     false

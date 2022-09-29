@@ -15,6 +15,7 @@ class Game
   end
 
   def start
+    board.print_board
     loop do
       puts "Select the piece you would like to move (e.g., 'a4')"
       piece_selected = player_input
@@ -42,7 +43,7 @@ class Game
   private
 
   def move_piece(location, destination)
-    return true if move.new_move(location, destination, board)
+    return true if move.move_loop(location, destination, board.board)
 
     false
   end

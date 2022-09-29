@@ -20,7 +20,7 @@ class GamePiece
       q: BlackQueen,
       K: King,
       k: BlackKing,
-    }.fetch(piece).new
+    }.fetch(piece.to_sym).new
   end
 
   def self.moves(piece)
