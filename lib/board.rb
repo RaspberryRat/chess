@@ -46,7 +46,7 @@ class Board
 
   def convert_notation
     board.chars.map do |c|
-      if('1'..'8').include?(c)
+      if ('1'..'8').include?(c)
         c.to_i
       else
         c

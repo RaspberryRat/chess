@@ -27,9 +27,12 @@ class Game
       #TODO would like to somehow highlight available moves
 
       destination = player_input
-      break if move_piece(piece_selected, destination)
+      moved_piece = move_piece(piece_selected, destination)
+      break unless moved_piece
 
-      # TODO create new board state with piece moved
+      # Need to create a better factory for this
+      board = Board.new(moved_piece)
+      board.print_board
     end
     # need to do game check and restart move loop
     # TODO add players
@@ -59,8 +62,10 @@ class Game
   end
 
   def move_piece(location, destination)
-    return true if move.move_loop(location, destination, board.board)
-
-    false
+    unless moved_piece = move.move_loop(location, destination, board.board)
+      return false
+    end
+    captured_piece = moved_piece[1]
+    new_board = moved_piece[0]
   end
 end
