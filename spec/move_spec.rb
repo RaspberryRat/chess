@@ -235,7 +235,7 @@ describe Move do
     end
   end
 
-  describe '#legal_move_list' do
+  describe '#available_moves' do
 
     context 'when queen is selected at starting location' do
 

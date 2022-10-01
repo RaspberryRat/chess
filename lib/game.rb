@@ -3,7 +3,9 @@
 require_relative 'board'
 require_relative 'game_pieces'
 require_relative 'move'
+require_relative 'available_moves'
 require 'pry-byebug'
+
 
 class Game
 
@@ -19,7 +21,8 @@ class Game
     loop do
       puts "Select the piece you would like to move (e.g., 'a4')"
       piece_selected = player_input
-      # legal_selection?(piece_selected)
+      # does piece have any legal moves?
+
       destination = player_input
       break if move_piece(piece_selected, destination)
     end
