@@ -9,7 +9,8 @@ require 'pry-byebug'
 
 class Game
 
-  attr_reader :board, :move, :move_list
+  attr_reader :move, :move_list
+  attr_accessor :board
   
   def initialize(board = Board.new, move = Move, move_list = AvailableMoves)
     @board = board
@@ -19,10 +20,11 @@ class Game
 
   def start
     board.print_board
+    # TODO pawn is not taking piece legally, it took piece directly in front, also allows double move at al time
     loop do
       puts "Select the piece you would like to move (e.g., 'a4')"
       piece_selected = player_input
-      break unless available_moves?(piece_selected)
+      next unless available_moves?(piece_selected)
 
       #TODO would like to somehow highlight available moves
 
@@ -31,7 +33,7 @@ class Game
       break unless moved_piece
 
       # Need to create a better factory for this
-      board = Board.new(moved_piece)
+      @board = Board.new(moved_piece)
       board.print_board
     end
     # need to do game check and restart move loop
@@ -58,6 +60,7 @@ class Game
   def available_moves?(piece_selected)
     return true if move_list.possible_move(piece_selected, board.board)
 
+    puts 'No legal moves available, pick a different piece.'
     false
   end
 
