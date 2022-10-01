@@ -69,15 +69,6 @@ class Move
     false
   end
 
-  # def available_moves(move_list, piece_type)
-  #   piece_location = convert_to_grid(location)
-  #   current_board_state = expand_notation
-  #   possible_moves = move_template.for(move_list, piece_type, piece_location, current_board_state)
-  #   return false if possible_moves.flatten.empty?
-
-  #   possible_moves
-  # end
-
   def move_checker?(move_list)
     current_location = convert_to_grid(location)
     converted_destination = convert_to_grid(destination)
