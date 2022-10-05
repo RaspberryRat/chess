@@ -65,9 +65,9 @@ class Game
   end
 
   def move_piece(location, destination)
-    unless moved_piece = move.move_loop(location, destination, board.board)
-      return false
-    end
+    moved_piece = move.move_loop(location, destination, board.board)
+    return false unless moved_piece
+
     captured_piece = moved_piece[1]
     new_board = moved_piece[0]
   end
