@@ -142,7 +142,7 @@ describe Move do
       let(:destination) { 'b1' }
 
       it "returns 'P' for a pawn" do
-        result = pawn_selected.what_piece
+        result = pawn_selected.what_piece(pawn_start)
         expect(result).to eq('P')
       end
 
@@ -155,7 +155,7 @@ describe Move do
 
 
       it "returns 'P' for a pawn" do
-        result = first_move.what_piece
+        result = first_move.what_piece(pawn_location)
         expect(result).to eq('P')
       end
     end
@@ -168,7 +168,7 @@ describe Move do
     let(:destination) { nil }
 
     it "returns 'K'" do
-      result = end_game_board.what_piece
+      result = end_game_board.what_piece(square_picked)
       expect(result).to eq('k')
     end
 
@@ -176,7 +176,7 @@ describe Move do
     let(:empty_square) { 'c3' }
 
     it "returns 'empty square' when pick 'c3'" do
-      result = next_board.what_piece
+      result = next_board.what_piece(empty_square)
       expect(result).to be(false)
     end
   end
@@ -189,7 +189,7 @@ describe Move do
       let(:destination) { 'b1' }
 
       it "returns 'empty square'" do
-        result = empty_square_check.what_piece
+        result = empty_square_check.what_piece(empty_location)
         expect(result).to be(false)
       end
     end
@@ -234,4 +234,49 @@ describe Move do
       end
     end
   end
+
+  # # private methods - comment out to test
+  # describe '#array_to_fen_notation' do
+  #   context 'when given starting locations as board array' do
+  #     subject(:new_game) { described_class.new(pawn, pawn2, white_queen_row) }
+  #     let(:pawn) { 'a2' }
+  #     let(:pawn2) { 'a3' }
+  #     let(:white_queen_row) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/3Q4' }
+
+  #     board_array = [[".", ".", ".", "Q", ".", ".", ".", "."],             
+  #     ["P", "P", "P", "P", "P", "P", "P", "P"],             
+  #     [".", ".", ".", ".", ".", ".", ".", "."],             
+  #     [".", ".", ".", ".", ".", ".", ".", "."],             
+  #     [".", ".", ".", ".", ".", ".", ".", "."],             
+  #     [".", ".", ".", ".", ".", ".", ".", "."],             
+  #     ["p", "p", "p", "p", "p", "p", "p", "p"],             
+  #     ["r", "n", "b", "q", "k", "b", "n", "r"]] 
+
+  #     it 'returns starting fen notation' do
+  #       fen_notation = new_game.array_to_fen_notation(board_array)
+  #       expect(fen_notation).to eq(white_queen_row)
+  #     end
+  #   end
+
+  #   context 'when given a board array' do
+  #     subject(:new_game) { described_class.new(pawn, pawn2, starting_board) }
+  #     let(:pawn) { 'a2' }
+  #     let(:pawn2) { 'a3' }
+  #     let(:starting_board) { 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' }
+
+  #     board_array = [["R", "N", "B", "Q", "K", "B", "N", "R"],             
+  #     ["P", "P", "P", "P", "P", "P", "P", "P"],             
+  #     [".", ".", ".", ".", ".", ".", ".", "."],             
+  #     [".", ".", ".", ".", ".", ".", ".", "."],             
+  #     [".", ".", ".", ".", ".", ".", ".", "."],             
+  #     [".", ".", ".", ".", ".", ".", ".", "."],             
+  #     ["p", "p", "p", "p", "p", "p", "p", "p"],             
+  #     ["r", "n", "b", "q", "k", "b", "n", "r"]] 
+
+  #     it 'returns correct fen notation' do
+  #       fen_notation = new_game.array_to_fen_notation(board_array)
+  #       expect(fen_notation).to eq(starting_board)
+  #     end
+  #   end
+  # end
 end
