@@ -26,14 +26,12 @@ class Game
       piece_selected = player_input
       allowed_moves = available_moves(piece_selected)
       next unless allowed_moves
-      # binding.pry
       allowed_destinations = legal_destinations(piece_selected, allowed_moves)
-      binding.pry
       # from available_moves? need to create all possible desintation locations
 
       #TODO would like to somehow highlight available moves
       
-      verify_destination(allowed_destinations)
+      destination = verify_destination(allowed_destinations)
       # Add a check to make sure destination is included in allowed_destinations
       moved_piece = move_piece(piece_selected, destination)
       break unless moved_piece
@@ -47,10 +45,14 @@ class Game
   end
 
   def verify_destination(allowed_destinations)
+    print 'Available destinations: '
+    print_available_destinations(allowed_destinations)
     loop do
       destination = player_input
       return destination if allowed_destinations.include?(destination)
       # TODO working here
+      puts 'Invalid destination, please choose from '
+      print_available_destinations
     end
   end
 
@@ -84,6 +86,12 @@ class Game
     return true if /^[a-h][1-8]$/.match(input)
 
     false
+  end
+
+  # TODO figure this out to use and and commans correctly
+  def print_available_destinations(destinations)
+    destinations.each { |destination| print "#{destination}, "}
+    print "\n"
   end
 
   private
