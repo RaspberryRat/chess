@@ -15,6 +15,8 @@ module PieceVariables
 
   GREEN_SQUARE = "\u001b[48;5;107m"
   WHITE_SQUARE = "\u001b[48;5;252m"
+  SELECTED_SQUARE = "\u001b[43;1m"
+  DESTINATION_SQUARE = "\u001b[41m"
   NEW_LINE = "\u001b[0m\n"
   EMPTY_SPACE = "  "
 end

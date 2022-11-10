@@ -19,6 +19,7 @@ class Game
   end
 
   def start
+    clear_screen
     board.print_board
     # TODO pawn is not taking piece legally, it took piece directly in front, also allows double move at al time
     loop do
@@ -34,6 +35,7 @@ class Game
       destination = verify_destination(allowed_destinations)
       # Add a check to make sure destination is included in allowed_destinations
       moved_piece = move_piece(piece_selected, destination)
+      binding.pry
       break unless moved_piece
 
       # Need to create a better factory for this
@@ -136,5 +138,9 @@ class Game
       6 => 'g',
       7 => 'h'
     }.fetch(num)
+  end
+
+  def clear_screen
+    system("clear") || system("cls")
   end
 end
