@@ -249,18 +249,7 @@ class MovePawn < LegalMove
     available_move_list
   end
 
-  # def move_direction(moves)
-  #   binding.pry if current_colour == "black"
-  #   return if moves.empty?
-  #   return moves if current_colour == "white"
-
-  #    moves.map { |move| [move[0] * -1, move[1]] }
-  # end
-
   def piece_to_capture(moves)
-    # added line to reverse capture movement becasue of way board_array
-    # I believe this is likely to cause problems in future - bad implementation
-
     move_list = []
 
     moves.each do |move|

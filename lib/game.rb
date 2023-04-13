@@ -94,11 +94,6 @@ class Game
     end
   end
 
-  def verify_colour(input)
-    binding.pry
-    puts x
-  end
-
   def verify_input(input)
     return true if /^[a-h][1-8]$/.match(input)
 
