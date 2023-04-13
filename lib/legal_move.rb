@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative 'string'
-require 'pry-byebug'
+require_relative "string"
+require "pry-byebug"
 
 class LegalMove
   def self.for(move_list, piece, location, board)
@@ -35,9 +35,9 @@ class LegalMove
   end
 
   def piece_colour(piece)
-    return 'white' if piece.is_upper?
+    return "white" if piece.is_upper?
 
-    'black'
+    "black"
   end
 
   def temporary_move_list
@@ -48,7 +48,7 @@ class LegalMove
 
       destination_square = board[next_square[0]][next_square[1]]
       # next iteration if square is same colour piece
-      if destination_square == '.'
+      if destination_square == "."
         temp_move_list << move
       elsif current_colour == piece_colour(destination_square)
         next
@@ -68,7 +68,7 @@ class LegalMove
         prev_move = [i - 1, 0]
         last_move = [prev_move[0] + location[0], prev_move[1] + location[1]]
         last_square = board[last_move[0]][last_move[1]]
-        break unless last_square == '.'
+        break unless last_square == "."
 
         possible_moves << [i, 0] if temp_move_list.include?([i, 0])
         i += 1
@@ -79,10 +79,10 @@ class LegalMove
       i = 2
       temp_move_list.length.times do
         break unless temp_move_list.include?([-i, 0])
-        prev_move = [(i - 1) * - 1, 0]
+        prev_move = [(i - 1) * -1, 0]
         last_move = [prev_move[0] + location[0], prev_move[1] + location[1]]
         last_square = board[last_move[0]][last_move[1]]
-        break unless last_square == '.'
+        break unless last_square == "."
 
         possible_moves << [-i, 0] if temp_move_list.include?([-i, 0])
 
@@ -101,7 +101,7 @@ class LegalMove
         prev_move = [0, i]
         last_move = [prev_move[0] + location[0], prev_move[1] + location[1]]
         last_square = board[last_move[0]][last_move[1]]
-        break unless last_square == '.'
+        break unless last_square == "."
 
         possible_moves << [0, i] if temp_move_list.include?([0, i])
 
@@ -114,10 +114,10 @@ class LegalMove
       temp_move_list.length.times do
         break unless temp_move_list.include?([0, -i])
 
-        prev_move = [0, (i - 1) * - 1]
+        prev_move = [0, (i - 1) * -1]
         last_move = [prev_move[0] + location[0], prev_move[1] + location[1]]
         last_square = board[last_move[0]][last_move[1]]
-        break unless last_square == '.'
+        break unless last_square == "."
 
         possible_moves << [0, -i] if temp_move_list.include?([0, -i])
 
@@ -136,10 +136,10 @@ class LegalMove
         prev_move = [i, i]
         last_move = [prev_move[0] + location[0], prev_move[1] + location[1]]
         last_square = board[last_move[0]][last_move[1]]
-        break unless last_square == '.'
+        break unless last_square == "."
 
         possible_moves << [i, i] if temp_move_list.include?([i, i])
-        
+
         i += 1
       end
     end
@@ -149,10 +149,10 @@ class LegalMove
       temp_move_list.length.times do
         break unless temp_move_list.include?([-i, i])
 
-        prev_move = [(i - 1) * - 1, i - 1]
+        prev_move = [(i - 1) * -1, i - 1]
         last_move = [prev_move[0] + location[0], prev_move[1] + location[1]]
         last_square = board[last_move[0]][last_move[1]]
-        break unless last_square == '.'
+        break unless last_square == "."
 
         possible_moves << [-i, i] if temp_move_list.include?([-i, i])
         i += 1
@@ -164,10 +164,10 @@ class LegalMove
       temp_move_list.length.times do
         break unless temp_move_list.include?([i, -i])
 
-        prev_move = [i - 1, (i - 1) * - 1]
+        prev_move = [i - 1, (i - 1) * -1]
         last_move = [prev_move[0] + location[0], prev_move[1] + location[1]]
         last_square = board[last_move[0]][last_move[1]]
-        break unless last_square == '.'
+        break unless last_square == "."
 
         possible_moves << [i, -i] if temp_move_list.include?([i, -i])
 
@@ -180,10 +180,10 @@ class LegalMove
       temp_move_list.length.times do
         break unless temp_move_list.include?([-i, -i])
 
-        prev_move = [(i - 1) * - 1, (i - 1) * - 1]
+        prev_move = [(i - 1) * -1, (i - 1) * -1]
         last_move = [prev_move[0] + location[0], prev_move[1] + location[1]]
         last_square = board[last_move[0]][last_move[1]]
-        break unless last_square == '.'
+        break unless last_square == "."
 
         possible_moves << [-i, -i] if temp_move_list.include?([-i, -i])
 
@@ -242,38 +242,44 @@ end
 class MovePawn < LegalMove
   def moves
     available_move_list = temporary_move_list
-    availble_move_list = at_start_location(available_move_list)
-    available_move_list = move_direction(available_move_list)
+    available_move_list = at_start_location(available_move_list)
+    # available_move_list = move_direction(available_move_list)
     available_move_list = blocked_square(available_move_list)
     available_move_list = piece_to_capture(available_move_list)
+    available_move_list
   end
 
-  def move_direction(moves)
-    return if moves.empty?
-    return moves if current_colour == 'white'
+  # def move_direction(moves)
+  #   binding.pry if current_colour == "black"
+  #   return if moves.empty?
+  #   return moves if current_colour == "white"
 
-    moves.map { |move| [move[0] * -1, move[1]] }
-  end
+  #    moves.map { |move| [move[0] * -1, move[1]] }
+  # end
 
   def piece_to_capture(moves)
+    # added line to reverse capture movement becasue of way board_array
+    # I believe this is likely to cause problems in future - bad implementation
+
     move_list = []
 
     moves.each do |move|
       move_list << move if move[1] == 0
       next if move[0] == 0
       next_square = [move[0] + location[0], move[1] + location[1]]
+      next if next_square[0].negative? || next_square[1].negative?
       destination = board[next_square[0]][next_square[1]]
-      next if destination == '.'
+      next if destination == "."
       move_list << move unless current_colour == piece_colour(destination)
     end
     move_list
   end
 
   def at_start_location(moves)
-    if current_colour == 'white'
+    if current_colour == "white"
       moves.delete_at(moves.index([2, 0])) unless location[0] == 1
     else
-      moves.delete_at(moves.index([2, 0])) unless location[0] == 6
+      moves.delete_at(moves.index([-2, 0])) unless location[0] == 6
     end
     moves
   end
@@ -286,7 +292,7 @@ class MovePawn < LegalMove
       next unless move[1] == 0
       next_square = [move[0] + location[0], move[1] + location[1]]
       destination = board[next_square[0]][next_square[1]]
-      next unless destination == '.'
+      next unless destination == "."
       move_list << move
     end
     first_move_blocked(move_list)
