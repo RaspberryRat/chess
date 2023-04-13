@@ -98,7 +98,7 @@ class LegalMove
       temp_move_list.length.times do
         break unless temp_move_list.include?([0, i])
 
-        prev_move = [0, i]
+        prev_move = [0, i - 1]
         last_move = [prev_move[0] + location[0], prev_move[1] + location[1]]
         last_square = board[last_move[0]][last_move[1]]
         break unless last_square == "."

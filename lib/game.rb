@@ -9,7 +9,7 @@ require "pry-byebug"
 
 class Game
   attr_reader :move, :move_list
-  attr_accessor :board, :player1, :player2, :current_player
+  attr_accessor :board, :player1, :player2, :current_player, :captured_pieces
 
   def initialize(
     board = Board.new,
@@ -23,6 +23,7 @@ class Game
     @current_player = current_player
     @player1 = nil
     @player2 = nil
+    @captured_pieces = []
   end
 
   def start
@@ -48,7 +49,7 @@ class Game
       break unless moved_piece
 
       # Need to create a better factory for this
-      @board = Board.new(moved_piece)
+      @board = Board.new(moved_piece, captured_pieces)
       board.print_board
       @current_player = @current_player == player1 ? player2 : player1
     end
@@ -132,6 +133,7 @@ class Game
     return false unless moved_piece
 
     captured_piece = moved_piece[1]
+    @captured_pieces << captured_piece unless captured_piece == false
     new_board = moved_piece[0]
   end
 
