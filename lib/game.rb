@@ -33,6 +33,8 @@ class Game
     board.print_board
 
     loop do
+      @current_player = determine_player_turn
+
       puts "\n\nIt is #{current_player.name}'s turn\n"
       puts "Select the piece you would like to move (e.g., 'a4')"
       piece_selected = player_input
@@ -49,12 +51,10 @@ class Game
       break unless moved_piece
 
       # Need to create a better factory for this
-      @board = Board.new(moved_piece, captured_pieces)
+      @board = Board.new(updated_board_state(moved_piece), captured_pieces)
       board.print_board
-      @current_player = @current_player == player1 ? player2 : player1
     end
     # need to do game check and restart move loop
-    # TODO add players
   end
 
   def verify_destination(allowed_destinations)
@@ -108,7 +108,7 @@ class Game
   end
 
   def determine_player_turn
-    turn_colour = turn_indicator_from_fen_notation
+    turn_colour = turn_indicator_from_fen_notation(board.board)
 
     return @current_player = @player1 if turn_colour == "w"
 
@@ -118,11 +118,25 @@ class Game
   private
 
   # takes the board state from fen notation, finds the w or b after first space
-  def turn_indicator_from_fen_notation
-    notation = board.board
+  def turn_indicator_from_fen_notation(board_state)
+    notation = board_state
 
     notation[notation.index(" ") + 1]
   end
+
+  def updated_board_state(board_state)
+    current_player_turn = turn_indicator_from_fen_notation(board_state)
+
+    ind_location_turn = board_state.index(" ") + 1
+
+    if current_player_turn == "w"
+      board_state[ind_location_turn] = "b"
+    elsif current_player_turn == "b"
+      board_state[ind_location_turn] = "w"
+    end
+    board_state
+  end
+
   def create_players
     @player1 = Player.new(self, ask_name, 1)
     @player2 = Player.new(self, ask_name, 2)

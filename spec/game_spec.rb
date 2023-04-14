@@ -99,6 +99,8 @@ describe Game do
         allow(turn_order).to receive(
           :turn_indicator_from_fen_notation
         ).and_return("w")
+
+        allow(board).to receive(:board)
       end
 
       it "sets current_player to player1" do
