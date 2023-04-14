@@ -241,6 +241,7 @@ end
 
 class MovePawn < LegalMove
   def moves
+    # binding.pry
     available_move_list = temporary_move_list
     available_move_list = at_start_location(available_move_list)
     # available_move_list = move_direction(available_move_list)
@@ -257,6 +258,7 @@ class MovePawn < LegalMove
       next if move[0] == 0
       next_square = [move[0] + location[0], move[1] + location[1]]
       next if next_square[0].negative? || next_square[1].negative?
+      # binding.pry
       destination = board[next_square[0]][next_square[1]]
       next if destination == "."
       move_list << move unless current_colour == piece_colour(destination)
