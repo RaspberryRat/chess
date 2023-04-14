@@ -257,6 +257,7 @@ class MovePawn < LegalMove
       next if move[0] == 0
       next_square = [move[0] + location[0], move[1] + location[1]]
       next if next_square[0].negative? || next_square[1].negative?
+      next if next_square[1] > 7
       destination = board[next_square[0]][next_square[1]]
       next if destination == "."
       move_list << move unless current_colour == piece_colour(destination)

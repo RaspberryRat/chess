@@ -36,10 +36,13 @@ class Game
     loop do
       puts "\n\nIt is #{current_player.name}'s turn\n"
       king_in_check?
-      binding.pry
       puts "Select the piece you would like to move (e.g., 'a4')"
       piece_selected = player_input
-      allowed_moves = available_moves(piece_selected)
+      allowed_moves = available_moves(piece_selected, current_player)
+      binding.pry
+      unless allowed_moves
+        puts "No legal moves available, pick a different piece."
+      end
       next unless allowed_moves
       allowed_destinations = legal_destinations(piece_selected, allowed_moves)
 
@@ -61,7 +64,6 @@ class Game
     loop do
       destination = player_input
       return destination if allowed_destinations.include?(destination)
-      # TODO working here
       puts "Invalid destination, please choose from "
       print_available_destinations(allowed_destinations)
     end
@@ -158,11 +160,10 @@ class Game
     gets.chomp.strip
   end
 
-  def available_moves(piece_selected)
-    moves = move_list.possible_move(piece_selected, board.board, current_player)
+  def available_moves(piece_selected, player)
+    moves = move_list.possible_move(piece_selected, board.board, player)
     return moves unless moves == false
 
-    puts "No legal moves available, pick a different piece."
     false
   end
 
@@ -204,7 +205,21 @@ class Game
 
     piece_locations_not_current_player
 
-    other_player_move_to_king?
+    other_player_move_to_king?(piece_locations_not_current_player)
+  end
+
+  def other_player_move_to_king?(piece_locations)
+    # list_of_destinations = []
+
+    # player = @current_player == player1 ? player2 : player1
+
+    # piece_locations.each do |piece|
+    #   moves = available_moves(piece, player)
+    #   next unless moves
+    #   list_of_destinations << legal_destinations(piece, moves)
+    # end
+    # binding.pry
+    # list_of_destinations
   end
 
   def piece_locations_not_current_player

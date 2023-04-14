@@ -28,6 +28,7 @@ class AvailableMoves
 
     piece_location = convert_to_grid
     current_board_state = expand_notation
+
     moves =
       move_template.for(
         move_list.moves(piece),
@@ -91,6 +92,7 @@ class AvailableMoves
 
   # coverts fen notation into an array, if empty square, converts to '.'
   def expand_notation
+    board = @board.split(" ").shift
     expanded_board = board.split("/").reverse
     expanded_board.map do |row|
       new_row = []
