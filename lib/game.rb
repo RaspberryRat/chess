@@ -9,7 +9,12 @@ require "pry-byebug"
 
 class Game
   attr_reader :move, :move_list
-  attr_accessor :board, :player1, :player2, :current_player, :captured_pieces
+  attr_accessor :board,
+                :player1,
+                :player2,
+                :current_player,
+                :captured_pieces,
+                :moved_piece
 
   def initialize(
     board = Board.new,
@@ -24,6 +29,7 @@ class Game
     @player1 = nil
     @player2 = nil
     @captured_pieces = []
+    @moved_piece = nil
   end
 
   def start
@@ -35,23 +41,31 @@ class Game
 
     loop do
       puts "\n\nIt is #{current_player.name}'s turn\n"
-      king_in_check?
+      check_alert if king_in_check?
       puts "Select the piece you would like to move (e.g., 'a4')"
-      piece_selected = player_input
-      allowed_moves = available_moves(piece_selected, current_player)
-      binding.pry
-      unless allowed_moves
-        puts "No legal moves available, pick a different piece."
+
+      loop do
+        piece_selected = player_input
+        allowed_moves = available_moves(piece_selected, current_player)
+        unless allowed_moves
+          puts "No legal moves available, pick a different piece."
+        end
+        next unless allowed_moves
+        allowed_destinations = legal_destinations(piece_selected, allowed_moves)
+
+        #TODO would like to somehow highlight available moves
+
+        destination = verify_destination(allowed_destinations)
+        @moved_piece = move_piece(piece_selected, destination)
+        if king_in_check?(moved_piece)
+          puts "Your King is still in check, this is not a legal move, you must make a different move"
+        end
+        break unless king_in_check?(moved_piece)
+        break unless @moved_piece || @move_piece.nil?
       end
-      next unless allowed_moves
-      allowed_destinations = legal_destinations(piece_selected, allowed_moves)
 
-      #TODO would like to somehow highlight available moves
-
-      destination = verify_destination(allowed_destinations)
-      moved_piece = move_piece(piece_selected, destination)
-      break unless moved_piece
-      @board = Board.new(updated_board_state(moved_piece), captured_pieces)
+      @board = Board.new(updated_board_state(@moved_piece), captured_pieces)
+      @moved_piece = nil
       clear_screen
       board.print_board
       @current_player = determine_player_turn
@@ -160,8 +174,8 @@ class Game
     gets.chomp.strip
   end
 
-  def available_moves(piece_selected, player)
-    moves = move_list.possible_move(piece_selected, board.board, player)
+  def available_moves(piece_selected, player, board_state = board.board)
+    moves = move_list.possible_move(piece_selected, board_state, player)
     return moves unless moves == false
 
     false
@@ -197,32 +211,31 @@ class Game
     system("clear") || system("cls")
   end
 
-  def king_in_check?
+  def king_in_check?(board_state = @board.board)
     # get location
-    location = king_location
-
+    location = king_location(board_state)
     # go through not current player's pieces to see if they have a move to location
+    potential_moves =
+      other_player_available_moves(moves_not_current_player, board_state)
+    return true if potential_moves.include?(location)
 
-    piece_locations_not_current_player
-
-    other_player_move_to_king?(piece_locations_not_current_player)
+    false
   end
 
-  def other_player_move_to_king?(piece_locations)
-    # list_of_destinations = []
+  def other_player_available_moves(piece_locations, board_state)
+    list_of_destinations = []
 
-    # player = @current_player == player1 ? player2 : player1
+    player = @current_player == player1 ? player2 : player1
 
-    # piece_locations.each do |piece|
-    #   moves = available_moves(piece, player)
-    #   next unless moves
-    #   list_of_destinations << legal_destinations(piece, moves)
-    # end
-    # binding.pry
-    # list_of_destinations
+    piece_locations.each do |piece|
+      moves = available_moves(piece, player, board_state)
+      next unless moves
+      list_of_destinations << legal_destinations(piece, moves)
+    end
+    list_of_destinations.flatten
   end
 
-  def piece_locations_not_current_player
+  def moves_not_current_player
     current_player_colour = turn_indicator_from_fen_notation(board.board)
 
     expanded_board = expand_notation
@@ -246,8 +259,8 @@ class Game
     true
   end
 
-  def expand_notation
-    board = @board.board.split(" ").shift
+  def expand_notation(board_state = @board.board)
+    board = board_state.split(" ").shift
     expanded_board = board.split("/").reverse
     expanded_board.map do |row|
       new_row = []
@@ -262,8 +275,8 @@ class Game
   def find_piece_location
   end
 
-  def king_location
-    expanded_board = expand_notation
+  def king_location(board)
+    expanded_board = expand_notation(board)
     current_king = current_player_king
     current_king_location = ""
     expanded_board.each_with_index do |column, row|
@@ -279,5 +292,9 @@ class Game
     return "K" if turn_indicator_from_fen_notation(board.board) == "w"
 
     return "k" if turn_indicator_from_fen_notation(board.board) == "b"
+  end
+
+  def check_alert
+    puts "Your king is in check, you must move it out of check"
   end
 end
