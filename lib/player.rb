@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class Player
-  @@player_count = 0
   def initialize(game, name, player)
-    @@player_count += 1
     @game = game
     @name = name
     @player = player
