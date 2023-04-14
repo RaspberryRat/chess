@@ -12,7 +12,7 @@ class Board
   attr_reader :piece_template, :captured_pieces
 
   def initialize(
-    board = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR",
+    board = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w",
     captured_pieces = []
   )
     @board = board
@@ -27,6 +27,7 @@ class Board
     printed_board += "#{row_number} "
     previous_color = "white"
     convert_notation.each do |notation|
+      break if notation == " "
       if notation.is_a?(Integer)
         notation.times do
           square_color = board_square(notation, previous_color)

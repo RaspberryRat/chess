@@ -107,8 +107,22 @@ class Game
     print "\n"
   end
 
+  def determine_player_turn
+    turn_colour = turn_indicator_from_fen_notation
+
+    return @current_player = @player1 if turn_colour == "w"
+
+    return @current_player = @player2 if turn_colour == "b"
+  end
+
   private
 
+  # takes the board state from fen notation, finds the w or b after first space
+  def turn_indicator_from_fen_notation
+    notation = board.board
+
+    notation[notation.index(" ") + 1]
+  end
   def create_players
     @player1 = Player.new(self, ask_name, 1)
     @player2 = Player.new(self, ask_name, 2)

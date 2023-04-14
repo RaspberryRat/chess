@@ -88,6 +88,31 @@ describe Game do
     end
   end
 
+  describe "#determine_player_turn" do
+    context "when game starts, current_player == player1" do
+      subject(:turn_order) { described_class.new(board, move, move_list) }
+      let(:board) { double("board") }
+      let(:move) { double("move") }
+      let(:move_list) { double("move_list") }
+
+      before do
+        allow(turn_order).to receive(
+          :turn_indicator_from_fen_notation
+        ).and_return("w")
+      end
+
+      it "sets current_player to player1" do
+        player1 = double("player1")
+        current_player = double("player2")
+        subject.instance_variable_set(:@player1, player1)
+        subject.instance_variable_set(:@current_player, current_player)
+
+        turn_order.determine_player_turn
+        expect(subject.instance_variable_get(:@current_player)).to eq(player1)
+      end
+    end
+  end
+
   # describe "#start" do
   #   subject(:move_loop) { described_class.new(board, move) }
   #   let(:board) { double("board") }
