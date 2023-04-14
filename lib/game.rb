@@ -35,6 +35,8 @@ class Game
 
     loop do
       puts "\n\nIt is #{current_player.name}'s turn\n"
+      king_in_check?
+      binding.pry
       puts "Select the piece you would like to move (e.g., 'a4')"
       piece_selected = player_input
       allowed_moves = available_moves(piece_selected)
@@ -192,5 +194,44 @@ class Game
 
   def clear_screen
     system("clear") || system("cls")
+  end
+
+  def king_in_check?
+    # get location
+    location = king_location
+  end
+
+  def expand_notation
+    board = @board.board.split(" ").shift
+    expanded_board = board.split("/").reverse
+    expanded_board.map do |row|
+      new_row = []
+      row = row.split("")
+      row.map do |c|
+        c.to_i.positive? ? c.to_i.times { new_row << "." } : new_row << c
+      end
+      new_row
+    end
+  end
+
+  def king_location
+    expanded_board = expand_notation
+    #[row][column]
+
+    current_king = current_player_king
+    king_location = ""
+    expanded_board.each_with_index do |column, row|
+      next unless column.include?(current_king)
+      column_index = column_to_letter(column.index(current_king))
+      row_index = row + 1
+      king_location = column_index.to_s + row_index.to_s
+    end
+    king_location
+  end
+
+  def current_player_king
+    return "K" if turn_indicator_from_fen_notation(board.board) == "w"
+
+    return "k" if turn_indicator_from_fen_notation(board.board) == "b"
   end
 end
