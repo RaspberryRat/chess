@@ -199,6 +199,36 @@ class Game
   def king_in_check?
     # get location
     location = king_location
+
+    # go through not current player's pieces to see if they have a move to location
+
+    piece_locations_not_current_player
+
+    other_player_move_to_king?
+  end
+
+  def piece_locations_not_current_player
+    current_player_colour = turn_indicator_from_fen_notation(board.board)
+
+    expanded_board = expand_notation
+
+    not_current_player_piece_locations = []
+    expanded_board.each_with_index do |column, row|
+      column.each_with_index do |piece, column|
+        next unless opposite_piece_color?(current_player_colour, piece)
+        column_index = column_to_letter(column)
+        row_index = row + 1
+        not_current_player_piece_locations << column_index.to_s + row_index.to_s
+      end
+    end
+    not_current_player_piece_locations
+  end
+
+  def opposite_piece_color?(current_player_colour, piece)
+    return false if piece == piece.upcase && current_player_colour == "w"
+    return false if piece == piece.downcase && current_player_colour == "b"
+
+    true
   end
 
   def expand_notation
@@ -214,19 +244,20 @@ class Game
     end
   end
 
+  def find_piece_location
+  end
+
   def king_location
     expanded_board = expand_notation
-    #[row][column]
-
     current_king = current_player_king
-    king_location = ""
+    current_king_location = ""
     expanded_board.each_with_index do |column, row|
       next unless column.include?(current_king)
       column_index = column_to_letter(column.index(current_king))
       row_index = row + 1
-      king_location = column_index.to_s + row_index.to_s
+      current_king_location = column_index.to_s + row_index.to_s
     end
-    king_location
+    current_king_location
   end
 
   def current_player_king
