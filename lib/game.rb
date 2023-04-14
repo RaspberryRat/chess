@@ -31,30 +31,25 @@ class Game
 
     clear_screen
     board.print_board
+    @current_player = determine_player_turn
 
     loop do
-      @current_player = determine_player_turn
-
       puts "\n\nIt is #{current_player.name}'s turn\n"
       puts "Select the piece you would like to move (e.g., 'a4')"
       piece_selected = player_input
       allowed_moves = available_moves(piece_selected)
       next unless allowed_moves
       allowed_destinations = legal_destinations(piece_selected, allowed_moves)
-      # from available_moves? need to create all possible desintation locations
 
       #TODO would like to somehow highlight available moves
 
       destination = verify_destination(allowed_destinations)
-      # Add a check to make sure destination is included in allowed_destinations
       moved_piece = move_piece(piece_selected, destination)
       break unless moved_piece
-
-      # Need to create a better factory for this
       @board = Board.new(updated_board_state(moved_piece), captured_pieces)
       board.print_board
+      @current_player = determine_player_turn
     end
-    # need to do game check and restart move loop
   end
 
   def verify_destination(allowed_destinations)
@@ -101,9 +96,18 @@ class Game
     false
   end
 
-  # TODO figure this out to use and and commans correctly
   def print_available_destinations(destinations)
-    destinations.each { |destination| print "#{destination}, " }
+    count = destinations.length - 1
+
+    if destinations.length == 1
+      print "#{destinations[0]}\n"
+      return
+    end
+
+    destinations.each_with_index do |destination, i|
+      print "#{destination}, " unless i == count
+      print "and #{destination}" if i == count
+    end
     print "\n"
   end
 
@@ -131,6 +135,7 @@ class Game
 
     if current_player_turn == "w"
       board_state[ind_location_turn] = "b"
+      return board_state
     elsif current_player_turn == "b"
       board_state[ind_location_turn] = "w"
     end

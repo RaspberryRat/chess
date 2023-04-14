@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative 'board'
-require_relative 'game_pieces'
-require_relative 'legal_move'
-require 'pry-byebug'
+require_relative "board"
+require_relative "game_pieces"
+require_relative "legal_move"
+require "pry-byebug"
 
 class Move
   def self.move_loop(location, destination, board)
@@ -13,7 +13,13 @@ class Move
   attr_reader :location, :destination, :piece_template, :move_template, :board
   attr_accessor :piece
 
-  def initialize(location, destination, board, piece_template = GamePiece, piece = nil)
+  def initialize(
+    location,
+    destination,
+    board,
+    piece_template = GamePiece,
+    piece = nil
+  )
     @location = location
     @destination = destination
     @board = board
@@ -31,16 +37,28 @@ class Move
   end
 
   def move_piece
+    other_notation = save_notation_after_piece_placement
     current_location = convert_to_grid(location)
     new_location = convert_to_grid(destination)
     board_array = expand_notation
     piece_at_current_location = what_piece(location)
     piece_at_destination = what_piece(destination)
     @piece = piece_at_destination
-    board_array[current_location[0]][current_location[1]] = '.'
+    board_array[current_location[0]][current_location[1]] = "."
     board_array[new_location[0]][new_location[1]] = piece_at_current_location
     board = array_to_fen_notation(board_array)
+    board = add_post_piece_notation(board, other_notation)
     board_and_piece = [board, piece_at_destination]
+  end
+
+  def save_notation_after_piece_placement
+    post_piece_notation = board.split(" ")
+    post_piece_notation.shift
+    post_piece_notation.join(" ")
+  end
+
+  def add_post_piece_notation(piece_notation, other_notation)
+    "#{piece_notation} #{other_notation}"
   end
 
   def legal_selection?
@@ -53,7 +71,7 @@ class Move
   def legal_move?
     return true if allowed_move?
 
-    puts 'That is not a legal move, please choose a different destination.'
+    puts "That is not a legal move, please choose a different destination."
     false
   end
 
@@ -71,7 +89,7 @@ class Move
     board_array = expand_notation
     row = board_array[row]
     @piece = row[column]
-    return piece unless piece == '.'
+    return piece unless piece == "."
 
     false
   end
@@ -102,16 +120,7 @@ class Move
   private
 
   def convert_column(column)
-    {
-      a: 0,
-      b: 1,
-      c: 2,
-      d: 3,
-      e: 4,
-      f: 5,
-      g: 6,
-      h: 7
-    }.fetch(column.to_sym)
+    { a: 0, b: 1, c: 2, d: 3, e: 4, f: 5, g: 6, h: 7 }.fetch(column.to_sym)
   end
 
   def convert_to_grid(board_square)
@@ -122,18 +131,12 @@ class Move
 
   # coverts fen notation into an array, if empty square, converts to '.'
   def expand_notation
-    expanded_board = board.split('/').reverse
+    expanded_board = board.split("/").reverse
     expanded_board.map do |row|
       new_row = []
-      row = row.split('')
+      row = row.split("")
       row.map do |c|
-        if c.to_i.positive?
-          c.to_i.times do
-            new_row << '.'
-          end
-        else
-          new_row << c
-        end
+        c.to_i.positive? ? c.to_i.times { new_row << "." } : new_row << c
       end
       new_row
     end
@@ -145,22 +148,22 @@ class Move
 
     board_array = board_array.reverse
     i = 0
-    fen_notation = ''
+    fen_notation = ""
     board_array.length.times do
-      unless board_array[i].include?('.')
+      unless board_array[i].include?(".")
         fen_notation += board_array[i].join
       else
         j = 0
         board_array[i].length.times do
           # binding.pry if i == 5
           break if j > 7
-          unless board_array[i][j] == '.'
+          unless board_array[i][j] == "."
             fen_notation += board_array[i][j]
             j += 1
           else
             empty_space = 0
             loop do
-              unless board_array[i][j] == '.'
+              unless board_array[i][j] == "."
                 fen_notation += empty_space.to_s
                 break
               end
@@ -172,7 +175,7 @@ class Move
       end
       i += 1
       j = 0
-      fen_notation += '/' unless i == 8
+      fen_notation += "/" unless i == 8
     end
     fen_notation
   end
