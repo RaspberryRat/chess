@@ -20,7 +20,7 @@ class Board
   end
 
   def print_board
-    printed_board = ""
+    printed_board = "\n\n\n\n\n\n\n"
     printed_board += pieces_captured unless captured_pieces.empty?
 
     row_number = 8

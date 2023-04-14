@@ -47,6 +47,7 @@ class Game
       moved_piece = move_piece(piece_selected, destination)
       break unless moved_piece
       @board = Board.new(updated_board_state(moved_piece), captured_pieces)
+      clear_screen
       board.print_board
       @current_player = determine_player_turn
     end
