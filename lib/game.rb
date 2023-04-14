@@ -97,6 +97,7 @@ class Game
   end
 
   def print_available_destinations(destinations)
+    destinations = destinations.sort
     count = destinations.length - 1
 
     if destinations.length == 1
@@ -105,7 +106,8 @@ class Game
     end
 
     destinations.each_with_index do |destination, i|
-      print "#{destination}, " unless i == count
+      print "#{destination}, " if i <= count - 2
+      print "#{destination} " if i == count - 1
       print "and #{destination}" if i == count
     end
     print "\n"

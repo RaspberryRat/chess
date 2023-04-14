@@ -62,16 +62,20 @@ class Board
   def pieces_captured
     return if captured_pieces.empty?
 
-    white_pieces = "White pieces captured: "
-    black_pieces = "Black pieces captured: "
+    # white_pieces = "White pieces captured: "
+    # black_pieces = "Black pieces captured: "
+
+    white_pieces = []
+    black_pieces = []
 
     captured_pieces.each do |piece|
       piece_symbol = CHESS_PIECES.fetch(piece.to_sym)
-      white_pieces += "#{piece_symbol}, " if piece_colour(piece) == "white"
-      black_pieces += "#{piece_symbol}, " if piece_colour(piece) == "black"
+      white_pieces << piece_symbol if piece_colour(piece) == "white"
+      black_pieces << piece_symbol if piece_colour(piece) == "black"
     end
-
-    "Captured Pieces\n#{white_pieces}\n#{black_pieces}\n\n"
+    white_piece_printout = format_for_print(white_pieces)
+    black_piece_printout = format_for_print(black_pieces)
+    "Captured Pieces\nWhite pieces: #{white_piece_printout}\nBlack pieces: #{black_piece_printout}\n\n"
   end
 
   def piece_colour(piece)
@@ -80,6 +84,9 @@ class Board
     "black"
   end
 
-  def last_piece?
+  def format_for_print(pieces)
+    print_out = ""
+    pieces.each { |piece| print_out += "#{piece} " }
+    print_out
   end
 end
