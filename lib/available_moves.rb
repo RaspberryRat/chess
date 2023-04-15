@@ -28,7 +28,6 @@ class AvailableMoves
 
     piece_location = convert_to_grid
     current_board_state = expand_notation
-
     moves =
       move_template.for(
         move_list.moves(piece),

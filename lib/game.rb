@@ -37,6 +37,7 @@ class Game
 
     clear_screen
     board.print_board
+    return winner if check_mate?
     @current_player = determine_player_turn
 
     loop do
@@ -181,8 +182,8 @@ class Game
     false
   end
 
-  def move_piece(location, destination)
-    moved_piece = move.move_loop(location, destination, board.board)
+  def move_piece(location, destination, board = @board.board)
+    moved_piece = move.move_loop(location, destination, board)
     return false unless moved_piece
 
     captured_piece = moved_piece[1]
@@ -212,31 +213,35 @@ class Game
   end
 
   def king_in_check?(board_state = @board.board)
-    # get location
     location = king_location(board_state)
     # go through not current player's pieces to see if they have a move to location
-    potential_moves =
-      other_player_available_moves(moves_not_current_player, board_state)
-    return true if potential_moves.include?(location)
+    potential_moves = []
+    other_player_pieces = locations_not_current_player(board_state)
+
+    other_player_pieces.each do |piece|
+      potential_moves << other_player_available_moves(piece, board_state)
+    end
+
+    return true if potential_moves.flatten.include?(location)
 
     false
   end
 
-  def other_player_available_moves(piece_locations, board_state)
+  def other_player_available_moves(piece, board_state)
     list_of_destinations = []
 
-    player = @current_player == player1 ? player2 : player1
+    player_colour = turn_indicator_from_fen_notation(board_state)
 
-    piece_locations.each do |piece|
-      moves = available_moves(piece, player, board_state)
-      next unless moves
-      list_of_destinations << legal_destinations(piece, moves)
-    end
+    player = player_colour == "b" ? player1 : player2
+    moves = available_moves(piece, player, board_state)
+    return nil unless moves
+
+    list_of_destinations << legal_destinations(piece, moves)
     list_of_destinations.flatten
   end
 
-  def moves_not_current_player
-    current_player_colour = turn_indicator_from_fen_notation(board.board)
+  def locations_not_current_player(board_state = @board.board)
+    current_player_colour = turn_indicator_from_fen_notation(board_state)
 
     expanded_board = expand_notation
 
@@ -244,6 +249,7 @@ class Game
     expanded_board.each_with_index do |column, row|
       column.each_with_index do |piece, column|
         next unless opposite_piece_color?(current_player_colour, piece)
+
         column_index = column_to_letter(column)
         row_index = row + 1
         not_current_player_piece_locations << column_index.to_s + row_index.to_s
@@ -272,9 +278,6 @@ class Game
     end
   end
 
-  def find_piece_location
-  end
-
   def king_location(board)
     expanded_board = expand_notation(board)
     current_king = current_player_king
@@ -296,5 +299,37 @@ class Game
 
   def check_alert
     puts "Your king is in check, you must move it out of check"
+  end
+
+  def check_mate?(board_state = @board.board)
+    #pass board state for each piece and move and run king_in_check
+    potential_moves = []
+    other_player_pieces = locations_not_current_player
+    checks = []
+
+    other_player_pieces.each do |piece|
+      potential_moves << other_player_available_moves(piece, board_state)
+      potential_moves.flatten.each do |move|
+        checks << simulate_move(piece, move, board_state)
+      end
+      return false if checks.include?(false)
+
+      true
+    end
+  end
+
+  def simulate_move(piece, move, board_state)
+    sim_move = move_piece(piece, move, board_state)
+    sim_move = updated_board_state(sim_move)
+    king_in_check?(sim_move)
+  end
+
+  def winner
+    winning_player = @current_player == @player1 ? @player2 : @player1
+    print "\n\n#{winning_player.name} is the winner! Congratuations!\n\n"
+    sleep(2)
+    print "\n\nThank you for playing... Goodbye...\n"
+    sleep(3)
+    exit
   end
 end
