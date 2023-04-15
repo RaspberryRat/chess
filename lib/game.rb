@@ -37,10 +37,11 @@ class Game
 
     clear_screen
     board.print_board
-    return winner if check_mate?
     @current_player = determine_player_turn
 
     loop do
+      return winner if check_mate?
+
       puts "\n\nIt is #{current_player.name}'s turn\n"
       check_alert if king_in_check?
       puts "Select the piece you would like to move (e.g., 'a4')"
@@ -182,9 +183,11 @@ class Game
     false
   end
 
-  def move_piece(location, destination, board = @board.board)
+  def move_piece(location, destination, simulated = false, board = @board.board)
     moved_piece = move.move_loop(location, destination, board)
     return false unless moved_piece
+    # doesn't add captured piece to list when doing check_mate checks
+    return moved_piece[0] if simulated
 
     captured_piece = moved_piece[1]
     @captured_pieces << captured_piece unless captured_piece == false
@@ -243,11 +246,14 @@ class Game
   def locations_not_current_player(board_state = @board.board)
     current_player_colour = turn_indicator_from_fen_notation(board_state)
 
-    expanded_board = expand_notation
-
     not_current_player_piece_locations = []
+
+    expanded_board = expand_notation
     expanded_board.each_with_index do |column, row|
+      next if column.all?(".")
+
       column.each_with_index do |piece, column|
+        next if piece == "."
         next unless opposite_piece_color?(current_player_colour, piece)
 
         column_index = column_to_letter(column)
@@ -301,27 +307,45 @@ class Game
     puts "Your king is in check, you must move it out of check"
   end
 
-  def check_mate?(board_state = @board.board)
-    #pass board state for each piece and move and run king_in_check
-    potential_moves = []
-    other_player_pieces = locations_not_current_player
-    checks = []
+  def check_mate?
+    current_player_piece_locations = current_player_pieces
 
-    other_player_pieces.each do |piece|
-      potential_moves << other_player_available_moves(piece, board_state)
-      potential_moves.flatten.each do |move|
-        checks << simulate_move(piece, move, board_state)
+    current_player_piece_locations.each do |piece|
+      moves = available_moves(piece, current_player)
+      destinations = legal_destinations(piece, moves)
+
+      destinations.each do |move|
+        sim_move = simulate_move(piece, move)
+        return false unless king_in_check?(sim_move)
       end
-      return false if checks.include?(false)
-
       true
     end
   end
 
-  def simulate_move(piece, move, board_state)
-    sim_move = move_piece(piece, move, board_state)
-    sim_move = updated_board_state(sim_move)
-    king_in_check?(sim_move)
+  # refactor to combine with locations_not_current_player
+  def current_player_pieces(board_state = @board.board)
+    current_player_colour = turn_indicator_from_fen_notation(board_state)
+
+    piece_locations = []
+
+    expanded_board = expand_notation
+    expanded_board.each_with_index do |column, row|
+      next if column.all?(".")
+
+      column.each_with_index do |piece, column|
+        next if piece == "."
+        next if opposite_piece_color?(current_player_colour, piece)
+
+        column_index = column_to_letter(column)
+        row_index = row + 1
+        piece_locations << column_index.to_s + row_index.to_s
+      end
+    end
+    piece_locations
+  end
+
+  def simulate_move(piece, move)
+    sim_move = move_piece(piece, move, true)
   end
 
   def winner
