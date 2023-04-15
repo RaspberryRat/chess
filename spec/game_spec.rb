@@ -115,6 +115,25 @@ describe Game do
     end
   end
 
+  # describe "#check_mate?" do
+  #   context "in a checkmate board state" do
+  #     subject(:end_game) { described_class.new(board) }
+  #     let(:board) { double("board") }
+  #     let(:current_player) { double("current_player") }
+
+  #     before do
+  #       allow(board).to receive(:board).and_return("8/4N1pk/8/8/8/7R/8/6K1 w")
+  #       allow(current_player).to receive(:marker).and_return("white")
+  #       allow(end_game).to receive(:current_player).and_return(current_player)
+  #     end
+
+  #     it "returns true" do
+  #       result = end_game.check_mate?
+  #       expect(result).to be(true)
+  #     end
+  #   end
+  # end
+
   # describe "#start" do
   #   subject(:move_loop) { described_class.new(board, move) }
   #   let(:board) { double("board") }

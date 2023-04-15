@@ -40,6 +40,12 @@ class LegalMove
     "black"
   end
 
+  def opposite_piece_color?(checked_piece)
+    return true unless piece_colour(piece) == piece_colour(checked_piece)
+
+    false
+  end
+
   def temporary_move_list
     move_list.each do |move|
       next_square = [move[0] + location[0], move[1] + location[1]]
@@ -64,11 +70,11 @@ class LegalMove
       i = 2
       temp_move_list.length.times do
         break unless temp_move_list.include?([i, 0])
-        # last_square_empty?
+
         prev_move = [i - 1, 0]
         last_move = [prev_move[0] + location[0], prev_move[1] + location[1]]
         last_square = board[last_move[0]][last_move[1]]
-        break unless last_square == "."
+        break unless last_square == "." || opposite_piece_color?(last_square)
 
         possible_moves << [i, 0] if temp_move_list.include?([i, 0])
         i += 1
@@ -82,7 +88,7 @@ class LegalMove
         prev_move = [(i - 1) * -1, 0]
         last_move = [prev_move[0] + location[0], prev_move[1] + location[1]]
         last_square = board[last_move[0]][last_move[1]]
-        break unless last_square == "."
+        break unless last_square == "." || opposite_piece_color?(last_square)
 
         possible_moves << [-i, 0] if temp_move_list.include?([-i, 0])
 
@@ -101,7 +107,7 @@ class LegalMove
         prev_move = [0, i - 1]
         last_move = [prev_move[0] + location[0], prev_move[1] + location[1]]
         last_square = board[last_move[0]][last_move[1]]
-        break unless last_square == "."
+        break unless last_square == "." || opposite_piece_color?(last_square)
 
         possible_moves << [0, i] if temp_move_list.include?([0, i])
 
@@ -117,7 +123,7 @@ class LegalMove
         prev_move = [0, (i - 1) * -1]
         last_move = [prev_move[0] + location[0], prev_move[1] + location[1]]
         last_square = board[last_move[0]][last_move[1]]
-        break unless last_square == "."
+        break unless last_square == "." || opposite_piece_color?(last_square)
 
         possible_moves << [0, -i] if temp_move_list.include?([0, -i])
 
@@ -136,7 +142,7 @@ class LegalMove
         prev_move = [i, i]
         last_move = [prev_move[0] + location[0], prev_move[1] + location[1]]
         last_square = board[last_move[0]][last_move[1]]
-        break unless last_square == "."
+        break unless last_square == "." || opposite_piece_color?(last_square)
 
         possible_moves << [i, i] if temp_move_list.include?([i, i])
 
@@ -152,7 +158,7 @@ class LegalMove
         prev_move = [(i - 1) * -1, i - 1]
         last_move = [prev_move[0] + location[0], prev_move[1] + location[1]]
         last_square = board[last_move[0]][last_move[1]]
-        break unless last_square == "."
+        break unless last_square == "." || opposite_piece_color?(last_square)
 
         possible_moves << [-i, i] if temp_move_list.include?([-i, i])
         i += 1
@@ -167,7 +173,7 @@ class LegalMove
         prev_move = [i - 1, (i - 1) * -1]
         last_move = [prev_move[0] + location[0], prev_move[1] + location[1]]
         last_square = board[last_move[0]][last_move[1]]
-        break unless last_square == "."
+        break unless last_square == "." || opposite_piece_color?(last_square)
 
         possible_moves << [i, -i] if temp_move_list.include?([i, -i])
 
@@ -183,7 +189,7 @@ class LegalMove
         prev_move = [(i - 1) * -1, (i - 1) * -1]
         last_move = [prev_move[0] + location[0], prev_move[1] + location[1]]
         last_square = board[last_move[0]][last_move[1]]
-        break unless last_square == "."
+        break unless last_square == "." || opposite_piece_color?(last_square)
 
         possible_moves << [-i, -i] if temp_move_list.include?([-i, -i])
 
