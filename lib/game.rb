@@ -87,6 +87,8 @@ class Game
 
   # take piece location and moves to create destinations allowed
   def legal_destinations(piece, moves)
+    return unless moves
+
     destinations_available = []
     piece_column = convert_column(piece[0])
     piece_row = piece[1].to_i
@@ -313,7 +315,7 @@ class Game
     current_player_piece_locations.each do |piece|
       moves = available_moves(piece, current_player)
       destinations = legal_destinations(piece, moves)
-
+      next if destinations.nil?
       destinations.each do |move|
         sim_move = simulate_move(piece, move)
         return false unless king_in_check?(sim_move)
