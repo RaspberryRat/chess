@@ -7,4 +7,8 @@ class Castling
     @board = board
     @current_player = current_player
   end
+
+  def castling_available?
+    true
+  end
 end
