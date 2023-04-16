@@ -5,6 +5,7 @@ require_relative "game_pieces"
 require_relative "move"
 require_relative "available_moves"
 require_relative "player"
+require_relative "castling"
 require "pry-byebug"
 
 class Game
@@ -55,13 +56,14 @@ class Game
         next unless allowed_moves
         allowed_destinations = legal_destinations(piece_selected, allowed_moves)
 
+        castle_check?
+        binding.pry
+
         #TODO would like to somehow highlight available moves
 
         destination = verify_destination(allowed_destinations)
         @moved_piece = move_piece(piece_selected, destination)
-        if king_in_check?(moved_piece)
-          puts "Your King is still in check, this is not a legal move, you must make a different move"
-        end
+        still_in_check_alert if king_in_check?(moved_piece)
         break unless king_in_check?(moved_piece)
         break unless @moved_piece || @move_piece.nil?
       end
@@ -80,6 +82,7 @@ class Game
     loop do
       destination = player_input
       return destination if allowed_destinations.include?(destination)
+
       puts "Invalid destination, please choose from "
       print_available_destinations(allowed_destinations)
     end
@@ -357,5 +360,12 @@ class Game
     print "\n\nThank you for playing... Goodbye...\n"
     sleep(3)
     exit
+  end
+
+  def still_in_check_alert
+    puts "Your King is still in check, this is not a legal move, you must make a different move"
+  end
+
+  def castle_check?
   end
 end
