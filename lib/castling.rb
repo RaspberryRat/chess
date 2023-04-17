@@ -15,6 +15,7 @@ class Castling
 
     return false unless king_side_castling?
     return false unless king_side_room?
+    # TODO setup queenside now.
 
     true
   end
