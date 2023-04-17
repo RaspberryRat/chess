@@ -68,7 +68,6 @@ class Game
         break unless king_in_check?(moved_piece)
         break unless @moved_piece || @move_piece.nil?
       end
-      binding.pry
       updated_board = castling_notation_update(@moved_piece)
       @board = Board.new(updated_board_state(updated_board), captured_pieces)
       @moved_piece = nil
@@ -120,6 +119,8 @@ class Game
 
   def verify_input(input)
     return true if /^[a-h][1-8]$/.match(input)
+    return true if input == "queenside castle"
+    return true if input == "kingside castle"
 
     false
   end
