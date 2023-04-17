@@ -149,7 +149,7 @@ describe Castling do
   end
 
   describe "#update_castling_notation" do
-    context "when king is moved, castling notation removed" do
+    context "when king is moved, castling notation removed for white player" do
       subject(:king_move) { described_class.new(board, new_board) }
       let(:board) { "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq" }
       let(:new_board) { "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R2K3R w KQkq" }
@@ -157,6 +157,72 @@ describe Castling do
       it "returns notation with K castling notation removed" do
         result = king_move.update_castling_notation
         expect(result).to eq("r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R2K3R w kq")
+      end
+    end
+
+    context "when king is moved, castling notation removed for black player" do
+      subject(:king_move) { described_class.new(board, new_board) }
+      let(:board) { "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R b KQkq" }
+      let(:new_board) { "r2k3r/pppppppp/8/8/8/8/PPPPPPPP/R2K3R b KQkq" }
+
+      it "returns notation with K castling notation removed" do
+        result = king_move.update_castling_notation
+        expect(result).to eq("r2k3r/pppppppp/8/8/8/8/PPPPPPPP/R2K3R b KQ")
+      end
+    end
+
+    context "when king isn't moved, castling notation unchanged" do
+      subject(:king_move) { described_class.new(board, new_board) }
+      let(:board) { "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq" }
+      let(:new_board) { "r3k2r/pppppppp/8/8/8/7P/PPPPPPP1/R3K2R w KQkq" }
+
+      it "returns notation with castling notation" do
+        result = king_move.update_castling_notation
+        expect(result).to eq("r3k2r/pppppppp/8/8/8/7P/PPPPPPP1/R3K2R w KQkq")
+      end
+    end
+
+    context "when kingside rook is moved, kingside castling notation removed for white player" do
+      subject(:king_move) { described_class.new(board, new_board) }
+      let(:board) { "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq" }
+      let(:new_board) { "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K1R1 w KQkq" }
+
+      it "returns notation with K kingside castling notation removed" do
+        result = king_move.update_castling_notation
+        expect(result).to eq("r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K1R1 w Qkq")
+      end
+    end
+
+    context "when queenside rook is moved, queenside castling notation removed for white player" do
+      subject(:king_move) { described_class.new(board, new_board) }
+      let(:board) { "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq" }
+      let(:new_board) { "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/1R2K2R w KQkq" }
+
+      it "returns notation with K kingside castling notation removed" do
+        result = king_move.update_castling_notation
+        expect(result).to eq("r3k2r/pppppppp/8/8/8/8/PPPPPPPP/1R2K2R w Kkq")
+      end
+    end
+
+    context "when kingside rook is moved, kingside castling notation removed for black player" do
+      subject(:king_move) { described_class.new(board, new_board) }
+      let(:board) { "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R b KQkq" }
+      let(:new_board) { "r3k1r1/pppppppp/8/8/8/8/PPPPPPPP/R3K2R b KQkq" }
+
+      it "returns notation with K kingside castling notation removed" do
+        result = king_move.update_castling_notation
+        expect(result).to eq("r3k1r1/pppppppp/8/8/8/8/PPPPPPPP/R3K2R b KQq")
+      end
+    end
+
+    context "when queenside rook is moved, queenside castling notation removed for black player" do
+      subject(:king_move) { described_class.new(board, new_board) }
+      let(:board) { "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R b KQkq" }
+      let(:new_board) { "1r2k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R b KQkq" }
+
+      it "returns notation with K kingside castling notation removed" do
+        result = king_move.update_castling_notation
+        expect(result).to eq("1r2k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R b KQk")
       end
     end
   end

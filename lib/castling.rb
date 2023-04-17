@@ -3,8 +3,6 @@ require "pry-byebug"
 
 class Castling
   def self.castling_moves(board)
-    binding.pry
-
     new(board).castling
   end
 
@@ -25,20 +23,36 @@ class Castling
   end
 
   def update_castling_notation
-    # compare board to new board, if King moved, remove all castling notation for that colour
-    # if rook moved, remove kingside or queenside notation
+    king_row_old = expand_row(retrieve_king_row)
+    king_row_new = expand_row(retrieve_king_row(new_board_state))
 
-    # find king_row
+    return remove_castling_fen if king_moved?(king_row_old, king_row_new)
+    return remove_kingside_fen if king_rook_moved?(king_row_old, king_row_new)
+    return remove_queenside_fen if queen_rook_moved?(king_row_old, king_row_new)
 
-    king_row_old = retrieve_king_row
-    king_row_new = retrieve_king_row(new_board_state)
-    remove_castling_notation if king_moved?(king_row_old, king_row_new)
+    new_board_state
   end
 
   private
 
-  def remove_castling_notation
+  def remove_castling_fen
     castling_notation = update_notation
+
+    updated_board = new_board_state.split(" ")
+    updated_board[2] = castling_notation
+    updated_board.join(" ")
+  end
+
+  def remove_queenside_fen
+    castling_notation = update_queenside_notation
+
+    updated_board = new_board_state.split(" ")
+    updated_board[2] = castling_notation
+    updated_board.join(" ")
+  end
+
+  def remove_kingside_fen
+    castling_notation = update_kingside_notation
 
     updated_board = new_board_state.split(" ")
     updated_board[2] = castling_notation
@@ -57,9 +71,52 @@ class Castling
     new_notation.join("")
   end
 
+  def update_kingside_notation
+    updated_board = new_board_state.split(" ")
+    castle_notation = updated_board[2]
+    new_notation = []
+    castle_notation.chars.each do |char|
+      if player_colour == "w"
+        new_notation << char unless char == "K"
+      elsif player_colour == "b"
+        new_notation << char unless char == "k"
+      end
+    end
+    new_notation.join("")
+  end
+
+  def update_queenside_notation
+    updated_board = new_board_state.split(" ")
+    castle_notation = updated_board[2]
+    new_notation = []
+
+    castle_notation.chars.each do |char|
+      if player_colour == "w"
+        new_notation << char unless char == "Q"
+      elsif player_colour == "b"
+        new_notation << char unless char == "q"
+      end
+    end
+    new_notation.join("")
+  end
+
   def king_moved?(king_row_old, king_row_new)
     king = king_notation
-    return false unless king_row_old.index(king) == king_row_new.index(king)
+    return false if king_row_old.index(king) == king_row_new.index(king)
+
+    true
+  end
+
+  def king_rook_moved?(old_row, new_row)
+    rook = rook_notation
+    return false if old_row[7] == rook && new_row[7] == rook
+
+    true
+  end
+
+  def queen_rook_moved?(old_row, new_row)
+    rook = rook_notation
+    return false if old_row[0] == rook && new_row[0] == rook
 
     true
   end
