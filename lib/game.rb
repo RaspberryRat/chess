@@ -9,7 +9,7 @@ require_relative "castling"
 require "pry-byebug"
 
 class Game
-  attr_reader :move, :move_list
+  attr_reader :move, :move_list, :castling
   attr_accessor :board,
                 :player1,
                 :player2,
@@ -21,6 +21,7 @@ class Game
     board = Board.new,
     move = Move,
     move_list = AvailableMoves,
+    castling = Castling,
     current_player = nil
   )
     @board = board
@@ -31,6 +32,7 @@ class Game
     @player2 = nil
     @captured_pieces = []
     @moved_piece = nil
+    @castling = castling
   end
 
   def start
@@ -54,14 +56,15 @@ class Game
           puts "No legal moves available, pick a different piece."
         end
         next unless allowed_moves
-        allowed_destinations = legal_destinations(piece_selected, allowed_moves)
 
-        castle_check?
+        allowed_destinations = legal_destinations(piece_selected, allowed_moves)
+        allowed_destinations << castle_moves if king_location == piece_selected
+
         binding.pry
 
         #TODO would like to somehow highlight available moves
 
-        destination = verify_destination(allowed_destinations)
+        destination = verify_destination(allowed_destinations.flatten)
         @moved_piece = move_piece(piece_selected, destination)
         still_in_check_alert if king_in_check?(moved_piece)
         break unless king_in_check?(moved_piece)
@@ -150,7 +153,7 @@ class Game
   private
 
   # takes the board state from fen notation, finds the w or b after first space
-  def turn_indicator_from_fen_notation(board_state)
+  def turn_indicator_from_fen_notation(board_state = @board.board)
     notation = board_state
 
     notation[notation.index(" ") + 1]
@@ -289,7 +292,7 @@ class Game
     end
   end
 
-  def king_location(board)
+  def king_location(board = @board.board)
     expanded_board = expand_notation(board)
     current_king = current_player_king
     current_king_location = ""
@@ -366,6 +369,8 @@ class Game
     puts "Your King is still in check, this is not a legal move, you must make a different move"
   end
 
-  def castle_check?
+  def castle_moves
+    binding.pry
+    castling.castling_moves(board.board)
   end
 end

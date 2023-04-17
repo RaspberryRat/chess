@@ -33,4 +33,8 @@ require_relative "game"
 
 # Castling
 
-Game.new(Board.new("r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w")).start
+# Game.new(Board.new("r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w")).start
+
+Game.new(Board.new("r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq")).start
+
+# KQkq

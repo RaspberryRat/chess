@@ -1,10 +1,16 @@
 # frozen_string_literal: true
 
 class Castling
+  def self.castling_moves(board)
+    binding.pry
+
+    new(board).castling
+  end
+
   attr_reader :board, :player_colour
   attr_accessor :castling_options
 
-  def initialize(board)
+  def initialize(board = nil)
     @board = board
     @player_colour = retrieve_player_colour
     @castling_options = []
