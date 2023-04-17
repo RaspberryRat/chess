@@ -60,8 +60,6 @@ class Game
         allowed_destinations = legal_destinations(piece_selected, allowed_moves)
         allowed_destinations << castle_moves if king_location == piece_selected
 
-        binding.pry
-
         #TODO would like to somehow highlight available moves
 
         destination = verify_destination(allowed_destinations.flatten)
@@ -70,8 +68,9 @@ class Game
         break unless king_in_check?(moved_piece)
         break unless @moved_piece || @move_piece.nil?
       end
-
-      @board = Board.new(updated_board_state(@moved_piece), captured_pieces)
+      binding.pry
+      updated_board = castling_notation_update(@moved_piece)
+      @board = Board.new(updated_board_state(updated_board), captured_pieces)
       @moved_piece = nil
       clear_screen
       board.print_board
@@ -370,7 +369,10 @@ class Game
   end
 
   def castle_moves
-    binding.pry
     castling.castling_moves(board.board)
+  end
+
+  def castling_notation_update(updated_board)
+    castling.check_castle_notation(board.board, updated_board)
   end
 end

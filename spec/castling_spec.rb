@@ -225,5 +225,27 @@ describe Castling do
         expect(result).to eq("1r2k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R b KQk")
       end
     end
+
+    context "when last notification removed" do
+      subject(:king_move) { described_class.new(board, new_board) }
+      let(:board) { "k7/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w K" }
+      let(:new_board) { "k7/pppppppp/8/8/8/8/PPPPPPPP/4K1R1 w K" }
+
+      it "returns notation without a space at end" do
+        result = king_move.update_castling_notation
+        expect(result).to eq("k7/pppppppp/8/8/8/8/PPPPPPPP/4K1R1 w")
+      end
+    end
+
+    context "when white queenside rook moved" do
+      subject(:king_move) { described_class.new(board, new_board) }
+      let(:board) { "2r1k2r/pppppppp/8/8/8/8/PPPPPPPP/R3KR2 w Qk" }
+      let(:new_board) { "2r1k2r/pppppppp/8/8/8/8/PPPPPPPP/1R2KR2 w Qk" }
+
+      it "returns white queenside notation" do
+        result = king_move.update_castling_notation
+        expect(result).to eq("2r1k2r/pppppppp/8/8/8/8/PPPPPPPP/1R2KR2 w k")
+      end
+    end
   end
 end

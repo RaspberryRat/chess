@@ -6,6 +6,10 @@ class Castling
     new(board).castling
   end
 
+  def self.check_castle_notation(old_board, new_board)
+    new(old_board, new_board).update_castling_notation
+  end
+
   attr_reader :board, :player_colour
   attr_accessor :castling_options, :new_board_state
 
@@ -23,6 +27,12 @@ class Castling
   end
 
   def update_castling_notation
+    updated_board_state.rstrip
+  end
+
+  private
+
+  def updated_board_state
     king_row_old = expand_row(retrieve_king_row)
     king_row_new = expand_row(retrieve_king_row(new_board_state))
 
@@ -32,8 +42,6 @@ class Castling
 
     new_board_state
   end
-
-  private
 
   def remove_castling_fen
     castling_notation = update_notation
@@ -109,14 +117,17 @@ class Castling
 
   def king_rook_moved?(old_row, new_row)
     rook = rook_notation
-    return false if old_row[7] == rook && new_row[7] == rook
+    return false if old_row[7] == new_row[7]
+    return false if new_row[7] == rook
 
     true
   end
 
   def queen_rook_moved?(old_row, new_row)
     rook = rook_notation
-    return false if old_row[0] == rook && new_row[0] == rook
+
+    return false if old_row[0] == new_row[0]
+    return false if new_row[0] == rook
 
     true
   end
