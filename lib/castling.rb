@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require "pry-byebug"
 
 class Castling
   def self.castling_moves(board)
@@ -8,11 +9,12 @@ class Castling
   end
 
   attr_reader :board, :player_colour
-  attr_accessor :castling_options
+  attr_accessor :castling_options, :new_board_state
 
-  def initialize(board = nil)
+  def initialize(board = nil, new_board_state = nil)
     @board = board
     @player_colour = retrieve_player_colour
+    @new_board_state = new_board_state
     @castling_options = []
   end
 
@@ -22,7 +24,45 @@ class Castling
     castling_options
   end
 
+  def update_castling_notation
+    # compare board to new board, if King moved, remove all castling notation for that colour
+    # if rook moved, remove kingside or queenside notation
+
+    # find king_row
+
+    king_row_old = retrieve_king_row
+    king_row_new = retrieve_king_row(new_board_state)
+    remove_castling_notation if king_moved?(king_row_old, king_row_new)
+  end
+
   private
+
+  def remove_castling_notation
+    castling_notation = update_notation
+
+    updated_board = new_board_state.split(" ")
+    updated_board[2] = castling_notation
+    updated_board.join(" ")
+  end
+
+  def update_notation
+    updated_board = new_board_state.split(" ")
+    castle_notation = updated_board[2]
+    new_notation = []
+
+    castle_notation.chars.each do |char|
+      new_notation << char if char == char.upcase && player_colour == "b"
+      new_notation << char if char == char.downcase && player_colour == "w"
+    end
+    new_notation.join("")
+  end
+
+  def king_moved?(king_row_old, king_row_new)
+    king = king_notation
+    return false unless king_row_old.index(king) == king_row_new.index(king)
+
+    true
+  end
 
   def king_side_castle
     return false unless king_side_castling_notation?
@@ -64,8 +104,8 @@ class Castling
     board[board.index(" ") + 1]
   end
 
-  def retrieve_king_row
-    board_rows = board.split(" ").shift.split("/")
+  def retrieve_king_row(board_state = board)
+    board_rows = board_state.split(" ").shift.split("/")
 
     return board_rows[0] if player_colour == "b"
     return board_rows[7] if player_colour == "w"
@@ -75,19 +115,26 @@ class Castling
     king_row = expand_row(retrieve_king_row)
     blank = "."
 
-    if player_colour == "w"
-      king = "K"
-      rook = "R"
-    else
-      king = "k"
-      rook = "r"
-    end
+    king = king_notation
+    rook = rook_notation
 
     return false unless king_row[4] == king
     return false unless king_row[5] == blank && king_row[6] == blank
     return false unless king_row[7] == rook
 
     true
+  end
+
+  def king_notation
+    return "K" if player_colour == "w"
+
+    "k"
+  end
+
+  def rook_notation
+    return "R" if player_colour == "w"
+
+    "r"
   end
 
   def queen_side_room?

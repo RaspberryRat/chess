@@ -147,4 +147,17 @@ describe Castling do
       end
     end
   end
+
+  describe "#update_castling_notation" do
+    context "when king is moved, castling notation removed" do
+      subject(:king_move) { described_class.new(board, new_board) }
+      let(:board) { "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq" }
+      let(:new_board) { "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R2K3R w KQkq" }
+
+      it "returns notation with K castling notation removed" do
+        result = king_move.update_castling_notation
+        expect(result).to eq("r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R2K3R w kq")
+      end
+    end
+  end
 end
