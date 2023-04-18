@@ -106,4 +106,30 @@ describe EnPassant do
       end
     end
   end
+
+  describe "#last_passant?" do
+    context "when enpassant was last move" do
+      subject(:enpassant) { described_class.new(board, location, destination) }
+      let(:board) { "8/8/8/8/7P/7p/8/8 b h4" }
+      let(:location) { "g4" }
+      let(:destination) { "h3" }
+
+      it "adds enpassant move" do
+        result = enpassant.last_enpassant?
+        expect(result).to be(true)
+      end
+    end
+
+    context "when enpassant available" do
+      subject(:enpassant) { described_class.new(board, location, destination) }
+      let(:board) { "8/8/8/8/7P/7p/8/8 b h4" }
+      let(:location) { "g4" }
+      let(:destination) { "g3" }
+
+      it "adds enpassant move" do
+        result = enpassant.last_enpassant?
+        expect(result).to be(false)
+      end
+    end
+  end
 end

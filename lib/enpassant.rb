@@ -18,6 +18,10 @@ class EnPassant
     new(board_state, location).enpassant_move
   end
 
+  def self.last_move_enpassant?(board_state, location, destination)
+    new(board_state, location, destination).last_enpassant?
+  end
+
   attr_reader :board_state, :location, :destination, :player_colour
 
   def initialize(board_state, location, destination = nil)
@@ -48,6 +52,25 @@ class EnPassant
     move = []
     move << destination_array[0] - location_array[0]
     move << destination_array[1] - location_array[1]
+  end
+
+  def last_enpassant?
+    return false unless pawn?
+
+    start_col = convert_column(location[0])
+    dest_col = convert_column(destination[0])
+    enpass_col = convert_column(retrieve_enpassant_notation[0])
+    enpass_row = retrieve_enpassant_notation[1]
+    start_row = location[1]
+    dest_row = destination[1]
+
+    return false unless dest_col == enpass_col
+    return false unless start_row == enpass_row
+
+    column_change = enpass_col - start_col
+    return false unless column_change.abs == 1
+
+    true
   end
 
   private
