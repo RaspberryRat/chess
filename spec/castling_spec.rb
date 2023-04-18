@@ -1,7 +1,7 @@
 require_relative "../lib/castling"
 
 describe Castling do
-  describe "castling" do
+  describe "#castling" do
     before(:all) do
       @king_side_castle = "kingside castle"
       @queen_side_castle = "queenside castle"

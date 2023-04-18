@@ -4,9 +4,9 @@ require_relative "game"
 
 # Game.new.start
 
-# Game.new(
-#   Board.new("rnbqkbnr/pppp1ppp/8/4p3/8/P7/1PPPPPPP/RNBQK1NR w KQkq")
-# ).start
+Game.new(
+  Board.new("rnbqkbnr/pppp1ppp/8/4p3/8/P7/1PPPPPPP/RNBQK1NR w KQkq")
+).start
 
 # Game.new(Board.new("8/8/8/8/2q5/2K5/8/8 w")).start
 
@@ -41,4 +41,4 @@ require_relative "game"
 
 # KQkq
 
-Game.new(Board.new("r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq")).start
+# Game.new(Board.new("r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq")).start

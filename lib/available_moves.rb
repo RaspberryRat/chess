@@ -2,21 +2,24 @@
 
 require_relative "legal_move"
 require_relative "game_pieces"
+require_relative "board_method_module"
+
+include BoardMethods
 
 # checks if currently available move for piece at given location and board state
 class AvailableMoves
-  def self.possible_move(location, board, current_player)
-    new(location, board, current_player).possible_moves
+  def self.possible_move(location, player_colour, board)
+    new(location, player_colour, board).possible_moves
   end
 
-  attr_reader :location, :board, :move_list, :move_template, :current_player
+  attr_reader :location, :board, :move_list, :move_template, :player_colour
   attr_accessor :piece
 
-  def initialize(location, board, current_player, piece = nil)
+  def initialize(location, board, piece = nil)
     @location = location
     @board = board
     @piece = piece
-    @current_player = current_player
+    @player_colour = player_colour
     @move_list = GamePiece
     @move_template = LegalMove
   end
@@ -50,11 +53,11 @@ class AvailableMoves
 
   def verify_colour
     selected_piece = what_piece
-    if current_player.marker == "white"
+    if player_colour == "w"
       return false unless selected_piece == selected_piece.upcase
     end
 
-    if current_player.marker == "black"
+    if player_colour == "b"
       return false unless selected_piece == selected_piece.downcase
     end
 
