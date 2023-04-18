@@ -66,27 +66,4 @@ class Check
     list_of_destinations << legal_destinations(piece, moves)
     list_of_destinations.flatten
   end
-
-  def available_moves(piece_selected, player_colour, board = board_state)
-    moves = AvailableMoves.possible_move(piece_selected, player_colour, board)
-  end
-
-  # take piece location and moves to create destinations allowed
-  def legal_destinations(piece, moves)
-    return unless moves
-
-    destinations_available = []
-    piece_column = convert_column(piece[0])
-    piece_row = piece[1].to_i
-    # piece notation is [row, column]
-    piece_notation = [piece_row, piece_column]
-    i = 0
-    moves.length.times do
-      destination_row = piece_notation[0] + moves[i][0]
-      destination_column = column_to_letter(piece_notation[1] + moves[i][1])
-      destinations_available << destination_column.to_s + destination_row.to_s
-      i += 1
-    end
-    destinations_available
-  end
 end

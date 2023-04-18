@@ -8,6 +8,7 @@ require_relative "player"
 require_relative "castling"
 require_relative "check"
 require_relative "board_method_module"
+require_relative "checkmate"
 require "pry-byebug"
 
 include BoardMethods
@@ -56,7 +57,8 @@ class Game
       loop do
         piece_selected = player_input
         player_colour = turn_indicator_from_fen_notation(board.board)
-        allowed_moves = available_moves(piece_selected, player_colour)
+        allowed_moves =
+          available_moves(piece_selected, player_colour, board.board)
         unless allowed_moves
           puts "No legal moves available, pick a different piece."
         end
@@ -84,6 +86,8 @@ class Game
     end
   end
 
+  private
+
   def verify_destination(allowed_destinations)
     print "Available destinations: "
     print_available_destinations(allowed_destinations)
@@ -94,25 +98,6 @@ class Game
       puts "Invalid destination, please choose from "
       print_available_destinations(allowed_destinations)
     end
-  end
-
-  # take piece location and moves to create destinations allowed
-  def legal_destinations(piece, moves)
-    return unless moves
-
-    destinations_available = []
-    piece_column = convert_column(piece[0])
-    piece_row = piece[1].to_i
-    # piece notation is [row, column]
-    piece_notation = [piece_row, piece_column]
-    i = 0
-    moves.length.times do
-      destination_row = piece_notation[0] + moves[i][0]
-      destination_column = column_to_letter(piece_notation[1] + moves[i][1])
-      destinations_available << destination_column.to_s + destination_row.to_s
-      i += 1
-    end
-    destinations_available
   end
 
   def player_input
@@ -157,8 +142,6 @@ class Game
     return @current_player = @player2 if turn_colour == "b"
   end
 
-  private
-
   def updated_board_state(board_state)
     current_player_turn = turn_indicator_from_fen_notation(board_state)
 
@@ -184,15 +167,9 @@ class Game
     gets.chomp.strip
   end
 
-  def available_moves(piece_selected, player_colour, board_state = board.board)
-    moves = move_list.possible_move(piece_selected, player_colour, board_state)
-  end
-
-  def move_piece(location, destination, simulated = false, board = @board.board)
+  def move_piece(location, destination, board = @board.board)
     moved_piece = move.move_loop(location, destination, board)
     return false unless moved_piece
-    # doesn't add captured piece to list when doing check_mate checks
-    return moved_piece[0] if simulated
 
     captured_piece = moved_piece[1]
     @captured_pieces << captured_piece unless captured_piece == false
@@ -208,44 +185,7 @@ class Game
   end
 
   def check_mate?
-    current_player_piece_locations = current_player_pieces
-    current_player_colour = turn_indicator_from_fen_notation(board.board)
-    current_player_piece_locations.each do |piece|
-      moves = available_moves(piece, current_player_colour)
-      destinations = legal_destinations(piece, moves)
-      next if destinations.nil?
-      destinations.each do |move|
-        sim_move = simulate_move(piece, move)
-        return false unless king_in_check?(sim_move)
-      end
-      true
-    end
-  end
-
-  # refactor to combine with locations_not_current_player
-  def current_player_pieces(board_state = @board.board)
-    current_player_colour = turn_indicator_from_fen_notation(board_state)
-
-    piece_locations = []
-
-    expanded_board = expand_notation(board_state)
-    expanded_board.each_with_index do |column, row|
-      next if column.all?(".")
-
-      column.each_with_index do |piece, column|
-        next if piece == "."
-        next if opposite_piece_color?(current_player_colour, piece)
-
-        column_index = column_to_letter(column)
-        row_index = row + 1
-        piece_locations << column_index.to_s + row_index.to_s
-      end
-    end
-    piece_locations
-  end
-
-  def simulate_move(piece, move)
-    sim_move = move_piece(piece, move, true)
+    Checkmate.checkmate(board.board)
   end
 
   def winner

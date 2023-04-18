@@ -21,13 +21,13 @@ require_relative "game"
 
 # Game.new(Board.new("6kR/6P1/5K2/8/8/8/8/8 b")).start
 
-Game.new(Board.new("7k/7R/5N2/8/8/8/8/6K1 b")).start
+# Game.new(Board.new("7k/7R/5N2/8/8/8/8/6K1 b")).start
 
 # Game.new(Board.new("3R2k1/5ppp/8/8/8/8/5PPP/6K1 b")).start
 
 # Game.new(Board.new("4K3/8/2b2q2/8/8/8/8/6k1 w")).start
 
-# Game.new(Board.new("5rk1/7B/8/6N1/8/8/1B6/6K1 b")).start
+Game.new(Board.new("5rk1/7B/8/6N1/8/8/1B6/6K1 b")).start
 
 # Game.new(Board.new("5rk1/6RR/8/8/8/8/8/6K1 b")).start
 
