@@ -58,4 +58,26 @@ describe EnPassant do
       end
     end
   end
+
+  describe "#enpassant_available?" do
+    context "when enpassant avaiable" do
+      subject(:enpassant) { described_class.new(board) }
+      let(:board) { "8/8/8/pP6/8/8/8/8 w a6" }
+
+      it "returns true" do
+        result = enpassant.enpassant_available?
+        expect(result).to be(true)
+      end
+    end
+
+    context "when enpassant avaiable" do
+      subject(:enpassant) { described_class.new(board) }
+      let(:board) { "8/8/8/pP6/8/8/8/8 w -" }
+
+      it "returns true" do
+        result = enpassant.enpassant_available?
+        expect(result).to be(false)
+      end
+    end
+  end
 end

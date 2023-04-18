@@ -10,9 +10,13 @@ class EnPassant
     new(board_state, location, destination).enpassant_notation
   end
 
+  def self.legal_move?(board_state)
+    new(board_state)
+  end
+
   attr_reader :board_state, :location, :destination, :player_colour
 
-  def initialize(board_state, location, destination)
+  def initialize(board_state, location = nil, destination = nil)
     @board_state = board_state
     @location = location
     @destination = destination
@@ -26,10 +30,16 @@ class EnPassant
     add_notation
   end
 
+  def enpassant_available?
+    return false if retrieve_enpassant_notation == "-"
+
+    true
+  end
+
   private
 
   def add_notation
-    ex_board = board_state.split(" ")
+    ex_board = board_to_array
     target = location
     col = target[1].to_i
 
@@ -41,6 +51,15 @@ class EnPassant
     target[1] = column.to_s
     ex_board[-1] = target
     ex_board.join(" ")
+  end
+
+  def retrieve_enpassant_notation
+    board = board_to_array
+    board[-1]
+  end
+
+  def board_to_array
+    board_state.split(" ")
   end
 
   def pawn?
