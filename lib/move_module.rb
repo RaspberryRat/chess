@@ -18,7 +18,7 @@ module MoveModule
 
     board_array = expand_notation(board)
     row = board_array[row]
-    @piece = row[column]
+    piece = row[column]
     return piece unless piece == "."
 
     false
