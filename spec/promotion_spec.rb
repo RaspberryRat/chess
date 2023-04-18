@@ -67,7 +67,7 @@ describe Promotion do
 
       it "returns a board where pawn equals queen" do
         result = pawn_promotion.promoted
-        expect(result).to be(false)
+        expect(result).to eq(new_board)
       end
     end
   end

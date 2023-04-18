@@ -32,7 +32,7 @@ class Promotion
     old_board_expanded = expand_notation(old_board)
 
     pawn_change = confirm_pawn?(old_board_expanded, new_board_expanded)
-    return false unless pawn_change
+    return new_board unless pawn_change
 
     promote_piece(new_board_expanded)
   end
