@@ -1,12 +1,14 @@
 # frozen_string_literal: true
-require_relative 'board_method_module'
-require_relative 'available_moves'
-require 'pry-byebug'
+require_relative "board_method_module"
+require_relative "available_moves"
+require "pry-byebug"
 
 include BoardMethods
 
-
 class Check
+  def self.checker(board_state)
+    new(board_state).king_in_check?
+  end
 
   attr_reader :board_state
 
@@ -15,7 +17,7 @@ class Check
   end
 
   def king_in_check?
-    location = king_location
+    location = king_location(board_state)
     # go through not current player's pieces to see if they have a move to location
     potential_moves = []
     other_player_pieces = locations_not_current_player
@@ -28,27 +30,7 @@ class Check
     false
   end
 
-
   private
-
-  def king_location
-    expanded_board = expand_notation(board_state)
-    current_king = current_player_king
-    current_king_location = ""
-    expanded_board.each_with_index do |column, row|
-      next unless column.include?(current_king)
-      column_index = column_to_letter(column.index(current_king))
-      row_index = row + 1
-      current_king_location = column_index.to_s + row_index.to_s
-    end
-    current_king_location
-  end
-
-  def current_player_king
-    return "K" if turn_indicator_from_fen_notation(board_state) == "w"
-
-    return "k" if turn_indicator_from_fen_notation(board_state) == "b"
-  end
 
   def locations_not_current_player
     current_player_colour = turn_indicator_from_fen_notation(board_state)
@@ -71,21 +53,14 @@ class Check
     not_current_player_piece_locations
   end
 
-  def opposite_piece_color?(current_player_colour, piece)
-    return false if piece == piece.upcase && current_player_colour == "w"
-    return false if piece == piece.downcase && current_player_colour == "b"
-
-    true
-  end
-
   def other_player_available_moves(piece, board_state)
     list_of_destinations = []
 
     player_colour = turn_indicator_from_fen_notation(board_state)
 
-    opp_player_colour = player_colour == 'w' ? 'b' : 'w'
+    opp_player_colour = player_colour == "w" ? "b" : "w"
 
-    moves = available_moves(piece, board_state, opp_player_colour)
+    moves = available_moves(piece, opp_player_colour, board_state)
     return nil unless moves
 
     list_of_destinations << legal_destinations(piece, moves)
@@ -94,9 +69,6 @@ class Check
 
   def available_moves(piece_selected, player_colour, board = board_state)
     moves = AvailableMoves.possible_move(piece_selected, player_colour, board)
-    return moves unless moves == false
-
-    false
   end
 
   # take piece location and moves to create destinations allowed
@@ -118,5 +90,3 @@ class Check
     destinations_available
   end
 end
-
-

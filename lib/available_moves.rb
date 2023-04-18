@@ -15,7 +15,7 @@ class AvailableMoves
   attr_reader :location, :board, :move_list, :move_template, :player_colour
   attr_accessor :piece
 
-  def initialize(location, board, piece = nil)
+  def initialize(location, player_colour, board, piece = nil)
     @location = location
     @board = board
     @piece = piece
@@ -30,7 +30,7 @@ class AvailableMoves
     return false unless verify_colour
 
     piece_location = convert_to_grid
-    current_board_state = expand_notation
+    current_board_state = expand_notation(board)
     moves =
       move_template.for(
         move_list.moves(piece),
@@ -69,7 +69,7 @@ class AvailableMoves
     column = square_to_grid[1]
     row = square_to_grid[0]
 
-    board_array = expand_notation
+    board_array = expand_notation(board)
     row = board_array[row]
     game_piece = row[column]
     assign_piece(game_piece)
@@ -82,27 +82,9 @@ class AvailableMoves
     @piece = game_piece
   end
 
-  def convert_column(column)
-    { a: 0, b: 1, c: 2, d: 3, e: 4, f: 5, g: 6, h: 7 }.fetch(column.to_sym)
-  end
-
   def convert_to_grid
     column = convert_column(location[0])
     row = location[1].to_i - 1
     [row, column]
-  end
-
-  # coverts fen notation into an array, if empty square, converts to '.'
-  def expand_notation
-    board = @board.split(" ").shift
-    expanded_board = board.split("/").reverse
-    expanded_board.map do |row|
-      new_row = []
-      row = row.split("")
-      row.map do |c|
-        c.to_i.positive? ? c.to_i.times { new_row << "." } : new_row << c
-      end
-      new_row
-    end
   end
 end

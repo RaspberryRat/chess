@@ -63,7 +63,9 @@ class Game
         next unless allowed_moves
 
         allowed_destinations = legal_destinations(piece_selected, allowed_moves)
-        allowed_destinations << castle_moves if king_location == piece_selected
+        if king_location(board.board) == piece_selected
+          allowed_destinations << castle_moves
+        end
 
         #TODO would like to somehow highlight available moves
 
@@ -184,9 +186,6 @@ class Game
 
   def available_moves(piece_selected, player_colour, board_state = board.board)
     moves = move_list.possible_move(piece_selected, player_colour, board_state)
-    return moves unless moves == false
-
-    false
   end
 
   def move_piece(location, destination, simulated = false, board = @board.board)
@@ -200,71 +199,9 @@ class Game
     new_board = moved_piece[0]
   end
 
-  # def convert_column(column)
-  #   { a: 0, b: 1, c: 2, d: 3, e: 4, f: 5, g: 6, h: 7 }.fetch(column.to_sym)
-  # end
-
-  # def clear_screen
-  #   system("clear") || system("cls")
-  # end
-
   def king_in_check?(boardstate = board.board)
     Check.checker(boardstate)
   end
-
-  # def other_player_available_moves(piece, board_state)
-  #   list_of_destinations = []
-
-  #   player_colour = turn_indicator_from_fen_notation(board_state)
-
-  #   player = player_colour == "b" ? player1 : player2
-  #   moves = available_moves(piece, player, board_state)
-  #   return nil unless moves
-
-  #   list_of_destinations << legal_destinations(piece, moves)
-  #   list_of_destinations.flatten
-  # end
-
-  # def locations_not_current_player(board_state = @board.board)
-  #   current_player_colour = turn_indicator_from_fen_notation(board_state)
-
-  #   not_current_player_piece_locations = []
-
-  #   expanded_board = expand_notation(board_state)
-  #   expanded_board.each_with_index do |column, row|
-  #     next if column.all?(".")
-
-  #     column.each_with_index do |piece, column|
-  #       next if piece == "."
-  #       next unless opposite_piece_color?(current_player_colour, piece)
-
-  #       column_index = column_to_letter(column)
-  #       row_index = row + 1
-  #       not_current_player_piece_locations << column_index.to_s + row_index.to_s
-  #     end
-  #   end
-  #   not_current_player_piece_locations
-  # end
-
-  # def opposite_piece_color?(current_player_colour, piece)
-  #   return false if piece == piece.upcase && current_player_colour == "w"
-  #   return false if piece == piece.downcase && current_player_colour == "b"
-
-  #   true
-  # end
-
-  # def expand_notation(board_state = @board.board)
-  #   board = board_state.split(" ").shift
-  #   expanded_board = board.split("/").reverse
-  #   expanded_board.map do |row|
-  #     new_row = []
-  #     row = row.split("")
-  #     row.map do |c|
-  #       c.to_i.positive? ? c.to_i.times { new_row << "." } : new_row << c
-  #     end
-  #     new_row
-  #   end
-  # end
 
   def check_alert
     puts "Your king is in check, you must move it out of check"
@@ -272,9 +209,9 @@ class Game
 
   def check_mate?
     current_player_piece_locations = current_player_pieces
-
+    current_player_colour = turn_indicator_from_fen_notation(board.board)
     current_player_piece_locations.each do |piece|
-      moves = available_moves(piece)
+      moves = available_moves(piece, current_player_colour)
       destinations = legal_destinations(piece, moves)
       next if destinations.nil?
       destinations.each do |move|
@@ -291,7 +228,7 @@ class Game
 
     piece_locations = []
 
-    expanded_board = expand_notation
+    expanded_board = expand_notation(board_state)
     expanded_board.each_with_index do |column, row|
       next if column.all?(".")
 
@@ -330,5 +267,9 @@ class Game
 
   def castling_notation_update(updated_board)
     castling.check_castle_notation(board.board, updated_board)
+  end
+
+  def clear_screen
+    system("clear") || system("cls")
   end
 end
