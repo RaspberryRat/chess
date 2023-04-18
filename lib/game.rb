@@ -9,6 +9,7 @@ require_relative "castling"
 require_relative "check"
 require_relative "board_method_module"
 require_relative "checkmate"
+require_relative "promotion"
 require "pry-byebug"
 
 include BoardMethods
