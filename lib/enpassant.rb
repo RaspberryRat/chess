@@ -46,8 +46,8 @@ class EnPassant
     destination_array = convert_to_grid(retrieve_enpassant_notation)
 
     move = []
-    move << location_array[0] - destination_array[0]
-    move << location_array[1] - destination_array[1]
+    move << destination_array[0] - location_array[0]
+    move << destination_array[1] - location_array[1]
   end
 
   private

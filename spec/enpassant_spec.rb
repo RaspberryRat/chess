@@ -91,18 +91,18 @@ describe EnPassant do
 
       it "adds enpassant move" do
         result = enpassant.enpassant_move
-        expect(result).to eq([-1, 1])
+        expect(result).to eq([1, -1])
       end
     end
 
     context "when enpassant available" do
       subject(:enpassant) { described_class.new(board, location) }
-      let(:board) { "8/8/8/8/6pP/8/8/8 w h3" }
+      let(:board) { "8/8/8/8/6pP/8/8/8 b h3" }
       let(:location) { "g4" }
 
       it "adds enpassant move" do
         result = enpassant.enpassant_move
-        expect(result).to eq([1, -1])
+        expect(result).to eq([-1, 1])
       end
     end
   end

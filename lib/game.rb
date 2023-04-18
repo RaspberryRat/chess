@@ -225,8 +225,8 @@ class Game
     Promotion.promote(board.board, new_board, location, destination)
   end
 
-  def en_passant_move(moves)
-    return moves unless EnPassant.legal_move?(board.board)
+  def en_passant_move(moves, piece_selected)
+    return moves unless EnPassant.legal_move?(board.board, piece_selected)
 
     moves << EnPassant.moves(board.board, piece_selected)
   end
