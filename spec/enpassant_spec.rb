@@ -60,9 +60,10 @@ describe EnPassant do
   end
 
   describe "#enpassant_available?" do
-    context "when enpassant avaiable" do
-      subject(:enpassant) { described_class.new(board) }
+    context "when enpassant available" do
+      subject(:enpassant) { described_class.new(board, location) }
       let(:board) { "8/8/8/pP6/8/8/8/8 w a6" }
+      let(:location) { "b5" }
 
       it "returns true" do
         result = enpassant.enpassant_available?
@@ -70,13 +71,38 @@ describe EnPassant do
       end
     end
 
-    context "when enpassant avaiable" do
-      subject(:enpassant) { described_class.new(board) }
+    context "when enpassant not available" do
+      subject(:enpassant) { described_class.new(board, location) }
       let(:board) { "8/8/8/pP6/8/8/8/8 w -" }
+      let(:location) { "b5" }
 
       it "returns true" do
         result = enpassant.enpassant_available?
         expect(result).to be(false)
+      end
+    end
+  end
+
+  describe "#enpassant_move" do
+    context "when enpassant available" do
+      subject(:enpassant) { described_class.new(board, location) }
+      let(:board) { "8/8/8/pP6/8/8/8/8 w a6" }
+      let(:location) { "b5" }
+
+      it "adds enpassant move" do
+        result = enpassant.enpassant_move
+        expect(result).to eq([-1, 1])
+      end
+    end
+
+    context "when enpassant available" do
+      subject(:enpassant) { described_class.new(board, location) }
+      let(:board) { "8/8/8/8/6pP/8/8/8 w h3" }
+      let(:location) { "g4" }
+
+      it "adds enpassant move" do
+        result = enpassant.enpassant_move
+        expect(result).to eq([1, -1])
       end
     end
   end

@@ -10,13 +10,17 @@ class EnPassant
     new(board_state, location, destination).enpassant_notation
   end
 
-  def self.legal_move?(board_state)
-    new(board_state)
+  def self.legal_move?(board_state, location)
+    new(board_state, location).enpassant_available?
+  end
+
+  def self.moves(board_state, location)
+    new(board_state, location).enpassant_move
   end
 
   attr_reader :board_state, :location, :destination, :player_colour
 
-  def initialize(board_state, location = nil, destination = nil)
+  def initialize(board_state, location, destination = nil)
     @board_state = board_state
     @location = location
     @destination = destination
@@ -31,9 +35,19 @@ class EnPassant
   end
 
   def enpassant_available?
+    return false unless pawn?
     return false if retrieve_enpassant_notation == "-"
 
     true
+  end
+
+  def enpassant_move
+    location_array = convert_to_grid(location)
+    destination_array = convert_to_grid(retrieve_enpassant_notation)
+
+    move = []
+    move << location_array[0] - destination_array[0]
+    move << location_array[1] - destination_array[1]
   end
 
   private
@@ -63,7 +77,8 @@ class EnPassant
   end
 
   def pawn?
-    piece = what_piece(destination, board_state)
+    piece_location = destination.nil? ? location : destination
+    piece = what_piece(piece_location, board_state)
     return false unless piece
     return true if piece.downcase == "p"
 

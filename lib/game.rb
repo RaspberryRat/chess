@@ -61,6 +61,9 @@ class Game
         player_colour = turn_indicator_from_fen_notation(board.board)
         allowed_moves =
           available_moves(piece_selected, player_colour, board.board)
+        binding.pry
+
+        allowed_moves = en_passant_move(allowed_moves, piece_selected)
         unless allowed_moves
           puts "No legal moves available, pick a different piece."
         end
@@ -220,5 +223,11 @@ class Game
 
   def promote(new_board, location, destination)
     Promotion.promote(board.board, new_board, location, destination)
+  end
+
+  def en_passant_move(moves)
+    return moves unless EnPassant.legal_move?(board.board)
+
+    moves << EnPassant.moves(board.board, piece_selected)
   end
 end
