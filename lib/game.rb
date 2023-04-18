@@ -74,9 +74,12 @@ class Game
 
         destination = verify_destination(allowed_destinations.flatten)
         @moved_piece = move_piece(piece_selected, destination)
-        still_in_check_alert if king_in_check?(moved_piece)
-        break unless king_in_check?(moved_piece)
-        break unless @moved_piece || @move_piece.nil?
+        if king_in_check?(moved_piece)
+          still_in_check_alert
+        else
+          @moved_piece = promote(moved_piece, piece_selected, destination)
+          break unless @moved_piece.nil? || @moved_piece == false
+        end
       end
       updated_board = castling_notation_update(@moved_piece)
       @board = Board.new(updated_board_state(updated_board), captured_pieces)
@@ -212,5 +215,9 @@ class Game
 
   def clear_screen
     system("clear") || system("cls")
+  end
+
+  def promote(new_board, location, destination)
+    Promotion.promote(board.board, new_board, location, destination)
   end
 end

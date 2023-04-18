@@ -62,9 +62,6 @@ class Board
   def pieces_captured
     return if captured_pieces.empty?
 
-    # white_pieces = "White pieces captured: "
-    # black_pieces = "Black pieces captured: "
-
     white_pieces = []
     black_pieces = []
 

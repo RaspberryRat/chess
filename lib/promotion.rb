@@ -85,7 +85,8 @@ class Promotion
   end
 
   def display_promote_options
-    print '\n\n\nChoose what piece you want to promote your pawn too'
-    print '\n1: Queen\n2: Bishop\n3: Knight\n4: Rook'
+    print "\n\n\nChoose what piece you want to promote your pawn too"
+    print "\n1: Queen\n2: Bishop\n3: Knight\n4: Rook\n"
+    print ">> "
   end
 end
