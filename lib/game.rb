@@ -61,7 +61,6 @@ class Game
         player_colour = turn_indicator_from_fen_notation(board.board)
         allowed_moves =
           available_moves(piece_selected, player_colour, board.board)
-        binding.pry
 
         allowed_moves = en_passant_move(allowed_moves, piece_selected)
         unless allowed_moves
@@ -81,6 +80,11 @@ class Game
         if king_in_check?(moved_piece)
           still_in_check_alert
         else
+          if en_passant_target?(piece_selected, destination)
+            @moved_piece =
+              en_passant_update(moved_piece, piece_selected, destination)
+          end
+
           @moved_piece = promote(moved_piece, piece_selected, destination)
           break unless @moved_piece.nil? || @moved_piece == false
         end
@@ -229,5 +233,16 @@ class Game
     return moves unless EnPassant.legal_move?(board.board, piece_selected)
 
     moves << EnPassant.moves(board.board, piece_selected)
+  end
+
+  def en_passant_target?(piece_selected, destination)
+    EnPassant.last_move_enpassant?(@moved_piece, piece_selected, destination)
+  end
+
+  def en_passant_update(board_state, piece_selected, destination)
+    board_and_piece =
+      EnPassant.update_board(board_state, piece_selected, destination)
+    @captured_pieces << board_and_piece[1]
+    board_and_piece[0]
   end
 end

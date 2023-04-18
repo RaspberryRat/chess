@@ -22,6 +22,10 @@ class EnPassant
     new(board_state, location, destination).last_enpassant?
   end
 
+  def self.update_board(board_state, location, destination)
+    new(board_state, location, destination).captured_piece
+  end
+
   attr_reader :board_state, :location, :destination, :player_colour
 
   def initialize(board_state, location, destination = nil)
@@ -60,12 +64,8 @@ class EnPassant
     start_col = convert_column(location[0])
     dest_col = convert_column(destination[0])
     enpass_col = convert_column(retrieve_enpassant_notation[0])
-    enpass_row = retrieve_enpassant_notation[1]
-    start_row = location[1]
-    dest_row = destination[1]
 
-    return false unless dest_col == enpass_col
-    return false unless start_row == enpass_row
+    return false unless destination == retrieve_enpassant_notation
 
     column_change = enpass_col - start_col
     return false unless column_change.abs == 1
@@ -73,7 +73,38 @@ class EnPassant
     true
   end
 
+  def captured_piece
+    captured_piece_location = find_captured_piece
+
+    board = remove_capture_piece_from_board(captured_piece_location)
+
+    [board, what_piece(captured_piece_location, board_state)]
+  end
+
   private
+
+  def find_captured_piece
+    captured_piece_col = destination[0]
+    captured_piece_row = location[1]
+
+    [captured_piece_col, captured_piece_row].join("")
+  end
+
+  def remove_capture_piece_from_board(captured_piece_location)
+    other_notation = save_notation_after_piece_placement(board_state)
+    board_array = expand_notation(board_state)
+    cap_piece = convert_to_grid(captured_piece_location)
+    board_array[cap_piece[0]][cap_piece[1]] = "."
+    other_notation = remove_enpassant_notation(other_notation)
+    board = array_to_fen_notation(board_array)
+    board = add_post_piece_notation(board, other_notation)
+  end
+
+  def remove_enpassant_notation(notation)
+    notation = notation.split(" ")
+    notation[-1] = "-"
+    notation.join(" ")
+  end
 
   def add_notation
     ex_board = board_to_array
