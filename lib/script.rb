@@ -31,7 +31,7 @@ require_relative "game"
 
 # Game.new(Board.new("5rk1/6RR/8/8/8/8/8/6K1 b")).start
 
-# Game.new(Board.new("7k/5N1p/8/8/8/8/8/2K3R1 b")).start
+Game.new(Board.new("7k/5N1p/8/8/8/8/8/2K3R1 b")).start
 
 # Castling
 
@@ -53,4 +53,4 @@ require_relative "game"
 #   Board.new("rnbqkbnr/p1pp1pp1/8/1p2p3/3P2Pp/P6P/1PPKPP2/RNBQ2NR b kq g3")
 # ).start
 
-Game.new(Board.new("r3k2r/8/8/RR5R/8/8/8/K7 b KQkq")).start
+# Game.new(Board.new("qn2k3/8/8/RR5R/8/8/8/bK5B b KQkq")).start

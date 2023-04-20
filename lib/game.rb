@@ -79,6 +79,7 @@ class Game
         destination = verify_destination(allowed_destinations.flatten)
         @moved_piece = move_piece(piece_selected, destination)
         if king_in_check?(moved_piece)
+          @captured_pieces.pop
           still_in_check_alert
         else
           if en_passant_target?(piece_selected, destination)
