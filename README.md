@@ -63,9 +63,7 @@
 
  I programmed this to practice and develop my programming while I am learning.
 
-![Screenshot of gameboard](https://github.com/RaspberryRat/chess/screen_shots/screen_gameboard.png)
-
-Screenshot[product-screenshot]](https://github.com/RaspberryRat/chess/screen_shots/screen_gameboard.png)
+![Screenshot of gameboard](https://github.com/RaspberryRat/chess/blob/readme/screen_shots/screen_gameboard.png)
 
 Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
 
