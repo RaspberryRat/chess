@@ -1,0 +1,1 @@
+{"board_state":"1nbqkbnr/r5pp/8/pp2pp2/1Pp5/P3PN1P/1BPPQPP1/RN2K2R b KQk -","player1_name":"The Computer","player1_ai":true,"player2_name":"Billy boy","player2_ai":false,"player_count":1,"captured_pieces":[]}

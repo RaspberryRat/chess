@@ -11,11 +11,22 @@ require_relative "board_method_module"
 require_relative "checkmate"
 require_relative "promotion"
 require_relative "enpassant"
+require_relative "save_game"
 require "pry-byebug"
 
 include BoardMethods
 
 class Game
+  def self.load_game(
+    player_count,
+    board_state,
+    player1,
+    player2,
+    captured_pieces
+  )
+    new(player_count, board_state, player1, player2, captured_pieces).load_save
+  end
+
   attr_reader :move, :move_list, :castling, :player_count
   attr_accessor :board,
                 :player1,
@@ -27,6 +38,9 @@ class Game
   def initialize(
     player_count,
     board = Board.new,
+    player1 = nil,
+    player2 = nil,
+    captured_pieces = [],
     move = Move,
     move_list = AvailableMoves,
     castling = Castling,
@@ -37,11 +51,17 @@ class Game
     @move = move
     @move_list = move_list
     @current_player = current_player
-    @player1 = nil
-    @player2 = nil
-    @captured_pieces = []
+    @player1 = player1
+    @player2 = player2
+    @captured_pieces = captured_pieces
     @moved_piece = nil
     @castling = castling
+  end
+
+  def load_save
+    player_colour = turn_indicator_from_fen_notation(board.board)
+    @current_player = player_colour == "w" ? player1 : player2
+    start
   end
 
   def start
@@ -133,11 +153,24 @@ class Game
   end
 
   def verify_input(input)
+    return save_game if input == "save"
     return true if /^[a-h][1-8]$/.match(input)
     return true if input == "queenside castle"
     return true if input == "kingside castle"
 
     false
+  end
+
+  def save_game
+    SaveGame.save(board.board, player1, player2, player_count, captured_pieces)
+    puts "Game saving"
+    3.times do
+      sleep(0.3)
+      puts "."
+    end
+    print " Game saved!"
+    print "\nGoodbye\n"
+    exit
   end
 
   def print_available_destinations(destinations)
@@ -183,18 +216,18 @@ class Game
     player1_colour = choose_colour if player_count == 1
 
     if player1_colour.nil? && player_count == 1
-      @player1 = Player.new(self, ask_name, 1, false)
-      @player2 = Player.new(self, ask_name, 2, false)
+      @player1 = Player.new(ask_name, false)
+      @player2 = Player.new(ask_name, false)
     elsif player_count == 3
-      @player1 = Player.new(self, "The Computer 1", 1, true)
-      @player2 = Player.new(self, "The Computer 2", 2, true)
+      @player1 = Player.new("The Computer 1", true)
+      @player2 = Player.new("The Computer 2", true)
     else
       if player1_colour == "white"
-        @player1 = Player.new(self, ask_name, 1, false)
-        @player2 = Player.new(self, "The Computer", 2, true)
+        @player1 = Player.new(ask_name, false)
+        @player2 = Player.new("The Computer", true)
       else
-        @player1 = Player.new(self, "The Computer", 1, true)
-        @player2 = Player.new(self, ask_name, 2, false)
+        @player1 = Player.new("The Computer", true)
+        @player2 = Player.new(ask_name, false)
       end
     end
     @current_player = player1

@@ -2,6 +2,7 @@
 
 require_relative "game"
 require_relative "fen"
+require_relative "save_game"
 # Game.new.start
 
 # Game.new(
@@ -70,7 +71,7 @@ def new_game?
   when 1
     true
   when 2
-    false
+    SaveGame.load
   when 3
     board = Fen.confirm
     start_game(player_count, board)
