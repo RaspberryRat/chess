@@ -1,10 +1,9 @@
 # frozen_string_literal: true
-require 'pry-byebug'
-require_relative 'piece_module'
+require "pry-byebug"
+require_relative "piece_module"
 
 include PieceVariables
 include StandardChessPieces
-
 
 # TODO add square highlights here
 # superclass for board squares
@@ -27,7 +26,7 @@ class BoardSquare
 
   def self.choose_normal_square(notation, previous_color)
     case notation
-    when '/'
+    when "/"
       BoardSquare.new(notation)
     when Integer
       Square.for(notation, previous_color)
@@ -47,10 +46,8 @@ end
 
 # determines if piece is green for board squares
 class Square < BoardSquare
-
   def self.for(notation, previous_color)
-
-    if previous_color == 'white'
+    if previous_color == "white"
       Square
     else
       WhiteSquare
@@ -58,7 +55,6 @@ class Square < BoardSquare
   end
 
   def initialize(notation)
-
     super(notation)
   end
 
@@ -70,7 +66,6 @@ end
 # determines if piece is white for board squares
 class WhiteSquare < BoardSquare
   def initialize(notation)
-
     super(notation)
   end
 
@@ -93,7 +88,7 @@ end
 # determines if piece is green and has a game piece for board squares
 class OccupiedSquare < Square
   def self.for(notation, previous_color)
-    if previous_color == 'white'
+    if previous_color == "white"
       OccupiedSquare
     else
       OccupiedWhiteSquare
@@ -105,7 +100,7 @@ class OccupiedSquare < Square
   end
 
   def to_s
-    "#{GREEN_SQUARE} #{CHESS_PIECES.fetch(notation.to_sym)} "
+    "#{GREEN_SQUARE} #{CHESS_PIECES.fetch(notation.to_sym)}#{GREEN_SQUARE} "
   end
 end
 
@@ -116,7 +111,7 @@ class OccupiedWhiteSquare < OccupiedSquare
   end
 
   def to_s
-    "#{WHITE_SQUARE} #{CHESS_PIECES.fetch(notation.to_sym)} "
+    "#{WHITE_SQUARE} #{CHESS_PIECES.fetch(notation.to_sym)}#{WHITE_SQUARE} "
   end
 end
 
