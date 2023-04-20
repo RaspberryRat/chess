@@ -18,7 +18,7 @@ class Board
   end
 
   def print_board
-    printed_board = "\n\n\n\n\n\n\n"
+    printed_board = "\n\n\n\n\n"
     printed_board += cap_pieces.empty? ? "\n" * 4 : pieces_captured
 
     row_number = 8

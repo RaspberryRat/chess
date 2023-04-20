@@ -68,6 +68,7 @@ class Game
 
     clear_screen
     board.board = enpassant_blank_notation(board.board)
+    print_reminder
     board.print_board
 
     @current_player = determine_player_turn
@@ -129,7 +130,7 @@ class Game
   private
 
   def print_reminder
-    print "save game to save your game, or exit or quit to exit"
+    print "\n\nEnter 'save' to save your game, or 'exit' or 'quit' to exit"
   end
 
   def print_note
