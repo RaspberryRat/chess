@@ -1,9 +1,7 @@
 # frozen_string_literal: true
-require_relative "move_module"
 require_relative "board_method_module"
-require "pry-byebug"
 
-include MoveModule, BoardMethods
+include BoardMethods
 
 class EnPassant
   def self.blank_notation(board_state)

@@ -7,8 +7,6 @@ require_relative "move"
 
 include BoardMethods
 
-require "pry-byebug"
-
 class Checkmate
   def self.checkmate(board_state)
     new(board_state).checkmate?

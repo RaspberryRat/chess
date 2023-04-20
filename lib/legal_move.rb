@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative "string"
-require "pry-byebug"
 
 class LegalMove
   def self.for(move_list, piece, location, board)

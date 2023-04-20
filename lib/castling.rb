@@ -1,10 +1,8 @@
 # frozen_string_literal: true
-require "pry-byebug"
 require_relative "check"
 require_relative "board_method_module"
-require_relative "move_module"
 
-include MoveModule, BoardMethods
+include BoardMethods
 
 class Castling
   def self.castling_moves(board)

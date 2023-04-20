@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 require_relative "board_method_module"
 require_relative "available_moves"
-require "pry-byebug"
 
 include BoardMethods
 

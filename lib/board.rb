@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "pry-byebug"
-
 require_relative "board_square"
 require_relative "game_pieces"
 require_relative "piece_module"

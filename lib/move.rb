@@ -3,11 +3,8 @@
 require_relative "board"
 require_relative "game_pieces"
 require_relative "legal_move"
-require_relative "move_module"
 require_relative "board_method_module"
-require "pry-byebug"
 
-include MoveModule
 include BoardMethods
 
 class Move

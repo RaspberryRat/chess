@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "board_method_module"
-require_relative "move_module"
-require "pry-byebug"
 
-include MoveModule
 include BoardMethods
 
 class Promotion

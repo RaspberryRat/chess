@@ -12,7 +12,6 @@ require_relative "checkmate"
 require_relative "promotion"
 require_relative "enpassant"
 require_relative "save_game"
-require "pry-byebug"
 
 include BoardMethods
 
@@ -121,13 +120,17 @@ class Game
       @board = Board.new(updated_board_state(updated_board), captured_pieces)
       @moved_piece = nil
       clear_screen
-
+      print_reminder
       board.print_board
       @current_player = determine_player_turn
     end
   end
 
   private
+
+  def print_reminder
+    print "save game to save your game, or exit or quit to exit"
+  end
 
   def print_note
     print "\n\n#{board.board}"
@@ -154,6 +157,7 @@ class Game
 
   def verify_input(input)
     return save_game if input == "save"
+    return exit if input == "exit" || input == "q" || input == "quit"
     return true if /^[a-h][1-8]$/.match(input)
     return true if input == "queenside castle"
     return true if input == "kingside castle"

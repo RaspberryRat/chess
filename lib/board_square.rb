@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require "pry-byebug"
 require_relative "piece_module"
 
 include PieceVariables
