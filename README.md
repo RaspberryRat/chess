@@ -63,15 +63,15 @@
 
  I programmed this to practice and develop my programming while I am learning.
 
-![Screenshot of gameboard](https://github.com/RaspberryRat/chess/screen_shots/screen_gameboard.png)
-
-Screenshot[product-screenshot]](https://github.com/RaspberryRat/chess/screen_shots/screen_gameboard.png)
+![Screenshot of gameboard](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_gameboard.png)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
 ### Built With
+
+* ![Ruby](https://www.ruby-lang.org/en/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
