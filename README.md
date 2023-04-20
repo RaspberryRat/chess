@@ -20,13 +20,10 @@
   <p align="center">
     Play chess in your computer terminal programmed with the ruby language. The chess game has a number of features such as single player against the computer, 2 players at the same terminal, or watch the computer play against itself.
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
+    <a href="https://github.com/RaspberryRat/chess/issues">Report Bug</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
+    <a href="https://github.com/RaspberryRat/chess/issues">Request Feature</a>
   </p>
 </div>
 
