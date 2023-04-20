@@ -8,8 +8,8 @@ include MoveModule
 include BoardMethods
 
 class Promotion
-  def self.promote(old_board, new_board, location, destination)
-    new(old_board, new_board, location, destination).promoted
+  def self.promote(old_board, new_board, location, destination, current_player)
+    new(old_board, new_board, location, destination, current_player).promoted
   end
 
   attr_reader :player_colour,
@@ -17,13 +17,15 @@ class Promotion
               :destination,
               :new_board,
               :old_board,
-              :board_state
+              :board_state,
+              :current_player
 
-  def initialize(old_board, new_board, location, destination)
+  def initialize(old_board, new_board, location, destination, current_player)
     @old_board = old_board
     @new_board = new_board
     @location = location
     @destination = destination
+    @current_player = current_player
     @player_colour = turn_indicator_from_fen_notation(old_board)
   end
 
@@ -77,6 +79,7 @@ class Promotion
   end
 
   def player_input
+    return 1 if current_player.computer == true
     loop do
       display_promote_options
       choice = gets.chomp.to_i

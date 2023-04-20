@@ -16,7 +16,7 @@ require "pry-byebug"
 include BoardMethods
 
 class Game
-  attr_reader :move, :move_list, :castling
+  attr_reader :move, :move_list, :castling, :player_count
   attr_accessor :board,
                 :player1,
                 :player2,
@@ -25,12 +25,14 @@ class Game
                 :moved_piece
 
   def initialize(
+    player_count,
     board = Board.new,
     move = Move,
     move_list = AvailableMoves,
     castling = Castling,
     current_player = nil
   )
+    @player_count = player_count
     @board = board
     @move = move
     @move_list = move_list
@@ -48,25 +50,24 @@ class Game
     clear_screen
     board.board = enpassant_blank_notation(board.board)
     board.print_board
-    print_note
+
     @current_player = determine_player_turn
 
     loop do
       return winner if check_mate?
+      # print_note
 
       puts "\n\nIt is #{current_player.name}'s turn\n"
       check_alert if king_in_check?
       puts "Select the piece you would like to move (e.g., 'a4')"
 
       loop do
-        piece_selected = player_input
+        piece_selected = choose_piece
         player_colour = turn_indicator_from_fen_notation(board.board)
         allowed_moves =
           available_moves(piece_selected, player_colour, board.board)
         allowed_moves = en_passant_move(allowed_moves, piece_selected)
-        unless allowed_moves
-          puts "No legal moves available, pick a different piece."
-        end
+        incorrect_player_choice unless allowed_moves
         next unless allowed_moves
 
         allowed_destinations = legal_destinations(piece_selected, allowed_moves)
@@ -77,6 +78,7 @@ class Game
         #TODO would like to somehow highlight available moves
 
         destination = verify_destination(allowed_destinations.flatten)
+
         @moved_piece = move_piece(piece_selected, destination)
         if king_in_check?(moved_piece)
           @captured_pieces.pop
@@ -86,6 +88,8 @@ class Game
             @moved_piece =
               en_passant_update(moved_piece, piece_selected, destination)
           end
+          computer_choice_print(piece_selected, "yes")
+          computer_choice_print(destination)
 
           @moved_piece = promote(moved_piece, piece_selected, destination)
           @moved_piece =
@@ -99,26 +103,23 @@ class Game
       clear_screen
 
       board.print_board
-      print_note
       @current_player = determine_player_turn
     end
   end
 
   private
 
-  def print_note
-    print "\n\n#{board.board}"
-  end
+  # def print_note
+  #   print "\n\n#{board.board}"
+  # end
 
   def verify_destination(allowed_destinations)
-    print "Available destinations: "
-    print_available_destinations(allowed_destinations)
+    destination_printout_for_human_player(allowed_destinations)
     loop do
-      destination = player_input
+      destination = choose_piece(allowed_destinations)
       return destination if allowed_destinations.include?(destination)
 
-      puts "Invalid destination, please choose from "
-      print_available_destinations(allowed_destinations)
+      incorrect_player_destination(allowed_destinations)
     end
   end
 
@@ -179,9 +180,44 @@ class Game
   end
 
   def create_players
-    @player1 = Player.new(self, ask_name, 1)
-    @player2 = Player.new(self, ask_name, 2)
+    player1_colour = choose_colour if player_count == 1
+
+    if player1_colour.nil? && player_count == 1
+      @player1 = Player.new(self, ask_name, 1, false)
+      @player2 = Player.new(self, ask_name, 2, false)
+    elsif player_count == 3
+      @player1 = Player.new(self, "The Computer 1", 1, true)
+      @player2 = Player.new(self, "The Computer 2", 2, true)
+    else
+      if player1_colour == "white"
+        @player1 = Player.new(self, ask_name, 1, false)
+        @player2 = Player.new(self, "The Computer", 2, true)
+      else
+        @player1 = Player.new(self, "The Computer", 1, true)
+        @player2 = Player.new(self, ask_name, 2, false)
+      end
+    end
     @current_player = player1
+  end
+
+  def choose_colour
+    print "\n\nWhat colour do you want to be?\n\n\n"
+    sleep(0.6)
+    print "1: white\n2: black\n\n\n>> "
+    choice = colour_choice_input
+    return "white" if choice == 1
+
+    "black"
+  end
+
+  def colour_choice_input
+    loop do
+      choice = gets.chomp.to_i
+      return choice if (1..2).include?(choice)
+
+      puts "You must enter 1 or 2..."
+      print ">> "
+    end
   end
 
   def ask_name
@@ -203,7 +239,8 @@ class Game
   end
 
   def check_alert
-    puts "Your king is in check, you must move it out of check"
+    return if current_player.computer == true
+    puts "\e[31mYour king is in check, you must move it out of check!\e[0m"
   end
 
   def check_mate?
@@ -212,7 +249,8 @@ class Game
 
   def winner
     winning_player = @current_player == @player1 ? @player2 : @player1
-    print "\n\n#{winning_player.name} is the winner! Congratuations!\n\n"
+    print "\n\n\e[32m#{winning_player.name} is the winner! Congratuations!\e[0m\n\n"
+
     sleep(2)
     print "\n\nThank you for playing... Goodbye...\n"
     sleep(3)
@@ -220,6 +258,7 @@ class Game
   end
 
   def still_in_check_alert
+    return unless current_player.computer == false
     puts "Your King is still in check, this is not a legal move, you must make a different move"
   end
 
@@ -236,7 +275,13 @@ class Game
   end
 
   def promote(new_board, location, destination)
-    Promotion.promote(board.board, new_board, location, destination)
+    Promotion.promote(
+      board.board,
+      new_board,
+      location,
+      destination,
+      current_player
+    )
   end
 
   def enpassant_add_notation(board_state, piece_location, destination)
@@ -263,5 +308,46 @@ class Game
       EnPassant.update_board(board_state, piece_selected, destination)
     @captured_pieces << board_and_piece[1]
     board_and_piece[0]
+  end
+
+  def choose_piece(choice = nil)
+    return player_input if current_player.computer == false
+
+    computer_choice(choice)
+  end
+
+  def computer_choice(choices = nil)
+    return choices.sample unless choices.nil?
+
+    current_player_pieces(board.board).sample
+  end
+
+  def computer_choice_print(selection, piece = nil)
+    return unless current_player.computer == true
+    sleep(0.5)
+    print "\n#{selection}\n"
+    sleep(0.3)
+    print "to" unless piece.nil?
+    sleep(0.5)
+  end
+
+  def incorrect_player_choice
+    return unless current_player.computer == false
+
+    puts "\e[33mNo legal moves available, pick a different piece.\e[0m"
+  end
+
+  def incorrect_player_destination(allowed_destinations)
+    return unless current_player.computer == false
+
+    puts "Invalid destination, please choose from "
+    print_available_destinations(allowed_destinations)
+  end
+
+  def destination_printout_for_human_player(allowed_destinations)
+    return if current_player.computer == true
+
+    print "Available destinations: "
+    print_available_destinations(allowed_destinations)
   end
 end

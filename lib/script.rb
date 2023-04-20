@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative "game"
-
 # Game.new.start
 
 # Game.new(
@@ -31,7 +30,7 @@ require_relative "game"
 
 # Game.new(Board.new("5rk1/6RR/8/8/8/8/8/6K1 b")).start
 
-Game.new(Board.new("7k/5N1p/8/8/8/8/8/2K3R1 b")).start
+# Game.new(Board.new("7k/5N1p/8/8/8/8/8/2K3R1 b")).start
 
 # Castling
 
@@ -54,3 +53,54 @@ Game.new(Board.new("7k/5N1p/8/8/8/8/8/2K3R1 b")).start
 # ).start
 
 # Game.new(Board.new("qn2k3/8/8/RR5R/8/8/8/bK5B b KQkq")).start
+
+def game_start
+  welcome_message
+  start_game(player_count)
+end
+
+def start_game(players)
+  Game.new(players).start
+end
+
+def player_count
+  print "\n\nDo you want to play 1 player or 2 player game?\n\n\n"
+  sleep(0.6)
+  print "1: single player\n2: multiplayer\n3: simulate game\n\n>> "
+  player_input
+end
+
+def player_input
+  loop do
+    choice = gets.chomp.to_i
+    return choice if (1..3).include?(choice)
+
+    puts "You must enter 1, 2, or 3"
+    print ">> "
+  end
+end
+
+def welcome_message
+  system("clear") || system("cls")
+
+  puts "welcome to...."
+  sleep(1)
+  message =
+    '
+
+
+    _____   _    _   ______    _____    _____
+    / ____| | |  | | |  ____|  / ____|  / ____|
+   | |      | |__| | | |__    | (___   | (___
+   | |      |  __  | |  __|    \___ \   \___ \
+   | |____  | |  | | | |____   ____) |  ____) |
+    \_____| |_|  |_| |______| |_____/  |_____/
+
+
+
+
+                                                          '
+  puts message
+end
+
+game_start

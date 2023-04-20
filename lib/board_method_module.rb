@@ -85,4 +85,25 @@ module BoardMethods
     end
     destinations_available
   end
+
+  def current_player_pieces(board_state)
+    current_player_colour = turn_indicator_from_fen_notation(board_state)
+
+    piece_locations = []
+
+    expanded_board = expand_notation(board_state)
+    expanded_board.each_with_index do |column, row|
+      next if column.all?(".")
+
+      column.each_with_index do |piece, column|
+        next if piece == "."
+        next if opposite_piece_color?(current_player_colour, piece)
+
+        column_index = column_to_letter(column)
+        row_index = row + 1
+        piece_locations << column_index.to_s + row_index.to_s
+      end
+    end
+    piece_locations
+  end
 end
