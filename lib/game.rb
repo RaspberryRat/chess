@@ -109,9 +109,9 @@ class Game
 
   private
 
-  # def print_note
-  #   print "\n\n#{board.board}"
-  # end
+  def print_note
+    print "\n\n#{board.board}"
+  end
 
   def verify_destination(allowed_destinations)
     destination_printout_for_human_player(allowed_destinations)

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "game"
+require_relative "fen"
 # Game.new.start
 
 # Game.new(
@@ -56,11 +57,67 @@ require_relative "game"
 
 def game_start
   welcome_message
-  start_game(player_count)
+  start_game(player_count) if new_game?
 end
 
-def start_game(players)
-  Game.new(players).start
+def new_game?
+  puts "Do you want to start a new game?"
+  print "1: new game\n2: load game from file\n3: start game with fen notation\n\n>> "
+
+  choice = player_input
+
+  case choice
+  when 1
+    true
+  when 2
+    false
+  when 3
+    board = load_by_fen
+    start_game(player_count, board)
+  end
+end
+
+def load_by_fen
+  puts "Refer to the readme file for examples of fen notation..."
+  puts "New game: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq'"
+  print "Enter fen notation:\n>>"
+  player_notation
+end
+
+def player_notation
+  loop do
+    player_fen = gets.chomp
+    return player_fen if confirm_notation?(player_fen)
+    puts "That notation is incorrect, refer to the readme..."
+    print "Enter fen notation:\n>>"
+  end
+end
+
+def confirm_notation?(player_fen)
+  fen_array = player_fen.split(" ")
+  fen_array[0] = fen_array[0].split("/")
+
+  i = 0
+  fen_array.flatten.each do |line|
+    i += 1
+    if i <= 8
+      return false unless line.match(/^[rnbqkpRNBQKP1-8]{1,8}$/)
+    elsif i == 9
+      return false unless line == "w" || line == "b"
+    elsif i == 10
+      next if line.match(/^[KQkq]+$/) || line.match(/^([a-h][1-8]|-)$/)
+      false
+    elsif i == 11
+      return false unless line.match(/^([a-h][1-8]|-)$/)
+    end
+  end
+  true
+end
+
+def start_game(players, board = nil)
+  return Game.new(players).start if board.nil?
+
+  Game.new(players, Board.new(board)).start
 end
 
 def player_count
@@ -68,6 +125,16 @@ def player_count
   sleep(0.6)
   print "1: single player\n2: multiplayer\n3: simulate game\n\n>> "
   player_input
+end
+
+def player_input_2
+  loop do
+    choice = gets.chomp.to_i
+    return choice if (1..3).include?(choice)
+
+    puts "You must enter 1, 2, or 3"
+    print ">> "
+  end
 end
 
 def player_input

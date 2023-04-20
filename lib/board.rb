@@ -12,7 +12,7 @@ class Board
   attr_reader :piece_template, :cap_pieces
 
   def initialize(
-    board = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w",
+    board = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq",
     cap_pieces = []
   )
     @board = board
