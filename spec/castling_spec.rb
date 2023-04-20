@@ -19,7 +19,7 @@ describe Castling do
 
     context "when white player has no kingside castling" do
       subject(:kingside_castle) { described_class.new(board) }
-      let(:board) { "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3KR1 w Qkq" }
+      let(:board) { "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3KR2 w Qkq" }
 
       it "does not return kingside castle" do
         result = kingside_castle.castling
@@ -49,7 +49,7 @@ describe Castling do
 
     context "when black player has no kingside castling" do
       subject(:kingside_castle) { described_class.new(board) }
-      let(:board) { "r3kR1/pppppppp/8/8/8/8/PPPPPPPP/R3KR1 b Qq" }
+      let(:board) { "r3kr2/pppppppp/8/8/8/8/PPPPPPPP/R3KR2 b Qq" }
 
       it "does not return kingside castle" do
         result = kingside_castle.castling
@@ -245,6 +245,16 @@ describe Castling do
       it "returns white queenside notation" do
         result = king_move.update_castling_notation
         expect(result).to eq("2r1k2r/pppppppp/8/8/8/8/PPPPPPPP/1R2KR2 w k")
+      end
+    end
+
+    context "when check on way to castle square" do
+      subject(:king_move) { described_class.new(board) }
+      let(:board) { "8/8/8/1rrr1qr1/8/8/8/R3K2R w KQ" }
+
+      it "returns false" do
+        result = king_move.castling
+        expect(result).to eq([])
       end
     end
   end

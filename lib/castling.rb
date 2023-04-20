@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 require "pry-byebug"
+require_relative "check"
+require_relative "board_method_module"
+require_relative "move_module"
+
+include MoveModule, BoardMethods
 
 class Castling
   def self.castling_moves(board)
@@ -135,13 +140,78 @@ class Castling
   def king_side_castle
     return false unless king_side_castling_notation?
     return false unless king_side_room?
+    return false if check_kingside?
 
     castling_options << "kingside castle"
+  end
+
+  def check_kingside?
+    other_notation = save_notation_after_piece_placement(board)
+
+    board1 = recombine_board(test_board(king_row, 1))
+    board1 = add_post_piece_notation(board1, other_notation)
+    return true if Check.checker(board1)
+
+    board2 = recombine_board(test_board(king_row, 2))
+    board2 = add_post_piece_notation(board1, other_notation)
+    return true if Check.checker(board2)
+
+    false
+  end
+
+  def king_row
+    ex_board = expand_notation(board)
+    king_row = player_colour == "w" ? ex_board[0] : ex_board[7]
+  end
+
+  def check_queenside?
+    other_notation = save_notation_after_piece_placement(board)
+
+    board1 = recombine_board(test_board_queen(king_row, 1))
+    board1 = add_post_piece_notation(board1, other_notation)
+    return true if Check.checker(board1)
+
+    board2 = recombine_board(test_board_queen(king_row, 2))
+    board2 = add_post_piece_notation(board1, other_notation)
+    return true if Check.checker(board2)
+
+    board3 = recombine_board(test_board_queen(king_row, 3))
+    board3 = add_post_piece_notation(board1, other_notation)
+    return true if Check.checker(board3)
+
+    false
+  end
+
+  def recombine_board(sim_row)
+    ex_board = expand_notation(board)
+    ex_board[0] = sim_row if player_colour == "w"
+    ex_board[7] = sim_row if player_colour == "b"
+    array_to_fen_notation(ex_board)
+  end
+
+  def test_board(row, sim)
+    king = player_colour == "w" ? "K" : "k"
+
+    row[4] = "."
+    row[5] = king if sim == 1
+    row[6] = king if sim == 2
+    row
+  end
+
+  def test_board_queen(row, sim)
+    king = player_colour == "w" ? "K" : "k"
+
+    row[4] = "."
+    row[3] = king if sim == 1
+    row[2] = king if sim == 2
+    row[1] = king if sim == 3
+    row
   end
 
   def queen_side_castle
     return false unless queen_side_castling_notation?
     return false unless queen_side_room?
+    return false if check_queenside?
 
     castling_options << "queenside castle"
   end

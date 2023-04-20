@@ -25,7 +25,6 @@ module MoveModule
   end
 
   def array_to_fen_notation(board_array)
-    #first reverse array
     # then start loop, take row 0, combine to string, if . convert to #, and increment by 1 each .
 
     board_array = board_array.reverse
@@ -37,7 +36,6 @@ module MoveModule
       else
         j = 0
         board_array[i].length.times do
-          # binding.pry if i == 5
           break if j > 7
           unless board_array[i][j] == "."
             fen_notation += board_array[i][j]
