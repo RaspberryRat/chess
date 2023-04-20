@@ -215,19 +215,19 @@ class Game
   def create_players
     player1_colour = choose_colour if player_count == 1
 
-    if player1_colour.nil? && player_count == 1
-      @player1 = Player.new(ask_name, false)
-      @player2 = Player.new(ask_name, false)
+    if player1_colour.nil? && player_count == 2
+      @player1 = Player.new(ask_name, 1, false)
+      @player2 = Player.new(ask_name, 2, false)
     elsif player_count == 3
-      @player1 = Player.new("The Computer 1", true)
-      @player2 = Player.new("The Computer 2", true)
+      @player1 = Player.new("The Computer 1", 1, true)
+      @player2 = Player.new("The Computer 2", 2, true)
     else
       if player1_colour == "white"
-        @player1 = Player.new(ask_name, false)
-        @player2 = Player.new("The Computer", true)
+        @player1 = Player.new(ask_name, 1, false)
+        @player2 = Player.new("The Computer", 2, true)
       else
-        @player1 = Player.new("The Computer", true)
-        @player2 = Player.new(ask_name, false)
+        @player1 = Player.new("The Computer", 1, true)
+        @player2 = Player.new(ask_name, 2, false)
       end
     end
     @current_player = player1

@@ -74,7 +74,7 @@ class SaveGame
   end
 
   def create_players(save_data)
-    @player1 = Player.new(save_data["player1_name"], save_data["player1_ai"])
-    @player2 = Player.new(save_data["player2_name"], save_data["player2_ai"])
+    @player1 = Player.new(save_data["player1_name"], 1, save_data["player1_ai"])
+    @player2 = Player.new(save_data["player2_name"], 2, save_data["player2_ai"])
   end
 end
