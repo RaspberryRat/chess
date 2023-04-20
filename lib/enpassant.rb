@@ -170,6 +170,8 @@ class EnPassant
 
   def pawn?
     piece_location = destination.nil? ? location : destination
+    return false if piece_location.include?("castle")
+
     piece = what_piece(piece_location, board_state)
     return false unless piece
     return true if piece.downcase == "p"
