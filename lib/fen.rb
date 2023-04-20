@@ -1,48 +1,46 @@
 # frozen_string_literal: true
-require 'pry-byebug'
 
-#TODO UNSURE IF THIS CLASS IS NEEDED!
-
-# Takes fen notation
-class Fen 
-  
-  def initialize(field_placement = nil)
-    @field_placement = FenToArray.convert(field_placement)
+class Fen
+  def self.confirm
+    new.load_by_fen
   end
 
-  attr_reader :field_placement
-
-  def self.piece_placement(field_placement = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR')
-    new(field_placement).field_placement
+  def load_by_fen
+    puts "Refer to the readme file for examples of fen notation..."
+    puts "New game: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq'"
+    print "Enter fen notation:\n>>"
+    player_notation
   end
 
-  def to_s
-    @field_placement
-  end
-end
+  private
 
-# Used to convert to an Array to be usable by Board
-class FenToArray
-
-  def initialize(fen_notation)
-    @fen_notation = fen_notation
-  end
-
-  attr_accessor :fen_notation
-
-  def self.convert(fen_notation)
-    new(fen_notation).update_field
+  def player_notation
+    loop do
+      player_fen = gets.chomp
+      return player_fen if confirm_notation?(player_fen)
+      puts "That notation is incorrect, refer to the readme..."
+      print "Enter fen notation:\n>>"
+    end
   end
 
-  attr_accessor
+  def confirm_notation?(player_fen)
+    fen_array = player_fen.split(" ")
+    fen_array[0] = fen_array[0].split("/")
 
-  def update_field
-    fen_notation.chars.map do |c|
-      if('1'..'8').include?(c)
-        c.to_i
-      else
-        c
+    i = 0
+    fen_array.flatten.each do |line|
+      i += 1
+      if i <= 8
+        return false unless line.match(/^[rnbqkpRNBQKP1-8]{1,8}$/)
+      elsif i == 9
+        return false unless line == "w" || line == "b"
+      elsif i == 10
+        next if line.match(/^[KQkq]+$/) || line.match(/^([a-h][1-8]|-)$/)
+        false
+      elsif i == 11
+        return false unless line.match(/^([a-h][1-8]|-)$/)
       end
     end
+    true
   end
 end
