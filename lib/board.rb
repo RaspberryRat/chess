@@ -9,19 +9,19 @@ require_relative "piece_module"
 # playing board for pieces
 class Board
   attr_accessor :board
-  attr_reader :piece_template, :captured_pieces
+  attr_reader :piece_template, :cap_pieces
 
   def initialize(
     board = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w",
-    captured_pieces = []
+    cap_pieces = []
   )
     @board = board
-    @captured_pieces = captured_pieces
+    @cap_pieces = cap_pieces
   end
 
   def print_board
     printed_board = "\n\n\n\n\n\n\n"
-    printed_board += pieces_captured unless captured_pieces.empty?
+    printed_board += cap_pieces.empty? ? "\n" * 4 : pieces_captured
 
     row_number = 8
     printed_board += "#{row_number} "
@@ -60,12 +60,12 @@ class Board
   end
 
   def pieces_captured
-    return if captured_pieces.empty?
+    return if cap_pieces.empty?
 
     white_pieces = []
     black_pieces = []
 
-    captured_pieces.each do |piece|
+    cap_pieces.each do |piece|
       piece_symbol = CHESS_PIECES.fetch(piece.to_sym)
       white_pieces << piece_symbol if piece_colour(piece) == "white"
       black_pieces << piece_symbol if piece_colour(piece) == "black"

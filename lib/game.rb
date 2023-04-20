@@ -46,7 +46,9 @@ class Game
     create_players if @current_player.nil?
 
     clear_screen
+    board.board = enpassant_blank_notation(board.board)
     board.print_board
+    print_note
     @current_player = determine_player_turn
 
     loop do
@@ -61,7 +63,6 @@ class Game
         player_colour = turn_indicator_from_fen_notation(board.board)
         allowed_moves =
           available_moves(piece_selected, player_colour, board.board)
-
         allowed_moves = en_passant_move(allowed_moves, piece_selected)
         unless allowed_moves
           puts "No legal moves available, pick a different piece."
@@ -86,6 +87,8 @@ class Game
           end
 
           @moved_piece = promote(moved_piece, piece_selected, destination)
+          @moved_piece =
+            enpassant_add_notation(moved_piece, piece_selected, destination)
           break unless @moved_piece.nil? || @moved_piece == false
         end
       end
@@ -93,12 +96,18 @@ class Game
       @board = Board.new(updated_board_state(updated_board), captured_pieces)
       @moved_piece = nil
       clear_screen
+
       board.print_board
+      print_note
       @current_player = determine_player_turn
     end
   end
 
   private
+
+  def print_note
+    print "\n\n#{board.board}"
+  end
 
   def verify_destination(allowed_destinations)
     print "Available destinations: "
@@ -229,9 +238,18 @@ class Game
     Promotion.promote(board.board, new_board, location, destination)
   end
 
+  def enpassant_add_notation(board_state, piece_location, destination)
+    EnPassant.enpassant(board_state, piece_location, destination)
+  end
+
+  def enpassant_blank_notation(board_state)
+    EnPassant.blank_notation(board_state)
+  end
+
   def en_passant_move(moves, piece_selected)
     return moves unless EnPassant.legal_move?(board.board, piece_selected)
 
+    moves = [] if moves == false
     moves << EnPassant.moves(board.board, piece_selected)
   end
 

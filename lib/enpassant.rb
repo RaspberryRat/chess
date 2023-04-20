@@ -6,6 +6,10 @@ require "pry-byebug"
 include MoveModule, BoardMethods
 
 class EnPassant
+  def self.blank_notation(board_state)
+    new(board_state).include_blank_notation
+  end
+
   def self.enpassant(board_state, location, destination)
     new(board_state, location, destination).enpassant_notation
   end
@@ -28,7 +32,7 @@ class EnPassant
 
   attr_reader :board_state, :location, :destination, :player_colour
 
-  def initialize(board_state, location, destination = nil)
+  def initialize(board_state, location = nil, destination = nil)
     @board_state = board_state
     @location = location
     @destination = destination
@@ -36,8 +40,9 @@ class EnPassant
   end
 
   def enpassant_notation
-    return board_state unless pawn?
-    return board_state unless pawn_double_move?
+    board = remove_enpassant_notation(board_state)
+    return board unless pawn?
+    return board unless pawn_double_move?
 
     add_notation
   end
@@ -46,6 +51,7 @@ class EnPassant
     return false unless pawn?
     return false if retrieve_enpassant_notation == "-"
 
+    return false unless next_square?
     true
   end
 
@@ -60,6 +66,7 @@ class EnPassant
 
   def last_enpassant?
     return false unless pawn?
+    return false if retrieve_enpassant_notation == "-"
 
     start_col = convert_column(location[0])
     dest_col = convert_column(destination[0])
@@ -81,7 +88,38 @@ class EnPassant
     [board, what_piece(captured_piece_location, board_state)]
   end
 
+  def include_blank_notation
+    enpassant_note = retrieve_enpassant_notation
+    return @board_state if enpassant_note == "-"
+    return @board_state if chess_grid_code(enpassant_note)
+
+    @board_state += " -"
+    @board_state
+  end
+
   private
+
+  def next_square?
+    notation = retrieve_enpassant_notation
+    target_col = convert_column(notation[0]).to_i
+    target_row = notation[1].to_i
+    piece_col = convert_column(location[0]).to_i
+    piece_row = location[1].to_i
+
+    column_difference = target_col - piece_col
+    row_difference = target_row - piece_row
+    return false unless column_difference.abs == 1
+    return false unless row_difference.abs == 1
+
+    true
+  end
+
+  def chess_grid_code(note)
+    return false unless note.length == 2
+    return false unless note.match(/[a-h][1-8]/)
+
+    true
+  end
 
   def find_captured_piece
     captured_piece_col = destination[0]
