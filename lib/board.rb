@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "board_square"
+require_relative "./board_squares/board_square"
 require_relative "game_pieces"
 require_relative "./modules/piece_module"
 
