@@ -18,6 +18,6 @@ class Square
   end
 
   def to_s
-    "#{GREEN_SQUARE} #{EMPTY_SPACE}#{ESCAPE_CODE}"
+    "#{GREEN_SQUARE}#{EMPTY_SPACE}#{ESCAPE_CODE}"
   end
 end

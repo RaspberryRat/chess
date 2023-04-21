@@ -9,6 +9,6 @@ class WhiteSquare
   end
 
   def to_s
-    "#{WHITE_SQUARE} #{EMPTY_SPACE}#{ESCAPE_CODE}"
+    "#{WHITE_SQUARE}#{EMPTY_SPACE}#{ESCAPE_CODE}"
   end
 end

@@ -17,6 +17,6 @@ class DestinationSquare
   end
 
   def to_s
-    "#{DESTINATION_SQUARE_GREEN} #{EMPTY_SPACE}#{ESCAPE_CODE}"
+    "#{DESTINATION_SQUARE_GREEN}#{EMPTY_SPACE}#{ESCAPE_CODE}"
   end
 end

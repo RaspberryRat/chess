@@ -20,7 +20,7 @@ module PieceVariables
   DESTINATION_SQUARE_WHITE = "\u001b[101m"
 
   NEW_LINE = "\u001b[0m\n"
-  EMPTY_SPACE = "  "
+  EMPTY_SPACE = "   "
   ESCAPE_CODE = "\u001b[0m"
 end
 

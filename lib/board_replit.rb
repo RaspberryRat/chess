@@ -1,26 +1,20 @@
 # frozen_string_literal: true
 
-require_relative "./board_squares/board_square"
+require_relative "board_square"
 require_relative "game_pieces"
-require_relative "./modules/piece_module"
-require "pry-byebug"
+require_relative "piece_module"
 
 # playing board for pieces
 class Board
-  attr_accessor :board, :square_counter
-  attr_reader :piece_template, :cap_pieces, :selection, :destination_array
+  attr_accessor :board
+  attr_reader :piece_template, :cap_pieces
 
   def initialize(
     board = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq",
-    cap_pieces = [],
-    selection = nil,
-    destination_array = []
+    cap_pieces = []
   )
     @board = board
     @cap_pieces = cap_pieces
-    @selection = selection
-    @destination_array = destination_array
-    @square_counter = 64
   end
 
   def print_board
@@ -35,36 +29,23 @@ class Board
 
       if notation.is_a?(Integer)
         notation.times do
-          if destination_array.include?(square_counter)
-            square_color =
-              board_square(notation, previous_color, selection, square_counter)
-          else
-            square_color = board_square(notation, previous_color)
-          end
+          square_color = board_square(notation, previous_color)
           previous_color = previous_color == "green" ? "white" : "green"
           printed_board += square_color.to_s
-          @square_counter -= 1
         end
       else
-        if square_counter == selection && notation != "/"
-          square_color = board_square(notation, previous_color, selection)
-        elsif destination_array.include?(square_counter) && notation != "/"
-          square_color =
-            board_square(notation, previous_color, selection, square_counter)
-        else
-          square_color = board_square(notation, previous_color)
-        end
+        square_color = board_square(notation, previous_color)
         previous_color = previous_color == "green" ? "white" : "green"
-        @square_counter -= 1 unless notation == "/"
       end
-      printed_board += "  #{row_number} " if square_color.to_s == NEW_LINE
+      printed_board += " . #{row_number} " if square_color.to_s == NEW_LINE
       printed_board += square_color.to_s
+
       if square_color.to_s == NEW_LINE
         row_number -= 1
         printed_board += "#{row_number} "
       end
     end
-    printed_board += "  1 "
+    printed_board += " . 1 "
     printed_board += NEW_LINE
     printed_board += "   A  B  C  D  E  F  G  H\n"
     print printed_board
@@ -72,8 +53,8 @@ class Board
 
   private
 
-  def board_square(notation, color, selected = nil, destination = nil)
-    BoardSquare.for(notation, color, selected, destination)
+  def board_square(notation, color)
+    BoardSquare.for(notation, color)
   end
 
   def convert_notation
@@ -108,5 +89,3 @@ class Board
     print_out
   end
 end
-
-Board.new.print_board
