@@ -85,7 +85,7 @@ def start_game(players, board = nil)
 end
 
 def player_count
-  print "\n\nDo you want to play 1 player or 2 player game?\n\n\n"
+  print "\n\nWhat kind of game do you want to play?\n\n\n"
   sleep(0.6)
   print "1: single player\n2: multiplayer\n3: simulate game\n\n>> "
   player_input

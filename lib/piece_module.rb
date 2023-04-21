@@ -19,6 +19,7 @@ module PieceVariables
   DESTINATION_SQUARE = "\u001b[41m"
   NEW_LINE = "\u001b[0m\n"
   EMPTY_SPACE = "  "
+  ESCAPE_CODE = "\u001b[0m"
 end
 
 module StandardChessPieces

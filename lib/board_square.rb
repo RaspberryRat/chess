@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 require_relative "piece_module"
 
-include PieceVariables
-include StandardChessPieces
+include PieceVariables, StandardChessPieces
 
 # TODO add square highlights here
 # superclass for board squares
@@ -58,7 +57,7 @@ class Square < BoardSquare
   end
 
   def to_s
-    "#{GREEN_SQUARE} #{EMPTY_SPACE}"
+    "#{GREEN_SQUARE} #{EMPTY_SPACE}#{ESCAPE_CODE}"
   end
 end
 
@@ -69,7 +68,7 @@ class WhiteSquare < BoardSquare
   end
 
   def to_s
-    "#{WHITE_SQUARE} #{EMPTY_SPACE}"
+    "#{WHITE_SQUARE} #{EMPTY_SPACE}#{ESCAPE_CODE}"
   end
 end
 
@@ -99,7 +98,7 @@ class OccupiedSquare < Square
   end
 
   def to_s
-    "#{GREEN_SQUARE} #{CHESS_PIECES.fetch(notation.to_sym)}#{GREEN_SQUARE} "
+    "#{GREEN_SQUARE} #{CHESS_PIECES.fetch(notation.to_sym)}#{GREEN_SQUARE} #{ESCAPE_CODE}"
   end
 end
 
@@ -110,7 +109,7 @@ class OccupiedWhiteSquare < OccupiedSquare
   end
 
   def to_s
-    "#{WHITE_SQUARE} #{CHESS_PIECES.fetch(notation.to_sym)}#{WHITE_SQUARE} "
+    "#{WHITE_SQUARE} #{CHESS_PIECES.fetch(notation.to_sym)}#{WHITE_SQUARE} #{ESCAPE_CODE}"
   end
 end
 
