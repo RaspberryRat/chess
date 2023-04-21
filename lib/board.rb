@@ -3,18 +3,24 @@
 require_relative "board_square"
 require_relative "game_pieces"
 require_relative "piece_module"
+require "pry-byebug"
 
 # playing board for pieces
 class Board
-  attr_accessor :board
-  attr_reader :piece_template, :cap_pieces
+  attr_accessor :board, :square_counter
+  attr_reader :piece_template, :cap_pieces, :selection, :destination_array
 
   def initialize(
     board = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq",
-    cap_pieces = []
+    cap_pieces = [],
+    selection = nil,
+    destination_array = []
   )
     @board = board
     @cap_pieces = cap_pieces
+    @selection = selection
+    @destination_array = destination_array
+    @square_counter = 64
   end
 
   def print_board
@@ -26,15 +32,30 @@ class Board
     previous_color = "white"
     convert_notation.each do |notation|
       break if notation == " "
+
       if notation.is_a?(Integer)
         notation.times do
-          square_color = board_square(notation, previous_color)
+          if destination_array.include?(square_counter)
+            square_color =
+              board_square(notation, previous_color, selection, square_counter)
+          else
+            square_color = board_square(notation, previous_color)
+          end
           previous_color = previous_color == "green" ? "white" : "green"
           printed_board += square_color.to_s
+          @square_counter -= 1
         end
       else
-        square_color = board_square(notation, previous_color)
+        if square_counter == selection && notation != "/"
+          square_color = board_square(notation, previous_color, selection)
+        elsif destination_array.include?(square_counter)
+          square_color =
+            board_square(notation, previous_color, selection, square_counter)
+        else
+          square_color = board_square(notation, previous_color)
+        end
         previous_color = previous_color == "green" ? "white" : "green"
+        @square_counter -= 1 unless notation == "/"
       end
       printed_board += square_color.to_s
       if square_color.to_s == NEW_LINE
@@ -49,8 +70,8 @@ class Board
 
   private
 
-  def board_square(notation, color)
-    BoardSquare.for(notation, color)
+  def board_square(notation, color, selected = nil, destination = nil)
+    BoardSquare.for(notation, color, selected, destination)
   end
 
   def convert_notation
@@ -85,3 +106,10 @@ class Board
     print_out
   end
 end
+
+Board.new(
+  "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq",
+  [],
+  9,
+  [17, 22, 36, 64]
+).print_board
