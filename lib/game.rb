@@ -78,10 +78,9 @@ class Game
       return winner if check_mate?
       # print_note
 
-      puts "\n\nIt is #{current_player.name}'s turn\n"
+      print_turn
       check_alert if king_in_check?
-      puts "Select the piece you would like to move (e.g., 'a4')"
-      print ">> "
+      print_piece_offer
 
       loop do
         piece_selected = choose_piece
@@ -395,6 +394,21 @@ class Game
   end
 
   def print_hightlighted_board(piece, destinations)
+    clear_screen
+    print_reminder
     Highlight.print(board, piece, destinations)
+    print_turn
+    print_piece_offer
+    print piece.to_s
+    print "\n"
+  end
+
+  def print_piece_offer
+    puts "Select the piece you would like to move (e.g., 'a4')"
+    print ">> "
+  end
+
+  def print_turn
+    puts "\n\nIt is #{current_player.name}'s turn\n"
   end
 end
