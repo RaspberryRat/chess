@@ -80,6 +80,7 @@ class Game
       puts "\n\nIt is #{current_player.name}'s turn\n"
       check_alert if king_in_check?
       puts "Select the piece you would like to move (e.g., 'a4')"
+      print ">> "
 
       loop do
         piece_selected = choose_piece
@@ -260,6 +261,7 @@ class Game
 
   def ask_name
     puts "You are #{@player1.nil? ? "Player 1" : "Player 2"}. What is your name?"
+    print ">> "
     gets.chomp.strip
   end
 
@@ -387,5 +389,6 @@ class Game
 
     print "Available destinations: "
     print_available_destinations(allowed_destinations)
+    print "\n>> "
   end
 end
