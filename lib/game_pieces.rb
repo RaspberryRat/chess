@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'piece_module'
-require 'pry-byebug'
+require_relative "piece_module"
 
 include PieceVariables
 
@@ -19,15 +18,14 @@ class GamePiece
       Q: Queen,
       q: BlackQueen,
       K: King,
-      k: BlackKing,
+      k: BlackKing
     }.fetch(piece.to_sym).new
   end
 
   def self.moves(piece)
     self.for(piece).moves
   end
-  
-  
+
   attr_reader :piece, :location, :piece_number
   attr_accessor :move_list
 
@@ -74,7 +72,6 @@ class Pawn < GamePiece
 end
 
 class BlackPawn < Pawn
-  
   def initialize(location = nil)
     @location = location
     @piece = BLACK_PAWN
@@ -97,7 +94,6 @@ class Rook < GamePiece
 end
 
 class BlackRook < Rook
-  
   def initialize(location = nil)
     @location = location
     @piece = BLACK_ROOK
@@ -105,7 +101,6 @@ class BlackRook < Rook
 end
 
 class Knight < GamePiece
-
   def initialize(location = nil)
     @location = location
     @piece = WHITE_KNIGHT
@@ -117,7 +112,6 @@ class Knight < GamePiece
 end
 
 class BlackKnight < Knight
-
   def initialize(location = nil)
     @location = location
     @piece = BLACK_KNIGHT
@@ -125,19 +119,17 @@ class BlackKnight < Knight
 end
 
 class Bishop < GamePiece
-  
   def initialize(location = nil)
     @location = location
     @piece = WHITE_BISHOP
   end
-  
+
   def moves
     diagonal_moves(7)
   end
 end
 
 class BlackBishop < Bishop
-  
   def initialize(location = nil)
     @location = location
     @piece = BLACK_BISHOP
@@ -145,19 +137,17 @@ class BlackBishop < Bishop
 end
 
 class Queen < GamePiece
-  
   def initialize(location = nil)
     @location = location
     @piece = WHITE_QUEEN
   end
 
   def moves
-   move_list = straight_moves(7) + diagonal_moves(7)
+    move_list = straight_moves(7) + diagonal_moves(7)
   end
 end
 
 class BlackQueen < Queen
-  
   def initialize(location = nil)
     @location = location
     @piece = BLACK_QUEEN
@@ -165,20 +155,17 @@ class BlackQueen < Queen
 end
 
 class King < GamePiece
-  
   def initialize(location = nil)
     @location = location
     @piece = WHITE_KING
   end
-  
+
   def moves
     move_list = diagonal_moves(1) + straight_moves(1)
-
   end
 end
 
 class BlackKing < King
-  
   def initialize(location = nil)
     @location = location
     @piece = BLACK_KING
