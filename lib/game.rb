@@ -13,7 +13,6 @@ require_relative "promotion"
 require_relative "enpassant"
 require_relative "save_game"
 require_relative "highlight"
-require "pry-byebug"
 
 include BoardMethods
 
@@ -151,6 +150,8 @@ class Game
   def player_input
     loop do
       choice = gets.chomp.downcase
+      choice = "kingside castle" if choice == "k"
+      choice = "queenside castle" if choice == "q"
       return choice if verify_input(choice)
 
       puts "Invalid input. Your input must be in format 'a4' from letters a to h and numbers 1-8. Please enter a valid choice."

@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require "pry-byebug"
 class Fen
   def self.confirm
     new.load_by_fen

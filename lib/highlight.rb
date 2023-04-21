@@ -28,7 +28,19 @@ class Highlight
 
   # takes coordinate position from board, ex. 'a1' and returns position, ex, 1
   def get_position_code(coordinates)
+    coordinates = castle_code(coordinates) if coordinates.include?("castle")
+
     column_code(coordinates[0]) + row_code(coordinates[1])
+  end
+
+  def castle_code(coordinates)
+    column = selection[0]
+    row = selection[1]
+
+    column = "g" if coordinates == "kingside castle"
+    column = "c" if coordinates == "queenside castle"
+
+    column + row
   end
 
   def print_selection_board
