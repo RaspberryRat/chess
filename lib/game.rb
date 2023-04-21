@@ -13,6 +13,7 @@ require_relative "promotion"
 require_relative "enpassant"
 require_relative "save_game"
 require_relative "highlight"
+require "pry-byebug"
 
 include BoardMethods
 
