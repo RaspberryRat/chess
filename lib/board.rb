@@ -3,7 +3,6 @@
 require_relative "board_square"
 require_relative "game_pieces"
 require_relative "piece_module"
-require "pry-byebug"
 
 # playing board for pieces
 class Board

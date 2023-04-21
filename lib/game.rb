@@ -12,6 +12,7 @@ require_relative "checkmate"
 require_relative "promotion"
 require_relative "enpassant"
 require_relative "save_game"
+require_relative "highlight"
 
 include BoardMethods
 
@@ -96,9 +97,8 @@ class Game
           allowed_destinations << castle_moves
         end
 
-        #TODO would like to somehow highlight available moves
-
-        destination = verify_destination(allowed_destinations.flatten)
+        destination =
+          verify_destination(piece_selected, allowed_destinations.flatten)
 
         @moved_piece = move_piece(piece_selected, destination)
         if king_in_check?(moved_piece)
@@ -138,8 +138,8 @@ class Game
     print "\n\n#{board.board}"
   end
 
-  def verify_destination(allowed_destinations)
-    destination_printout_for_human_player(allowed_destinations)
+  def verify_destination(piece, allowed_destinations)
+    destination_printout_for_human_player(piece, allowed_destinations)
     loop do
       destination = choose_piece(allowed_destinations)
       return destination if allowed_destinations.include?(destination)
@@ -384,11 +384,17 @@ class Game
     print_available_destinations(allowed_destinations)
   end
 
-  def destination_printout_for_human_player(allowed_destinations)
+  def destination_printout_for_human_player(piece, allowed_destinations)
     return if current_player.computer == true
+
+    print_hightlighted_board(piece, allowed_destinations)
 
     print "Available destinations: "
     print_available_destinations(allowed_destinations)
     print "\n>> "
+  end
+
+  def print_hightlighted_board(piece, destinations)
+    Highlight.print(board, piece, destinations)
   end
 end

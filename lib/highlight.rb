@@ -2,6 +2,10 @@
 require_relative "board"
 
 class Highlight
+  def self.print(board, selection, destinations)
+    new(board, selection, destinations).highlight_positions
+  end
+
   attr_reader :board, :selection, :destinations
   attr_accessor :destination_array, :selection_position
 
