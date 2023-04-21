@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 require_relative "check"
-require_relative "board_method_module"
+require_relative "./modules/board_method_module"
 require_relative "available_moves"
 require_relative "check"
 require_relative "move"

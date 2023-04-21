@@ -2,7 +2,7 @@
 
 require_relative "board_square"
 require_relative "game_pieces"
-require_relative "piece_module"
+require_relative "./modules/piece_module"
 
 # playing board for pieces
 class Board

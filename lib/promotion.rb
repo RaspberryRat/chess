@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "board_method_module"
+require_relative "./modules/board_method_module"
 
 include BoardMethods
 
