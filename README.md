@@ -59,17 +59,20 @@
 
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+<h2>About</h2>
 
- I programmed this to practice and develop my programming while I am learning.
+ <p>I programmed this to practice and develop my programming while I am learning.</p>
 
 ![Screenshot of gameboard](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_gameboard.png)
+</ br>
+</ br>
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
-### Built With
+<p>Built With</p>
 
 * ![Ruby](https://www.ruby-lang.org/en/)
 
@@ -78,10 +81,7 @@
 
 
 <!-- GETTING STARTED -->
-## Getting Started
-
-To play this game please go to replit link:
-![Replit version of the game](https://replit.com/@SmellyCosby/Terminal-chess-game?v=1)
+<p>!To play go to replit => https://replit.com/@SmellyCosby/Terminal-chess-game</p>
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -89,21 +89,112 @@ To play this game please go to replit link:
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
+<h2>Starting the game</h2>
 
-The game allows you to start a new game.
-Load the game from a save file.
-Start a game using fen notation.
+<p>The game allows you to start a new game.</p>
+<p>Load the game from a save file.</p>
+<p>Start a game using fen notation.</p>
 
 ![Screen of start of game options](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_new_game.png)
 
+<h3>Option 1 will allow you to start a new game</h3>
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+![Game type options](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_game_type.png)
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+</br></br>
+<h3>Option 2 will allow you to load a game from a file. To choose this option, you must have saved a game previously.</h3>
+
+<h3>Option 3 will allow you to enter fen notation. </h3>
+<p>For details about fen notation check out this website: https://www.chess.com/terms/fen-chess</p>
+<p>To begin a game with option 3, the user must enter notation with the following format: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -'</p>
+<p>The first part of the notation represents the game board, with the placement of pieces on each row being marked with a letter and empty spaces with a number.</p>
+<p>The letters represent the pieces: R: rook, N: knight, B: Bishop, Q: queen, K: king, and P: pawn.</p>
+<p>Capital letters are white game pieces and lowercase letters are black game pieces</p>
+<p>The break between rows represented by a /.</p>
+<p>A number equals the amount of squares in that row that are empty. For example P7 means the row has a white pawn in the first (leftest most) square followed by 7 empty squares. A second example: r2KQ2r, starting with the left square is a black rook, two empty squares, a white king, a white queen, two empty squares, and a second black rook.</p>
+<p>There will be a space following the 8 rows then a lowercase 'w' or 'b'. This represents the current players turn. 'w' means it is the white player's turn and 'b' means it is the black player's turn.</p>
+<p> A game can not be loaded this way without all 8 rows represented and a turn indicator ('w' or 'b'). You can also have castling notation and En Passant notation but neither of it is required to load a game with this method.</p>
+
+<p>Following the turn indicator is another space and will have up to the following letters 'KQkq', but also may contain no letters here. This represents if there is a castling option available. 'K' or 'k' represents a kingside castle. 'Q' or 'q' represents the queenside castle for the white and black player resepctively.</p>
+<p>The appropriate letter will be removed from the notation if a rook or the king moves during the game, meaning that castling option is no longer available.</p>
+
+<p>The final part of the notation is followed by another space. This is the En Passant notation and is not required to start a game.</p>
+<p>This En Passant Notation can be a '-' or 'a3' through 'h3' or 'a6' through 'h6'.</p>
+<p>En Passant notation indicates if a pawn made a double move on the previous players turn. If so, that piece can be taken by a pawn.</p>
+
+
+<h1>Game play</h1>
+
+<h2>Game type</h2>
+<p>After choosing how to start the game you will be given three choices:</p>
+
+![Screenshot of gametype](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_gametype.png)
+
+<p>You can play single player, multiplayer or watch the computer duke it out!</p>
+
+<p>If you choose option 1: single player, you will play by yourself against a computer AI opponent on easy. Hard mode coming soon...</p>
+<p>If you choose option 2: multiplayer, you will play against another human opponent. Both players must use the same terminal and keyboard to play.</p>
+<p>If you choose option 3: simulate game, both players will be computer AIs on easy. Watch the computer take on itself and try to guess who will win!</p>
+
+<p>After choosing option 1 or option 2, the human players choose what colour they will be. White player is always player 1 and goes first. Black player is always player 2 and plays second.</p>
+![Screenshot of colour choice](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_colourchoice.png)
+
+<p>Human players can then choose their name which will show up when it is their turn:</p>
+![Screenshot of colour choice](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_namepicker.png)
+</br></br>
+![Screenshot of colour choice](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_name_gameboard.png)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+
+
+<!-- Game Rules -->
+<h1>Game Rules</h1>
+
+<h2>Piece Movement</h2>
+<p>Describe Piece movement</p>
+<h3>Pawn movement</h3>
+<h3>Rook movement</h3>
+<h3>Knight movement</h3>
+<h3>Bishop movement</h3>
+<h3>Queen movement</h3>
+<h3>King movement</h3>
+
+<h2>Check</h2>
+<p>description of check</p>
+
+<h2>Checkmate</h2>
+<p>description of checkmate</p>
+
+
+
+
+
+
+<h1>Special Rules</h1>
+
+<h2>Promotion</h2>
+<p>describe how promotion works</p>
+
+<h2>Castling</h2>
+<p>You can only castle if there is a clear path to castle, and your king is not put in check on any of the squares on the way to the castle location.</p>
+
+
+
+<h2>En Passant</h2>
+<p>The white player's pawn at 'a5' is within two squares of the black player.</p>
+
+![Screenshot of enpassant](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_enpassant1.png)
+
+<p>At this point the black player moves their pawn from 'b7' to 'b5' thinking they can avoid getting it captured.</p>
+
+![Screenshot of enpassant](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_enpassant2.png)
+
+<p>However, the rule of En Passant, which means in passing in french, allows the white player to still capture the black player's pawn.</p>
+
+![Screenshot of enpassant](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_enpassant3.png)
+
+<p>The white player has move to 'b6' and capture the pawn at 'b5'</p>
 
 
 <!-- ROADMAP -->
@@ -114,7 +205,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [ ] Feature 3
     - [ ] Nested Feature
 
-See the [open issues](https://github.com/RaspberryRat/chess/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -152,7 +243,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
 
-Project Link: [https://github.com/RaspberryRat/chess](https://github.com/RaspberryRat/chess)
+Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -167,36 +258,3 @@ Project Link: [https://github.com/RaspberryRat/chess](https://github.com/Raspber
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/RaspberryRat/chess.svg?style=for-the-badge
-[contributors-url]: https://github.com/RaspberryRat/chess/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/RaspberryRat/chess.svg?style=for-the-badge
-[forks-url]: https://github.com/RaspberryRat/chess/network/members
-[stars-shield]: https://img.shields.io/github/stars/RaspberryRat/chess.svg?style=for-the-badge
-[stars-url]: https://github.com/RaspberryRat/chess/stargazers
-[issues-shield]: https://img.shields.io/github/issues/RaspberryRat/chess.svg?style=for-the-badge
-[issues-url]: https://github.com/RaspberryRat/chess/issues
-[license-shield]: https://img.shields.io/github/license/RaspberryRat/chess.svg?style=for-the-badge
-[license-url]: https://github.com/RaspberryRat/chess/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
-[product-screenshot]: images/screenshot.png
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
-[Vue-url]: https://vuejs.org/
-[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[Angular-url]: https://angular.io/
-[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
-[Svelte-url]: https://svelte.dev/
-[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-[Laravel-url]: https://laravel.com
-[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[Bootstrap-url]: https://getbootstrap.com
-[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com
