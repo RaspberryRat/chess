@@ -140,9 +140,9 @@
 ![Screenshot of colour choice](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_colourchoice.png)
 
 <p>Human players can then choose their name which will show up when it is their turn:</p>
-![Screenshot of colour choice](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_namepicker.png)
+![Screenshot of name choice](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_namepicker.png)
 </br></br>
-![Screenshot of colour choice](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_name_gameboard.png)
+![Screenshot of game board showing name](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_name_gameboard.png)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
