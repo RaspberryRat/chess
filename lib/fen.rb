@@ -15,7 +15,7 @@ class Fen
 
   def player_notation
     loop do
-      player_fen = gets.chomp.rstrip
+      player_fen = gets.chomp.rstrip.lstrip
       return player_fen if confirm_notation?(player_fen)
 
       puts "That notation is incorrect, refer to the readme..."
