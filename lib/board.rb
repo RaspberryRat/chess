@@ -48,7 +48,7 @@ class Board
       else
         if square_counter == selection && notation != "/"
           square_color = board_square(notation, previous_color, selection)
-        elsif destination_array.include?(square_counter)
+        elsif destination_array.include?(square_counter) && notation != "/"
           square_color =
             board_square(notation, previous_color, selection, square_counter)
         else
@@ -106,10 +106,3 @@ class Board
     print_out
   end
 end
-
-Board.new(
-  "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq",
-  [],
-  9,
-  [17, 22, 36, 64]
-).print_board

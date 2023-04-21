@@ -2,7 +2,7 @@
 require_relative "board"
 
 class Highlight
-  attr_reader :board_state, :selection, :destinations
+  attr_reader :board, :selection, :destinations
   attr_accessor :destination_array, :selection_position
 
   def initialize(board, selection, destinations)
@@ -14,10 +14,8 @@ class Highlight
   end
 
   def highlight_positions
-    destination_array = []
-
-    selection_position = get_index(selection)
-    destinations.each { |d| destination_array << get_index(d) }
+    @selection_position = get_position_code(selection)
+    destinations.each { |d| @destination_array << get_position_code(d) }
 
     print_selection_board
   end
@@ -25,11 +23,8 @@ class Highlight
   private
 
   # takes coordinate position from board, ex. 'a1' and returns position, ex, 1
-  def get_index(coordinates)
-    letter, num = coordinates.split("")
-    letter = letter.ord + "a".ord + 1
-    num = num.to_i - 1
-    num * 8 + letter
+  def get_position_code(coordinates)
+    column_code(coordinates[0]) + row_code(coordinates[1])
   end
 
   def print_selection_board
@@ -40,4 +35,25 @@ class Highlight
       destination_array
     ).print_board
   end
+
+  def column_code(column)
+    { a: 8, b: 7, c: 6, d: 5, e: 4, f: 3, g: 2, h: 1 }.fetch(column.to_sym).to_i
+  end
+
+  def row_code(row)
+    {
+      1 => 0,
+      2 => 8,
+      3 => 16,
+      4 => 24,
+      5 => 32,
+      6 => 40,
+      7 => 48,
+      8 => 56
+    }.fetch(row.to_i).to_i
+  end
 end
+
+board = Board.new
+
+Highlight.new(board, "a2", %w[a3 a4]).highlight_positions
