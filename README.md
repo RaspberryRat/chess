@@ -141,8 +141,13 @@
 
 <p>Human players can then choose their name which will show up when it is their turn:</p>
 ![Screenshot of name choice](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_namepicker.png)
-</br></br>
+<p></p>
+<p></p>
 ![Screenshot of game board showing name](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_name_gameboard.png)
+<p></p>
+<p></p>
+
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -152,8 +157,21 @@
 <h1>Game Rules</h1>
 
 <h2>Piece Movement</h2>
-<p>Describe Piece movement</p>
+<p>To move a piece, enter the coordinates of a piece on the board using the format column row. For example, to choose a pawn at 'a2' simply enter 'a2'.</p>
+<p>After entering a piece that has legal moves, the piece selected will be highlighted in blue and all squares that are legal moves will be highlighted in red.</p>
+![Screenshot of piece selection](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_select.png)
+<p>Then enter the coordinates of the square you want to move to, legel moves will be listed below the game board. For example in the screenshot above you could choose 'b2', 'c3', 'c5', or 'b6'.</p>
+
+<p>All pieces follow the movement rules for chess.</p>
 <h3>Pawn movement</h3>
+<p>Pawns can move forward a single space. White pawns can only move in the driection where the row is a higher value (for example, 'a2' to 'a3'). Black pawns can only move in the direciton where rows are a decreasing number (for example, 'a7' to 'a6').</p>
+<p>When pawns are at their starting position, row 2 for white pawns and row 7 for black pawns, they can move forward 2 squares for the pawns first move. Example, pawn 'c2' can move to square 'c3' or 'c4'</p>
+![Screenshot of pawn initial move](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_pawnmove.png)
+<p>Pawns can only capture an opponents piece that is at a diagonal forward direction to the pawn's square. For example pawn at a 'c4', there an opponent piece at locations 'b5', 'c5', and 'd5'. The white pawn can capture the pieces at location 'b5' or 'd5'. The pawn can not capture the piece at location 'c5'.</p>
+
+![Screenshot of pawn capture](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_pawncapture.png)
+
+
 <h3>Rook movement</h3>
 <h3>Knight movement</h3>
 <h3>Bishop movement</h3>
