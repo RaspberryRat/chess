@@ -47,22 +47,22 @@
     <li><a href="#game-rules">Game Rules</a>
      <ul>
         <li>
-        <a href="#pawn-movemenet">Pawn Movement</a>
+        <a href="#pawn-movement">Pawn Movement</a>
         </li>
         <li>
-        <a href="#rook-movemenet">Rook Movement</a>
+        <a href="#rook-movement">Rook Movement</a>
         </li>
         <li>
-        <a href="#knight-movemenet">Knight Movement</a>
+        <a href="#knight-movement">Knight Movement</a>
         </li>
         <li>
-        <a href="#bishop-movemenet">Bishop Movement</a>
+        <a href="#bishop-movement">Bishop Movement</a>
         </li>
         <li>
-        <a href="#queen-movemenet">Queen Movement</a>
+        <a href="#queen-movement">Queen Movement</a>
         </li>
          <li>
-        <a href="#king-movemenet">King Movement</a>
+        <a href="#king-movement">King Movement</a>
         </li>
          <li>
         <a href="#check">Check</a>
