@@ -1,7 +1,6 @@
 # chess
 </br>
 
-## readme-top
 
 
 
@@ -15,9 +14,6 @@
 ```
 <br />
 <div align="center">
-  <a href="https://github.com/RaspberryRat/chess">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
 
 <h3 align="center">Terminal Chess in Ruby</h3>
 
@@ -32,6 +28,7 @@
 </div>
 
 
+## readme-top
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -208,6 +205,9 @@
 
 <p>All pieces follow the movement rules for chess.</p>
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
 ## Pawn movement
 
 <p>♙</p>
@@ -220,10 +220,16 @@
 
 ![Screenshot of pawn capture](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_pawncapture.png)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
 ## Rook movement
 
 <p>♖</p>
 <p>A rook can move horizontally or vertically up to as many squares that are empty. Rooks cannot pass through another piece during its movement. It cannot end up on the same square as a piece of the same colour. If a rook ends its movement on a piece of the enemy colour, the player captures that piece and removes it from the gameboard. Rooks cannot move diagonally.</p>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 ## Knight movemenet
 
@@ -232,15 +238,24 @@
 
 ![Screenshot of piece selection](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_select.png)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
 ## Bishop movement
 
 <p>♗</p>
 <p>A bishop can move diagonally up to as many squares that are empty, it cannot end pass through a piece during its movement and must end its movement on an empty square or a square with an opponent's piece. If the bishop ends its movement on a square where there is an opponent's piece, it captures that piece and removes it from the gameboard.</p>
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
 ## Queen movement
 
 <p>♕</p>
 <p>Queens have all movement options, the queen can move, horizontally, vertically, or diagonally up to as many squares that are empty. The queen cannot end pass through a piece during its movement and must end its movement on an empty square or a square with an opponent's piece. If the queen ends its movement on a square where there is an opponent's piece, it captures that piece and removes it from the gameboard.</p>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 ## King movement
 
@@ -249,6 +264,8 @@
 
 ![Screenshot of king move](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_kingmove.png)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 ## Check
 
@@ -256,11 +273,16 @@
 
 ![Screenshot of king check](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_kingcheck.png)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Checkmate
 
 <p>A king is in checkmate when there are no legal moves available that don't result in the current player's king being out of check. In the screenshot below, the black player's king is in checkmate. The black player has no legal moves where the king is not in check. When a player is in checkmate the other player is the winner and the game ends</p>
 
 ![Screenshot of checkmate](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_checkmate.png)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 ## Special Rules
 
@@ -273,6 +295,8 @@
 ![Screenshot of promotion option](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_promotion1.png)
 
 ![Screenshot of after promotion](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_promotion2.png)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 ## Castling
@@ -287,6 +311,7 @@
 
 ![Screenshot of castle after](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_promotion2.png)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
