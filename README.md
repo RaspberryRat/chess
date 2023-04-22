@@ -173,10 +173,17 @@
 
 
 <h3>Rook movement</h3>
+<p>A rook can move horizontally or vertically up to as many squares that are empty. Rooks cannot pass through another piece during its movement. It cannot end up on the same square as a piece of the same colour. If a rook ends its movement on a piece of the enemy colour, the player captures that piece and removes it from the gameboard. Rooks cannot move diagonally.</p>
 <h3>Knight movement</h3>
+<p>A knight moves in an 'L' shape. This means it can move 1 square in any direction, say verticlaly, than 2 squares horizontally. Or 1 square horizontal direction, than 2 squares vertically. For example, a knight at 'a4' could move to 'b2', 'c3', 'c5', or 'b6'.</p>
+![Screenshot of piece selection](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_select.png)
 <h3>Bishop movement</h3>
+<p>A bishop can move diagonally up to as many squares that are empty, it cannot end pass through a piece during its movement and must end its movement on an empty square or a square with an opponent's piece. If the bishop ends its movement on a square where there is an opponent's piece, it captures that piece and removes it from the gameboard.</p>
 <h3>Queen movement</h3>
+<p>Queens have all movement options, the queen can move, horizontally, vertically, or diagonally up to as many squares that are empty. The queen cannot end pass through a piece during its movement and must end its movement on an empty square or a square with an opponent's piece. If the queen ends its movement on a square where there is an opponent's piece, it captures that piece and removes it from the gameboard.</p>
 <h3>King movement</h3>
+<p>Kings have all movement options, however the king is limited to moving only a single square. The king can move, horizontally, vertically, or diagonally, but cannot ends its movement on a piece of the same colour. If the king ends its movement on a square where there is an opponent's piece, it captures that piece and removes it from the gameboard.</p>
+![Screenshot of king move](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_kingmove.png)
 
 <h2>Check</h2>
 <p>description of check</p>

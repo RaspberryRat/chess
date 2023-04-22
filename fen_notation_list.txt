@@ -1,0 +1,47 @@
+rnbqkbnr/pppp1ppp/8/4p3/8/P7/1PPPPPPP/RNBQK1NR w KQkq
+
+8/8/8/8/2q5/2K5/8/8 w
+
+8/8/8/8/2q5/7R/2K5/8 w
+
+8/8/8/8/8/1q6/8/K7 w
+
+8/8/8/8/2q5/8/8/K7 b
+
+# check mates
+8/4N1pk/8/8/8/7R/8/6K1 b
+
+6kR/6P1/5K2/8/8/8/8/8 b
+
+7k/7R/5N2/8/8/8/8/6K1 b
+
+3R2k1/5ppp/8/8/8/8/5PPP/6K1 b
+
+4K3/8/2b2q2/8/8/8/8/6k1 w
+
+5rk1/7B/8/6N1/8/8/1B6/6K1 b
+
+5rk1/6RR/8/8/8/8/8/6K1 b
+
+7k/5N1p/8/8/8/8/8/2K3R1 b
+
+# Castling
+
+r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w
+
+r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq
+
+
+
+r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq
+
+# Promotion
+
+3k4/6P1/8/8/8/8/7p/3K4 w KQkq
+
+8/8/8/8/6pP/8/8/K7 b h3
+
+
+rnbqkbnr/p1pp1pp1/8/1p2p3/3P2Pp/P6P/1PPKPP2/RNBQ2NR b kq g3
+
+qn2k3/8/8/RR5R/8/8/8/bK5B b KQkq
