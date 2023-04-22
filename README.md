@@ -93,7 +93,7 @@
 
 
 <!-- ABOUT THE PROJECT -->
-#about-the-project
+## About The Project
 <h2>About</h2>
 
  <p>I programmed this to practice and develop my programming while I am learning.</p>
@@ -105,8 +105,8 @@
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-#bult-with
+<!-- Built With -->
+## Built With
 <p>Built With</p>
 
 * ![Ruby](https://www.ruby-lang.org/en/)
@@ -116,6 +116,7 @@
 
 
 <!-- GETTING STARTED -->
+## Getting Started
 <p>!To play go to replit => https://replit.com/@SmellyCosby/Terminal-chess-game</p>
 
 
@@ -124,7 +125,7 @@
 
 
 <!-- USAGE EXAMPLES -->
-#starting-the-game
+## Starting the Game
 <h2>Starting the game</h2>
 
 <p>The game allows you to start a new game.</p>
@@ -158,7 +159,7 @@
 <p>This En Passant Notation can be a '-' or 'a3' through 'h3' or 'a6' through 'h6'.</p>
 <p>En Passant notation indicates if a pawn made a double move on the previous players turn. If so, that piece can be taken by a pawn.</p>
 
-#game-play
+## Game Play
 <h1>Game Play</h1>
 
 <h2>Game type</h2>
@@ -193,7 +194,7 @@
 
 
 <!-- Game Rules -->
-#game-rules
+## Game Rules
 <h1>Game Rules</h1>
 <p>To win the game, you must put your opponent's king in checkmate. This means the opponent has no legal moves available where their king will not be captured on your next turn. Essentially the goal of the game is to capture the opponent's king.</p>
 
@@ -206,7 +207,8 @@
 <p>Then enter the coordinates of the square you want to move to, legel moves will be listed below the game board. For example in the screenshot above you could choose 'b2', 'c3', 'c5', or 'b6'.</p>
 
 <p>All pieces follow the movement rules for chess.</p>
-#pawn
+
+## Pawn movement
 <h3>Pawn movement</h3>
 <p>♙</p>
 <p>Pawns can move forward a single space. White pawns can only move in the driection where the row is a higher value (for example, 'a2' to 'a3'). Black pawns can only move in the direciton where rows are a decreasing number (for example, 'a7' to 'a6').</p>
@@ -218,29 +220,29 @@
 
 ![Screenshot of pawn capture](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_pawncapture.png)
 
-#rook
+## Rook movement
 <h3>Rook movement</h3>
 <p>♖</p>
 <p>A rook can move horizontally or vertically up to as many squares that are empty. Rooks cannot pass through another piece during its movement. It cannot end up on the same square as a piece of the same colour. If a rook ends its movement on a piece of the enemy colour, the player captures that piece and removes it from the gameboard. Rooks cannot move diagonally.</p>
 
-#knight
+## Knight movemenet
 <h3>Knight movement</h3>
 <p>♘</p>
 <p>A knight moves in an 'L' shape. This means it can move 1 square in any direction, say verticlaly, than 2 squares horizontally. Or 1 square horizontal direction, than 2 squares vertically. For example, a knight at 'a4' could move to 'b2', 'c3', 'c5', or 'b6'.</p>
 
 ![Screenshot of piece selection](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_select.png)
 
-#bishop
+## Bishop movement
 <h3>Bishop movement</h3>
 <p>♗</p>
 <p>A bishop can move diagonally up to as many squares that are empty, it cannot end pass through a piece during its movement and must end its movement on an empty square or a square with an opponent's piece. If the bishop ends its movement on a square where there is an opponent's piece, it captures that piece and removes it from the gameboard.</p>
 
-#queen
+## Queen movement
 <h3>Queen movement</h3>
 <p>♕</p>
 <p>Queens have all movement options, the queen can move, horizontally, vertically, or diagonally up to as many squares that are empty. The queen cannot end pass through a piece during its movement and must end its movement on an empty square or a square with an opponent's piece. If the queen ends its movement on a square where there is an opponent's piece, it captures that piece and removes it from the gameboard.</p>
 
-#king
+## King movement
 <h3>King movement</h3>
 <p>♔</p>
 <p>Kings have all movement options, however the king is limited to moving only a single square. The king can move, horizontally, vertically, or diagonally, but cannot ends its movement on a piece of the same colour. If the king ends its movement on a square where there is an opponent's piece, it captures that piece and removes it from the gameboard.</p>
@@ -248,23 +250,23 @@
 ![Screenshot of king move](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_kingmove.png)
 
 
-#check
+## Check
 <h2>Check</h2>
 <p>A king is in check when your opponent can capture it on their next turn. When a king is in check, the only moves you can make result with your king no longer in check. This could be by moving either the king that in in check, or another piece that blocks, or captures the piece that is causing the king to be in check. The game will not let you make any other move. Additionally, you cannot make a move that results with your king being in check at the end of the move.</p>
 
 ![Screenshot of king check](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_kingcheck.png)
 
-#checkmate
+## Checkmate
 <h2>Checkmate</h2>
 <p>A king is in checkmate when there are no legal moves available that don't result in the current player's king being out of check. In the screenshot below, the black player's king is in checkmate. The black player has no legal moves where the king is not in check. When a player is in checkmate the other player is the winner and the game ends</p>
 
 ![Screenshot of checkmate](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_checkmate.png)
 
-#special-rules
+## Special Rules
 <h1>Special Rules</h1>
 <p>There are three additional special rules in chess that are important for a player to know. Promotion which effects a pawn that makes it to the other end of the board, castling, which is a special king movememnt, and En Passant, which is a special pawn capture move.</p>
 
-#promotion
+## Promotion
 <h2>Promotion</h2>
 <p>If a pawn moves it to the last square of the opposite side of the board, meaning row 8 for the white player, or row 1 for the black player, the pawn can be promoted to a queen, bishop, knight, or rook. Contrary to popular belief, a player can choose any of these options even if the player hasn't captured that piece from their opponent. This means you could have 2 or more queens! After choosing a piece, the pawn transforms into that piece for the rest of the game.</p>
 
@@ -273,7 +275,7 @@
 ![Screenshot of after promotion](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_promotion2.png)
 
 
-#castling
+## Castling
 <h2>Castling</h2>
 <p>Castling is a special move available to the king which results in the king moving two squares, while simultaneously moving a rook to the far side of the king, protecting it.</p>
 <p>A king can castle on either the right or left side of the board which is called a 'kingside castle' or 'queenside castle' respectively. A castle results in moving the king two squares either left or right. Meaning it will end up in column 'c' or 'g'. The rook will move past the king and end up in column 'd' or 'g' respectively.</p>
@@ -288,7 +290,7 @@
 
 
 
-#enpassant
+## En Passant
 <h2>En Passant</h2>
 <p>En Passant, mean means 'in passing' in french is a special move available only to pawns. This speical move allows you to capture a pawn with your own pawn when the opponent move's their pawn 2 squares. If an opponent's pawn moves 2 squares, and you would have been able to capture it if the opponent only moved a single square, you will then have the option to capture that pawn as if it only moved the 1 square. See the screenshots below to see how it works in the game.</p>
 <p>The white player's pawn at 'a5' is within two squares of the black player.</p>
