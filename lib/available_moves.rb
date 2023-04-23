@@ -3,6 +3,7 @@
 require_relative "legal_move"
 require_relative "game_pieces"
 require_relative "./modules/board_method_module"
+require "pry-byebug"
 
 include BoardMethods
 
