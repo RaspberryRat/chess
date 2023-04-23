@@ -7,7 +7,7 @@ require_relative "selectedsquare"
 require_relative "destinationsquare"
 require_relative "occupieddestinationsquare"
 
-include PieceVariables, StandardChessPieces
+include PieceVariables
 
 # superclass for board squares
 class BoardSquare

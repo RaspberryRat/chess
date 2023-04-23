@@ -2,7 +2,7 @@
 
 require_relative "piece_module"
 
-include PieceVariables, StandardChessPieces
+include PieceVariables
 
 # TODO: add square highlights here
 # superclass for board squares

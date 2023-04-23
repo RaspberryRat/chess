@@ -22,10 +22,6 @@ module PieceVariables
   NEW_LINE = "\u001b[0m\n"
   EMPTY_SPACE = "   "
   ESCAPE_CODE = "\u001b[0m"
-end
-
-module StandardChessPieces
-  include PieceVariables
 
   CHESS_PIECES = {
     P: WHITE_PAWN,
