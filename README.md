@@ -182,6 +182,17 @@
 <p></p>
 <p></p>
 
+## Move Log
+
+<p>Enter 'move log' instead of inputting a piece location to pull up all past moves by both players'</p>
+![Screenshot of move log](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_move_log.png)
+</br></br>
+
+## Fen Notation Board State
+
+<p>Enter 'fen' instead of inputting a piece location to display the current board state as fen notation. You can copy this fen notation and enter it to restart you game from the same spot</p>
+![Screenshot of move log](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_fen_display.png)
+</br></br>
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
