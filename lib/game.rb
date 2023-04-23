@@ -133,6 +133,7 @@ class Game
     return if player1.computer && player2.computer
 
     print "\n\nEnter 'save' to save your game, or 'exit' or 'quit' to exit"
+    print "\n Enter 'fen' to display current board state as fen notation."
   end
 
   def print_note
@@ -167,7 +168,16 @@ class Game
     return true if input == "queenside castle"
     return true if input == "kingside castle"
 
+    display_fen if input == "fen"
+
     false
+  end
+
+  def display_fen
+    print "\n\nCurrent board state: "
+    print "#{board.board}\n"
+    print "\nPress enter to continue\n"
+    gets.chomp
   end
 
   def save_game
