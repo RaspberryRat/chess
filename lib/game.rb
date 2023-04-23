@@ -110,6 +110,7 @@ class Game
           end
           computer_choice_print(piece_selected, "yes")
           computer_choice_print(destination)
+          update_move_log(piece_selected, destination)
 
           @moved_piece = promote(moved_piece, piece_selected, destination)
           @moved_piece =
@@ -129,11 +130,16 @@ class Game
 
   private
 
+  def update_move_log(piece, destination)
+    @current_player.move_log << [piece, destination]
+  end
+
   def print_reminder
     return if player1.computer && player2.computer
 
     print "\n\nEnter 'save' to save your game, or 'exit' or 'quit' to exit"
     print "\n Enter 'fen' to display current board state as fen notation."
+    print "\n Enter 'move log' to display past moves for both players."
   end
 
   def print_note
@@ -169,8 +175,30 @@ class Game
     return true if input == "kingside castle"
 
     display_fen if input == "fen"
+    display_move_log if input == "move log"
 
     false
+  end
+
+  def display_move_log
+    name_gap = 21 - player1.name.length
+    white_space = " " * name_gap
+    log = "\n     #{player1.name}#{white_space}#{player2.name}\n\n"
+
+    i = 0
+    player1.move_log.length.times do
+      log += "#{i + 1}    "
+      log +=
+        "#{player1.move_log[i][0]} to #{player1.move_log[i][1]}             " unless player1.move_log[
+        i
+      ].nil?
+      log +=
+        "#{player2.move_log[i][0]} to #{player2.move_log[i][1]}\n" unless player1.move_log[
+        i
+      ].nil?
+      i += 1
+    end
+    print "#{log}\n"
   end
 
   def display_fen
