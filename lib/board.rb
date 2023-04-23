@@ -3,7 +3,6 @@
 require_relative "./board_squares/board_square"
 require_relative "game_pieces"
 require_relative "./modules/piece_module"
-require "pry-byebug"
 
 # playing board for pieces
 class Board
@@ -24,7 +23,7 @@ class Board
   end
 
   def print_board
-    printed_board = "\n\n\n\n\n"
+    printed_board = "\n\n\n"
     printed_board += cap_pieces.empty? ? "\n" * 4 : pieces_captured
 
     row_number = 8

@@ -130,6 +130,8 @@ class Game
   private
 
   def print_reminder
+    return if player1.computer && player2.computer
+
     print "\n\nEnter 'save' to save your game, or 'exit' or 'quit' to exit"
   end
 
