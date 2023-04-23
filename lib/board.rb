@@ -112,5 +112,3 @@ class Board
     print_out
   end
 end
-
-Board.new.print_board
