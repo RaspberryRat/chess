@@ -45,6 +45,8 @@
     </li>
     <li><a href="#starting-the-game">Starting the Game</a></li>
     <li><a href="#game-play">Game Play</a></li>
+    <li><a href="#move_log">Move Log</a></li>
+    <li><a href="#fen-notation-board-state">Fen Notation Board State</a></li>
     <li><a href="#game-rules">Game Rules</a>
      <ul>
         <li>
