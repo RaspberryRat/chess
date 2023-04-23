@@ -99,8 +99,6 @@
  <p>I programmed this to practice and develop my programming while I am learning.</p>
 
 ![Screenshot of gameboard](https://github.com/RaspberryRat/chess/blob/main/screen_shots/screen_gameboard.png)
-</ br>
-</ br>
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
