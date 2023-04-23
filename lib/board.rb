@@ -27,6 +27,7 @@ class Board
     printed_board += cap_pieces.empty? ? "\n" * 4 : pieces_captured
 
     row_number = 8
+    printed_board += add_column_markers
     printed_board += "#{row_number} "
     previous_color = "white"
     convert_notation.each do |notation|
@@ -56,20 +57,24 @@ class Board
         previous_color = previous_color == "green" ? "white" : "green"
         @square_counter -= 1 unless notation == "/"
       end
-      printed_board += "  #{row_number} " if square_color.to_s == NEW_LINE
+      printed_board += " #{row_number} " if square_color.to_s == NEW_LINE
       printed_board += square_color.to_s
       if square_color.to_s == NEW_LINE
         row_number -= 1
         printed_board += "#{row_number} "
       end
     end
-    printed_board += "  1 "
+    printed_board += " 1 "
     printed_board += NEW_LINE
-    printed_board += "   A  B  C  D  E  F  G  H\n"
+    printed_board += add_column_markers
     print printed_board
   end
 
   private
+
+  def add_column_markers
+    "   A  B  C  D  E  F  G  H\n"
+  end
 
   def board_square(notation, color, selected = nil, destination = nil)
     BoardSquare.for(notation, color, selected, destination)
