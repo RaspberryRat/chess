@@ -116,7 +116,7 @@
 
 <!-- GETTING STARTED -->
 ## Getting Started
-<p>!To play go to replit => https://replit.com/@SmellyCosby/Terminal-chess-game</p>
+<p>To play go to replit => https://replit.com/@SmellyCosby/chess?v=1</p>
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
