@@ -4,13 +4,20 @@ describe Promotion do
   describe "#promoted" do
     context "when a white pawn reaches last row" do
       subject(:pawn_promotion) do
-        described_class.new(old_board, new_board, location, destination)
+        described_class.new(
+          old_board,
+          new_board,
+          location,
+          destination,
+          current_player
+        )
       end
       let(:old_board) { "8/P7/8/8/8/8/8/8" }
       let(:new_board) { "P7/8/8/8/8/8/8/8" }
       let(:location) { "a7" }
       let(:destination) { "a8" }
       let(:player_colour) { "player_colour" }
+      let(:current_player) { "current_player" }
 
       before do
         allow_any_instance_of(BoardMethods).to receive(
@@ -27,13 +34,20 @@ describe Promotion do
 
     context "when a black pawn reaches last row" do
       subject(:pawn_promotion) do
-        described_class.new(old_board, new_board, location, destination)
+        described_class.new(
+          old_board,
+          new_board,
+          location,
+          destination,
+          current_player
+        )
       end
       let(:old_board) { "8/8/8/8/8/8/p7/8" }
       let(:new_board) { "8/8/8/8/8/8/8/p7" }
       let(:location) { "a2" }
       let(:destination) { "a1" }
       let(:player_colour) { "player_colour" }
+      let(:current_player) { "current_player" }
 
       before do
         allow_any_instance_of(BoardMethods).to receive(
@@ -50,12 +64,19 @@ describe Promotion do
 
     context "when a no pawn enters last row" do
       subject(:pawn_promotion) do
-        described_class.new(old_board, new_board, location, destination)
+        described_class.new(
+          old_board,
+          new_board,
+          location,
+          destination,
+          current_player
+        )
       end
       let(:old_board) { "8/8/8/8/8/1p6/p7/8" }
       let(:new_board) { "8/8/8/8/8/8/pp6/8" }
       let(:location) { "b3" }
       let(:destination) { "b2" }
+      let(:current_player) { "current_player" }
       let(:player_colour) { "player_colour" }
 
       before do
@@ -73,11 +94,18 @@ describe Promotion do
 
     context "when a white pawn reaches last row" do
       subject(:pawn_promotion) do
-        described_class.new(old_board, new_board, location, destination)
+        described_class.new(
+          old_board,
+          new_board,
+          location,
+          destination,
+          current_player
+        )
       end
       let(:old_board) { "8/P7/8/8/8/8/8/8" }
       let(:new_board) { "P7/8/8/8/8/8/8/8" }
       let(:location) { "a7" }
+      let(:current_player) { "current_player" }
       let(:destination) { "a8" }
       let(:player_colour) { "player_colour" }
 
@@ -96,11 +124,18 @@ describe Promotion do
 
     context "when a white pawn reaches last row" do
       subject(:pawn_promotion) do
-        described_class.new(old_board, new_board, location, destination)
+        described_class.new(
+          old_board,
+          new_board,
+          location,
+          destination,
+          current_player
+        )
       end
       let(:old_board) { "8/P7/8/8/8/8/8/8" }
       let(:new_board) { "P7/8/8/8/8/8/8/8" }
       let(:location) { "a7" }
+      let(:current_player) { "current_player" }
       let(:destination) { "a8" }
       let(:player_colour) { "player_colour" }
 
@@ -119,11 +154,18 @@ describe Promotion do
 
     context "when a white pawn reaches last row" do
       subject(:pawn_promotion) do
-        described_class.new(old_board, new_board, location, destination)
+        described_class.new(
+          old_board,
+          new_board,
+          location,
+          destination,
+          current_player
+        )
       end
       let(:old_board) { "8/P7/8/8/8/8/8/8" }
       let(:new_board) { "P7/8/8/8/8/8/8/8" }
       let(:location) { "a7" }
+      let(:current_player) { "current_player" }
       let(:destination) { "a8" }
       let(:player_colour) { "player_colour" }
 
@@ -142,11 +184,18 @@ describe Promotion do
 
     context "when a white pawn reaches last row" do
       subject(:pawn_promotion) do
-        described_class.new(old_board, new_board, location, destination)
+        described_class.new(
+          old_board,
+          new_board,
+          location,
+          destination,
+          current_player
+        )
       end
       let(:old_board) { "8/P7/8/8/8/8/8/8" }
       let(:new_board) { "P7/8/8/8/8/8/8/8" }
       let(:location) { "a7" }
+      let(:current_player) { "current_player" }
       let(:destination) { "a8" }
       let(:player_colour) { "player_colour" }
 
@@ -165,11 +214,18 @@ describe Promotion do
 
     context "when a black pawn reaches last row" do
       subject(:pawn_promotion) do
-        described_class.new(old_board, new_board, location, destination)
+        described_class.new(
+          old_board,
+          new_board,
+          location,
+          destination,
+          current_player
+        )
       end
       let(:old_board) { "3k4/6P1/8/8/8/8/7p/3K4" }
       let(:new_board) { "3k4/6P1/8/8/8/8/8/3K3p" }
       let(:location) { "h2" }
+      let(:current_player) { "current_player" }
       let(:destination) { "h1" }
       let(:player_colour) { "player_colour" }
 
@@ -188,10 +244,17 @@ describe Promotion do
 
     context "when a black pawn reaches last row" do
       subject(:pawn_promotion) do
-        described_class.new(old_board, new_board, location, destination)
+        described_class.new(
+          old_board,
+          new_board,
+          location,
+          destination,
+          current_player
+        )
       end
       let(:old_board) { "3k4/6P1/8/8/8/8/7p/3K4" }
       let(:new_board) { "3k4/6P1/8/8/8/8/8/3K3p" }
+      let(:current_player) { "current_player" }
       let(:location) { "h2" }
       let(:destination) { "h1" }
       let(:player_colour) { "player_colour" }
@@ -211,10 +274,17 @@ describe Promotion do
 
     context "when a black pawn reaches last row" do
       subject(:pawn_promotion) do
-        described_class.new(old_board, new_board, location, destination)
+        described_class.new(
+          old_board,
+          new_board,
+          location,
+          destination,
+          current_player
+        )
       end
       let(:old_board) { "3k4/6P1/8/8/8/8/7p/3K4" }
       let(:new_board) { "3k4/6P1/8/8/8/8/8/3K3p" }
+      let(:current_player) { "current_player" }
       let(:location) { "h2" }
       let(:destination) { "h1" }
       let(:player_colour) { "player_colour" }
@@ -234,10 +304,17 @@ describe Promotion do
 
     context "when a black pawn reaches last row" do
       subject(:pawn_promotion) do
-        described_class.new(old_board, new_board, location, destination)
+        described_class.new(
+          old_board,
+          new_board,
+          location,
+          destination,
+          current_player
+        )
       end
       let(:old_board) { "3k4/6P1/8/8/8/8/7p/3K4" }
       let(:new_board) { "3k4/6P1/8/8/8/8/8/3K3p" }
+      let(:current_player) { "current_player" }
       let(:location) { "h2" }
       let(:destination) { "h1" }
       let(:player_colour) { "player_colour" }
