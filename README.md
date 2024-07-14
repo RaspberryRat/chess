@@ -112,6 +112,13 @@
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<!-- Running the Game -->
+## Running the Game
+<p>To run the project, download the code. Make sure you have ruby>=3.2 installed.</p>
+<p>From the command line type:</p>
+```
+ruby lib/main.rb
+```
 
 
 <!-- GETTING STARTED -->
