@@ -37,6 +37,9 @@
     <li>
       <a href="#about-the-project">About The Project</a>
     </li>
+     <li>
+        <a href="#running-the-game">Running the Game</a>
+     </li>
     <li>
       <a href="#built-with">Built With</a>
     </li>
