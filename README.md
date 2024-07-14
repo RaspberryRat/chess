@@ -117,11 +117,11 @@
 
 <!-- Running the Game -->
 ## Running the Game
-<p>To run the project, download the code. Make sure you have ruby>=3.2 installed.</p>
+<p>To run the project, download the code. Make sure you have ruby &gt;= 3.2 installed.</p>
 <p>From the command line type:</p>
-```
-ruby lib/main.rb
-```
+
+<pre><code>ruby lib/main.rb
+</code></pre>
 
 
 <!-- GETTING STARTED -->
