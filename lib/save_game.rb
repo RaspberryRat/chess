@@ -4,6 +4,8 @@ require "json"
 require_relative "game"
 
 class SaveGame
+  SAVE_PATH = File.expand_path("../saves/chess_save.txt", __dir__)
+  
   def self.save(board_state, player1, player2, player_count, captured_pieces)
     new(board_state, player1, player2, player_count, captured_pieces).to_json
   end
@@ -45,19 +47,22 @@ class SaveGame
                     captured_pieces: @captured_pieces
                   }
                 )
-    save = File.open("./saves/chess_save.txt", "w")
-    save.puts game_save
-    save.close
+    File.write(SAVE_PATH, "#{game_save}\n")
   end
 
   def from_json
+    unless File.exist?(SAVE_PATH)
+      puts "No saved game found."
+      return false
+    end
+
     3.times do
       print "."
       sleep(0.3)
     end
     puts "Game loaded!\n\n"
 
-    save_file = File.read("./saves/chess_save.txt")
+    save_file = File.read(SAVE_PATH)
     save_data = JSON.parse(save_file)
     @board_state = save_data["board_state"]
     create_players(save_data)

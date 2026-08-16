@@ -1,0 +1,9 @@
+.DS_Store
+
+.bundle/
+vendor/bundle/
+.ruby-lsp/
+coverage/
+.rspec_status
+
+saves/chess_save.txt
