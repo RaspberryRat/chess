@@ -38,24 +38,37 @@ class Fen
   end
 
   def confirm_notation?(player_fen)
-    fen_array = player_fen.split(" ")
-    fen_array[0] = fen_array[0].split("/")
+    fields = player_fen.split
+    return false unless (2..4).cover?(fields.length)
 
-    i = 0
-    fen_array.flatten.each do |line|
-      i += 1
-      if i <= 8
-        return false unless squares_in_row?(line)
-        return false unless line.match(/^[rnbqkpRNBQKP1-8]{1,8}$/)
-      elsif i == 9
-        return false unless line == "w" || line == "b"
-      elsif i == 10
-        next if line.match(/^[KQkq]+$/) || line.match(/^([a-h][1-8]|-)$/)
-        false
-      elsif i == 11
-        return false unless line.match(/^([a-h][1-8]|-)$/)
+    board, active_colour, castling, en_passant = fields
+    rows = board.split("/")
+
+    return false unless rows.length == 8
+
+    valid_rows =
+      rows.all? do |row|
+        squares_in_row?(row) &&
+          row.match?(/\A[rnbqkpRNBQKP1-8]{1,8}\z/)
       end
+
+    return false unless valid_rows
+    return false unless %w[w b].include?(active_colour)
+
+    unless castling.nil?
+      valid_castling =
+        castling == "-" || castling.match?(/\AK?Q?k?q?\z/)
+
+      return false unless valid_castling
     end
+
+    unless en_passant.nil?
+      valid_en_passant =
+        en_passant == "-" || en_passant.match?(/\A[a-h][36]\z/)
+
+      return false unless valid_en_passant
+    end
+
     true
   end
 end
