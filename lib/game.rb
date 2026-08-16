@@ -75,6 +75,7 @@ class Game
     @current_player = determine_player_turn
 
     loop do
+      return draw if stale_mate?
       return winner if check_mate?
       # print_note
 
@@ -180,26 +181,42 @@ class Game
     false
   end
 
-  def display_move_log
-    name_gap = 21 - player1.name.length
-    white_space = " " * name_gap
-    log = "\n     #{player1.name}#{white_space}#{player2.name}\n\n"
+def display_move_log
+  header =
+    Kernel.format(
+      "%-5s%-24s%s",
+      "",
+      player1.name,
+      player2.name
+    )
 
-    i = 0
-    player1.move_log.length.times do
-      log += "#{i + 1}    "
-      log +=
-        "#{player1.move_log[i][0]} to #{player1.move_log[i][1]}             " unless player1.move_log[
-        i
-      ].nil?
-      log +=
-        "#{player2.move_log[i][0]} to #{player2.move_log[i][1]}\n" unless player1.move_log[
-        i
-      ].nil?
-      i += 1
+  turn_count = [player1.move_log.length, player2.move_log.length].max
+
+  rows =
+    turn_count.times.map do |index|
+      white_move = format_move(player1.move_log[index])
+      black_move = format_move(player2.move_log[index])
+
+      Kernel.format(
+        "%-5d%-24s%s",
+        index + 1,
+        white_move,
+        black_move
+      ).rstrip
     end
-    print "#{log}\n"
-  end
+
+  log = "\n#{header}\n\n"
+  log += rows.join("\n")
+  log += "\n"
+
+  print log
+end
+
+def format_move(move)
+  return "" if move.nil?
+
+  "#{move[0]} to #{move[1]}"
+end
 
   def display_fen
     print "\n\nCurrent board state: "
@@ -335,6 +352,16 @@ class Game
     sleep(2)
     print "\n\nThank you for playing... Goodbye...\n"
     sleep(3)
+    exit
+  end
+
+  def stale_mate?
+    Checkmate.stalemate(board.board)
+  end
+
+  def draw
+    print "\n\nStalemate. The game is a draw.\n\n"
+    sleep(2)
     exit
   end
 
