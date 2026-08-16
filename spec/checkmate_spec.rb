@@ -30,5 +30,19 @@ describe Checkmate do
         expect(result).to be(false)
       end
     end
+
+    context "when the current player is stalemated" do
+      subject(:stalemate) { described_class.new(board) }
+
+      let(:board) { "7k/5K2/6Q1/8/8/8/8/8 b -" }
+
+      it "returns false" do
+        expect(stalemate.checkmate?).to be(false)
+      end
+
+      it "identifies the position as stalemate" do
+        expect(stalemate.stalemate?).to be(true)
+      end
+    end
   end
 end
